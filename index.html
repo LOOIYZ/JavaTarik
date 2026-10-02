@@ -1106,7 +1106,7 @@
       margin-bottom: 32px;
       box-shadow: var(--shadow);
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
     .chapter-hero::before {
       content: "";
@@ -1116,6 +1116,8 @@
       width: 5px;
       height: 100%;
       background: linear-gradient(to bottom, var(--brand), var(--accent));
+      border-top-left-radius: var(--radius-lg);
+      border-bottom-left-radius: var(--radius-lg);
     }
     .hero-breadcrumbs {
       display: flex;
@@ -2077,12 +2079,18 @@
       position: relative;
       margin-top: 14px;
     }
+    @media (max-width: 900px) {
+      .mobile-section-nav.has-sections {
+        display: block;
+      }
+    }
     .mobile-section-btn {
       display: inline-flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
       width: 100%;
+      min-height: 44px;
       padding: 10px 14px;
       background: var(--surface-subtle);
       border: 1px solid var(--border);
@@ -2093,6 +2101,10 @@
       text-align: left;
       cursor: pointer;
       transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+    }
+    .mobile-section-btn:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
     }
     .mobile-section-btn:active {
       transform: scale(0.98);
@@ -2112,7 +2124,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       box-shadow: var(--shadow-lg);
-      z-index: 40;
+      z-index: 60;
       padding: 6px;
       flex-direction: column;
       gap: 3px;
@@ -2121,6 +2133,9 @@
       display: flex;
     }
     .mobile-section-item {
+      display: block;
+      width: 100%;
+      min-height: 40px;
       padding: 8px 12px;
       border-radius: 6px;
       border: none;
@@ -2133,7 +2148,13 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      transition: background var(--dur-fast) var(--ease-out);
+      transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+    }
+    .mobile-section-item:focus-visible,
+    .mobile-section-item:hover {
+      background: var(--brand-light);
+      color: var(--brand);
+      outline: none;
     }
     .mobile-section-item:active {
       background: var(--brand-light);
@@ -2634,11 +2655,11 @@
 
         <!-- Mobile In-Page Section Jumper -->
         <div class="mobile-section-nav" id="mobile-section-nav">
-          <button class="mobile-section-btn" id="mobile-section-btn" aria-expanded="false" aria-label="Jump to section on this page">
+          <button class="mobile-section-btn" id="mobile-section-btn" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-section-menu" aria-label="Jump to section on this page">
             <span>📑 Jump to Section</span>
-            <span class="mobile-section-arrow" id="mobile-section-arrow">▾</span>
+            <span class="mobile-section-arrow" id="mobile-section-arrow" aria-hidden="true">▾</span>
           </button>
-          <div class="mobile-section-menu" id="mobile-section-menu">
+          <div class="mobile-section-menu" id="mobile-section-menu" role="menu" aria-label="Sections in this chapter">
             <!-- Populated dynamically with chapter sections -->
           </div>
         </div>
@@ -3276,11 +3297,17 @@
 
       if (tocHeadings.length === 0) {
         if (tocList) tocList.innerHTML = '<li style="font-size:0.8rem; color:var(--ink-subtle)">No subsections in this chapter.</li>';
-        if (mobileNav) mobileNav.style.display = "none";
+        if (mobileNav) {
+          mobileNav.classList.remove("has-sections");
+          mobileNav.style.display = "none";
+        }
         return;
       }
 
-      if (mobileNav) mobileNav.style.display = "block";
+      if (mobileNav) {
+        mobileNav.classList.add("has-sections");
+        mobileNav.style.display = ""; // Let CSS media query control responsive visibility
+      }
 
       tocHeadings.forEach(h => {
         // Desktop item
@@ -3304,6 +3331,7 @@
         if (mobileMenu) {
           const item = document.createElement("button");
           item.type = "button";
+          item.setAttribute("role", "menuitem");
           item.className = "mobile-section-item" + (h.tagName === "H3" ? " sub" : "");
           item.textContent = (h.tagName === "H3" ? "↳ " : "") + h.textContent.replace(/^[\d.\s]+/, "");
           item.onclick = () => {
@@ -3339,7 +3367,31 @@
         mobileTocBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
         const arrow = $("#mobile-section-arrow");
         if (arrow) arrow.textContent = isOpen ? "▴" : "▾";
+        if (isOpen) {
+          const firstItem = mobileTocMenu.querySelector(".mobile-section-item");
+          if (firstItem) firstItem.focus();
+        }
       };
+
+      mobileTocMenu.addEventListener("keydown", e => {
+        const items = [...mobileTocMenu.querySelectorAll(".mobile-section-item")];
+        const currentIndex = items.indexOf(document.activeElement);
+
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          const next = (currentIndex + 1) % items.length;
+          items[next]?.focus();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          const prev = (currentIndex - 1 + items.length) % items.length;
+          items[prev]?.focus();
+        } else if (e.key === "Escape") {
+          e.preventDefault();
+          closeMobileToc();
+          mobileTocBtn.focus();
+        }
+      });
+
       document.addEventListener("click", e => {
         if (mobileTocMenu && !mobileTocMenu.contains(e.target) && e.target !== mobileTocBtn) {
           closeMobileToc();
