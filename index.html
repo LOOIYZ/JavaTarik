@@ -719,13 +719,42 @@
       border-radius: var(--radius);
       padding: 16px;
       box-shadow: var(--shadow-sm);
+      transition: padding 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .sidebar-card.collapsed {
+      padding: 12px 16px;
     }
 
     .progress-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      user-select: none;
+      border-radius: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .progress-header:hover {
+      opacity: 0.85;
+    }
+    .progress-header:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 3px;
+    }
+    .progress-header-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .progress-header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
     .progress-title {
       font-size: 0.8rem;
@@ -740,6 +769,68 @@
       font-weight: 700;
       color: var(--brand);
     }
+    .progress-chevron {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      color: var(--ink-subtle);
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, color 0.15s ease;
+    }
+    .progress-header:hover .progress-chevron {
+      color: var(--ink);
+      border-color: var(--border);
+    }
+    .sidebar-card.collapsed .progress-chevron {
+      transform: rotate(-90deg);
+    }
+
+    /* Collapsible Grid Animation */
+    .progress-body {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      opacity: 1;
+    }
+    .progress-body-inner {
+      overflow: hidden;
+      min-height: 0;
+    }
+    .sidebar-card.collapsed .progress-body {
+      grid-template-rows: 0fr;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar-card:not(.collapsed) .progress-track {
+      margin-top: 10px;
+    }
+
+    /* Mini progress bar visible only when collapsed */
+    .progress-mini-bar {
+      display: none;
+      height: 3px;
+      background: var(--surface-subtle);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+    .sidebar-card.collapsed .progress-mini-bar {
+      display: block;
+    }
+    .progress-mini-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
     .progress-track {
       height: 7px;
       background: var(--surface-subtle);
@@ -2431,23 +2522,39 @@
       </div>
 
       <div class="sidebar-card" id="sidebar-progress-card">
-        <div class="progress-header">
-          <span class="progress-title">Your Progress</span>
-          <span class="progress-percent" id="prog-pct">0%</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="prog-bar"></div>
-        </div>
-        <div class="progress-details" id="prog-details">
-          <span id="prog-count-chapters">0 of 10 done</span>
-          <span id="prog-count-quizzes">0 quizzes</span>
-        </div>
-        <div class="progress-footer">
-          <div class="progress-autosave" title="Your study progress & reading position are auto-saved locally">
-            <span class="save-dot"></span>
-            <span id="prog-save-text">Auto-saved</span>
+        <button type="button" class="progress-header" id="prog-toggle-btn" aria-expanded="true" aria-controls="prog-collapsible-body" title="Click to collapse / expand progress card">
+          <div class="progress-header-left">
+            <span class="progress-title">Your Progress</span>
           </div>
-          <button type="button" class="progress-reset-btn" id="prog-reset-btn" title="Reset your study progress">Reset</button>
+          <div class="progress-header-right">
+            <span class="progress-percent" id="prog-pct">0%</span>
+            <span class="progress-chevron" id="prog-chevron" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </span>
+          </div>
+        </button>
+        
+        <div class="progress-mini-bar" id="prog-mini-bar" aria-hidden="true">
+          <div class="progress-mini-fill" id="prog-mini-fill"></div>
+        </div>
+
+        <div class="progress-body" id="prog-collapsible-body">
+          <div class="progress-body-inner">
+            <div class="progress-track">
+              <div class="progress-fill" id="prog-bar"></div>
+            </div>
+            <div class="progress-details" id="prog-details">
+              <span id="prog-count-chapters">0 of 10 done</span>
+              <span id="prog-count-quizzes">0 quizzes</span>
+            </div>
+            <div class="progress-footer">
+              <div class="progress-autosave" title="Your study progress & reading position are auto-saved locally">
+                <span class="save-dot"></span>
+                <span id="prog-save-text">Auto-saved</span>
+              </div>
+              <button type="button" class="progress-reset-btn" id="prog-reset-btn" title="Reset your study progress">Reset</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2884,6 +2991,8 @@
       const pct = Math.round((done.size / DATA.length) * 100);
       $("#prog-pct").textContent = pct + "%";
       $("#prog-bar").style.width = pct + "%";
+      const miniFill = $("#prog-mini-fill");
+      if (miniFill) miniFill.style.width = pct + "%";
 
       const chCountEl = $("#prog-count-chapters");
       if (chCountEl) chCountEl.textContent = `${done.size} of ${DATA.length} done`;
@@ -3607,6 +3716,36 @@
         closeMobileToc();
       }
     });
+
+    // Progress Card Collapse / Expand Toggle
+    const progressCard = $("#sidebar-progress-card");
+    const progToggleBtn = $("#prog-toggle-btn");
+    
+    function setProgressCollapsed(collapsed) {
+      if (!progressCard || !progToggleBtn) return;
+      progressCard.classList.toggle("collapsed", collapsed);
+      progToggleBtn.setAttribute("aria-expanded", String(!collapsed));
+      progToggleBtn.setAttribute("title", collapsed ? "Click to expand progress card" : "Click to collapse progress card");
+      try {
+        localStorage.setItem("kopi-progress-collapsed", collapsed ? "true" : "false");
+      } catch(e) {}
+    }
+
+    if (progToggleBtn) {
+      progToggleBtn.onclick = (e) => {
+        e.stopPropagation();
+        const isCollapsed = progressCard.classList.contains("collapsed");
+        setProgressCollapsed(!isCollapsed);
+      };
+    }
+
+    // Restore saved collapse state
+    try {
+      const isCardCollapsed = localStorage.getItem("kopi-progress-collapsed") === "true";
+      if (isCardCollapsed) {
+        setProgressCollapsed(true);
+      }
+    } catch(e) {}
 
     // Reset Progress Handler
     const resetBtn = $("#prog-reset-btn");
