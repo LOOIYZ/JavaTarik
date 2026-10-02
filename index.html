@@ -754,6 +754,60 @@
       border-radius: 99px;
       transition: width 0.4s ease;
     }
+    .progress-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 0.74rem;
+      color: var(--ink-subtle);
+      font-weight: 600;
+    }
+    .progress-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-subtle);
+      font-size: 0.72rem;
+    }
+    .progress-autosave {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--ink-subtle);
+      font-weight: 600;
+      user-select: none;
+    }
+    .save-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+      animation: pulse-dot 2.5s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.75; }
+    }
+    .progress-reset-btn {
+      background: transparent;
+      border: none;
+      color: var(--ink-subtle);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 6px;
+      transition: color 0.15s, background-color 0.15s;
+    }
+    .progress-reset-btn:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+    }
 
     .chapter-filter {
       margin: 4px 0 8px;
@@ -837,16 +891,52 @@
       font-size: 0.78rem;
       color: var(--ink-muted);
       flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      border: 1px solid var(--border);
+    }
+    .ch-num:hover {
+      transform: scale(1.1);
+      border-color: var(--brand);
+    }
+    .ch-num.done {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: #10b981;
     }
     .chapter-btn[aria-current="true"] .ch-num {
       background: var(--brand);
       color: var(--brand-ink);
       border-color: var(--brand);
     }
+    .chapter-btn[aria-current="true"] .ch-num.done {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #10b981;
+    }
     .ch-done-icon {
       color: #10b981;
       font-size: 0.88rem;
       font-weight: 800;
+    }
+    .chapter-btn[aria-current="true"] .ch-num.done .ch-done-icon {
+      color: #ffffff;
+    }
+    .ch-quiz-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--brand);
+      background: var(--brand-light);
+      padding: 1px 6px;
+      border-radius: 99px;
+      margin-left: 4px;
+    }
+    [data-color-scheme="dark"] .ch-quiz-badge,
+    [data-theme="dark"] .ch-quiz-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--brand);
     }
 
     .ch-info {
@@ -1261,6 +1351,11 @@
       color: var(--brand-ink);
       border-color: var(--brand);
     }
+    .pager-btn.primary.is-completed {
+      background: #10b981;
+      border-color: #10b981;
+      color: #ffffff;
+    }
     @media (hover: hover) and (pointer: fine) {
       .pager-btn:hover {
         background: var(--surface-subtle);
@@ -1269,6 +1364,10 @@
       }
       .pager-btn.primary:hover {
         background: var(--brand-hover);
+      }
+      .pager-btn.primary.is-completed:hover {
+        background: #059669;
+        border-color: #059669;
       }
     }
 
@@ -2331,13 +2430,24 @@
         <button id="sidebar-close-btn" class="modal-close-btn" aria-label="Close chapter menu">×</button>
       </div>
 
-      <div class="sidebar-card">
+      <div class="sidebar-card" id="sidebar-progress-card">
         <div class="progress-header">
           <span class="progress-title">Your Progress</span>
           <span class="progress-percent" id="prog-pct">0%</span>
         </div>
         <div class="progress-track">
           <div class="progress-fill" id="prog-bar"></div>
+        </div>
+        <div class="progress-details" id="prog-details">
+          <span id="prog-count-chapters">0 of 10 done</span>
+          <span id="prog-count-quizzes">0 quizzes</span>
+        </div>
+        <div class="progress-footer">
+          <div class="progress-autosave" title="Your study progress & reading position are auto-saved locally">
+            <span class="save-dot"></span>
+            <span id="prog-save-text">Auto-saved</span>
+          </div>
+          <button type="button" class="progress-reset-btn" id="prog-reset-btn" title="Reset your study progress">Reset</button>
         </div>
       </div>
 
@@ -2527,14 +2637,104 @@
     let talkTimer = null;
     let fontSizes = ["15px", "16.5px", "18px"];
     let fontIdx = 1;
+    let quizHistory = {};
+    let isRestoringProgress = false;
 
+    // Load persisted progress state
+    let savedProgress = null;
     try {
-      done = new Set(JSON.parse(localStorage.getItem("kopi-done-chapters") || "[]"));
+      savedProgress = JSON.parse(localStorage.getItem("kopi-study-progress") || "null");
     } catch(e) {}
 
+    // Backward compatibility for completed chapters
+    try {
+      if (savedProgress && Array.isArray(savedProgress.completedChapters)) {
+        done = new Set(savedProgress.completedChapters);
+      } else {
+        done = new Set(JSON.parse(localStorage.getItem("kopi-done-chapters") || "[]"));
+      }
+    } catch(e) {
+      done = new Set();
+    }
+
+    if (savedProgress && savedProgress.quizHistory && typeof savedProgress.quizHistory === "object") {
+      quizHistory = savedProgress.quizHistory;
+    }
+
+    // Persisted Font Size
+    try {
+      const storedFont = localStorage.getItem("kopi-font-size");
+      if (storedFont !== null) {
+        fontIdx = parseInt(storedFont, 10);
+        if (isNaN(fontIdx) || fontIdx < 0 || fontIdx >= fontSizes.length) fontIdx = 1;
+      } else if (savedProgress && typeof savedProgress.fontSizeIdx === "number") {
+        fontIdx = savedProgress.fontSizeIdx;
+      }
+      document.documentElement.style.setProperty("--font-scale", fontSizes[fontIdx]);
+    } catch(e) {}
+
+    // Comprehensive Progress Persistence Function
+    function saveProgress() {
+      try {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPct = scrollHeight > 0 ? Math.min(1, Math.max(0, scrollTop / scrollHeight)) : 0;
+
+        const progressData = {
+          version: 1,
+          lastChapter: cur,
+          lastScrollTop: scrollTop,
+          lastScrollPct: scrollPct,
+          lastVisited: Date.now(),
+          completedChapters: [...done],
+          quizHistory: quizHistory,
+          fontSizeIdx: fontIdx
+        };
+
+        localStorage.setItem("kopi-study-progress", JSON.stringify(progressData));
+        localStorage.setItem("kopi-done-chapters", JSON.stringify([...done]));
+
+        // Flash auto-save status text briefly
+        const saveText = $("#prog-save-text");
+        if (saveText) {
+          saveText.textContent = "Saved ✓";
+          setTimeout(() => {
+            if (saveText) saveText.textContent = "Auto-saved";
+          }, 1500);
+        }
+      } catch (e) {
+        console.warn("Could not save study progress to localStorage:", e);
+      }
+    }
+
     const saveDone = () => {
-      try { localStorage.setItem("kopi-done-chapters", JSON.stringify([...done])) } catch (e) {}
+      saveProgress();
     };
+
+    // Debounce utility
+    function debounce(fn, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), wait);
+      };
+    }
+
+    // Continuously auto-save scroll position while reading
+    window.addEventListener("scroll", debounce(() => {
+      if (!isRestoringProgress) {
+        saveProgress();
+      }
+    }, 250), { passive: true });
+
+    // Save progress immediately whenever the user leaves the website
+    window.addEventListener("beforeunload", () => saveProgress());
+    window.addEventListener("pagehide", () => saveProgress());
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        saveProgress();
+      }
+    });
 
     // Mascot Functions
     const panda = $("#panda");
@@ -2617,6 +2817,28 @@
       });
     }
 
+    // Toggle Chapter Done
+    function toggleChapterDone(idx) {
+      const isDone = done.has(idx);
+      if (isDone) {
+        done.delete(idx);
+        showToast(`Chapter ${DATA[idx].num} marked in progress`);
+      } else {
+        done.add(idx);
+        showToast(`Chapter ${DATA[idx].num} marked completed! 🎉`);
+        say("Chapter Complete! 🎉", `${done.size} of ${DATA.length} chapters done. Keep up the momentum!`, "party");
+      }
+      saveProgress();
+      renderChapterList();
+
+      const doneBtn = $("#pager-done-btn");
+      if (doneBtn && cur === idx) {
+        const finishedNow = done.has(idx);
+        doneBtn.innerHTML = finishedNow ? "Chapter Completed ✓ (Tap to Undo)" : "Mark Chapter as Done 🎉";
+        doneBtn.classList.toggle("is-completed", finishedNow);
+      }
+    }
+
     // Render Chapters List in Left Sidebar
     function renderChapterList() {
       const container = $("#chapter-list");
@@ -2632,25 +2854,43 @@
         if (idx === cur) btn.setAttribute("aria-current", "true");
 
         const isDone = done.has(idx);
+        const qInfo = quizHistory[idx];
+        const quizBadge = qInfo ? `<span class="ch-quiz-badge" title="Quiz score: ${qInfo.score}/${qInfo.total}">🎯 ${qInfo.score}/${qInfo.total}</span>` : "";
+
         btn.innerHTML = `
-          <div class="ch-num">${isDone ? '<span class="ch-done-icon">✓</span>' : ch.num}</div>
+          <div class="ch-num ${isDone ? 'done' : ''}" title="${isDone ? 'Click to mark as in progress' : 'Click to mark as completed'}">
+            ${isDone ? '<span class="ch-done-icon">✓</span>' : ch.num}
+          </div>
           <div class="ch-info">
             <span class="ch-title">${ch.name}</span>
-            <span class="ch-meta">${ch.readTime || "10 min read"}</span>
+            <span class="ch-meta">${ch.readTime || "10 min read"} ${quizBadge}</span>
           </div>
         `;
 
+        const numEl = btn.querySelector(".ch-num");
+        numEl.onclick = (e) => {
+          e.stopPropagation();
+          toggleChapterDone(idx);
+        };
+
         btn.onclick = () => {
           openChapter(idx);
-          $("#sidebar").classList.remove("open");
+          closeSidebar();
         };
         container.append(btn);
       });
 
-      // Update progress bar
+      // Update progress bar & stats
       const pct = Math.round((done.size / DATA.length) * 100);
       $("#prog-pct").textContent = pct + "%";
       $("#prog-bar").style.width = pct + "%";
+
+      const chCountEl = $("#prog-count-chapters");
+      if (chCountEl) chCountEl.textContent = `${done.size} of ${DATA.length} done`;
+
+      const quizCountEl = $("#prog-count-quizzes");
+      const quizDoneCount = Object.keys(quizHistory).length;
+      if (quizCountEl) quizCountEl.textContent = `${quizDoneCount} quiz${quizDoneCount === 1 ? '' : 'zes'}`;
     }
 
     $("#ch-filter").addEventListener("input", renderChapterList);
@@ -2788,16 +3028,12 @@
 
       // Mark Chapter Done Button
       const doneBtn = document.createElement("button");
-      doneBtn.className = "pager-btn primary";
+      doneBtn.id = "pager-done-btn";
       const isFinished = done.has(idx);
-      doneBtn.innerHTML = isFinished ? "Chapter Completed ✓" : "Mark Chapter as Done 🎉";
+      doneBtn.className = "pager-btn primary" + (isFinished ? " is-completed" : "");
+      doneBtn.innerHTML = isFinished ? "Chapter Completed ✓ (Tap to Undo)" : "Mark Chapter as Done 🎉";
       doneBtn.onclick = () => {
-        done.add(idx);
-        saveDone();
-        renderChapterList();
-        doneBtn.innerHTML = "Chapter Completed ✓";
-        showToast("Chapter marked completed!");
-        say("Chapter Complete! 🎉", `${done.size} of ${DATA.length} chapters done. Keep up the momentum!`, "party");
+        toggleChapterDone(idx);
       };
       pager.append(doneBtn);
 
@@ -2834,7 +3070,22 @@
       renderChapterList();
       closeSidebar();
       closeMobileToc();
-      window.scrollTo(0, 0);
+
+      if (typeof restoreScrollPos === "number" && restoreScrollPos > 0) {
+        isRestoringProgress = true;
+        window.scrollTo({ top: restoreScrollPos, behavior: "instant" });
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: restoreScrollPos, behavior: "instant" });
+          setTimeout(() => {
+            window.scrollTo({ top: restoreScrollPos, behavior: "instant" });
+            isRestoringProgress = false;
+          }, 120);
+        });
+      } else {
+        window.scrollTo(0, 0);
+      }
+
+      saveProgress();
 
       if (!noSay) {
         say(
@@ -3052,6 +3303,10 @@
     $("#font-btn").onclick = () => {
       fontIdx = (fontIdx + 1) % fontSizes.length;
       document.documentElement.style.setProperty("--font-scale", fontSizes[fontIdx]);
+      try {
+        localStorage.setItem("kopi-font-size", fontIdx);
+      } catch(e) {}
+      saveProgress();
       showToast("Font size: " + ["Small", "Default", "Large"][fontIdx]);
     };
 
@@ -3253,7 +3508,9 @@
     function openQuiz() {
       const questions = QUIZZES[cur] || QUIZZES[1];
       const ch = DATA[cur];
-      $("#quiz-subtitle").textContent = `Testing knowledge on Chapter ${ch.num}: ${ch.name}`;
+      const prevRecord = quizHistory[cur];
+      const prevScoreText = prevRecord ? ` • Best: ${prevRecord.score}/${prevRecord.total} 🎯` : "";
+      $("#quiz-subtitle").textContent = `Testing knowledge on Chapter ${ch.num}: ${ch.name}${prevScoreText}`;
       
       const body = $("#quiz-body");
       body.innerHTML = "";
@@ -3301,6 +3558,19 @@
             }, 60);
 
             if (answeredCount === questions.length) {
+              // Persist quiz score & chapter completion stats
+              const prior = quizHistory[cur];
+              const bestScore = prior ? Math.max(prior.score, score) : score;
+              quizHistory[cur] = {
+                score: bestScore,
+                lastScore: score,
+                total: questions.length,
+                passed: bestScore >= Math.ceil(questions.length * 0.6),
+                date: Date.now()
+              };
+              saveProgress();
+              renderChapterList();
+
               setTimeout(() => {
                 if (score === questions.length) {
                   say("Perfect Score! 🌟", `You got ${score}/${questions.length} correct! You are ready for the exams!`, "party");
@@ -3338,13 +3608,61 @@
       }
     });
 
-    // Initialize with Chapter 0 (or from hash if present)
+    // Reset Progress Handler
+    const resetBtn = $("#prog-reset-btn");
+    if (resetBtn) {
+      resetBtn.onclick = () => {
+        if (confirm("Reset all study progress? This will clear completed chapters, quiz scores, and saved reading position.")) {
+          done.clear();
+          quizHistory = {};
+          try {
+            localStorage.removeItem("kopi-study-progress");
+            localStorage.removeItem("kopi-done-chapters");
+          } catch(e) {}
+          saveProgress();
+          renderChapterList();
+          openChapter(0);
+          showToast("Study progress has been reset.");
+          say("Fresh Start! ☕", "All progress has been reset. Let's study from Chapter 0!");
+        }
+      };
+    }
+
+    // Initialize with Chapter from saved progress (or hash if present)
     if (window.location.hash.startsWith("#quiz")) {
       const chNum = parseInt(window.location.hash.replace("#quiz-", "").replace("#quiz", "") || "1", 10);
       openChapter(chNum, true);
       setTimeout(openQuiz, 100);
+    } else if (window.location.hash.startsWith("#ch-")) {
+      const chNum = parseInt(window.location.hash.replace("#ch-", ""), 10);
+      const targetIdx = DATA.findIndex(d => d.num == chNum);
+      openChapter(targetIdx !== -1 ? targetIdx : 0, true);
     } else {
-      openChapter(0, true);
+      let targetCh = 0;
+      let targetScroll = 0;
+      let hasResumed = false;
+
+      if (savedProgress && typeof savedProgress.lastChapter === "number") {
+        if (savedProgress.lastChapter >= 0 && savedProgress.lastChapter < DATA.length) {
+          targetCh = savedProgress.lastChapter;
+          targetScroll = typeof savedProgress.lastScrollTop === "number" ? savedProgress.lastScrollTop : 0;
+          hasResumed = targetCh > 0 || targetScroll > 100;
+        }
+      }
+
+      openChapter(targetCh, true, targetScroll);
+
+      if (hasResumed) {
+        const ch = DATA[targetCh];
+        setTimeout(() => {
+          showToast(`Resumed Chapter ${ch.num}: ${ch.name} ☕`);
+          say("Welcome Back! ☕", `Continuing right where you left off on Chapter ${ch.num}: ${ch.name}.`);
+        }, 300);
+      } else {
+        setTimeout(() => {
+          say("Welcome! ☕", "Ready to master Java fundamentals? Let's dive in!");
+        }, 300);
+      }
     }
   </script>
 </body>
