@@ -299,22 +299,27 @@ def add_floating_island(builder, center, radius, island_idx):
     # center: (cx, cy, cz)
     cx, cy, cz = center
     
-    # Grass colors (warm green, pastel mint, lush emerald)
-    grass_palettes = [
-        (0.48, 0.78, 0.45), # Fresh Green
-        (0.55, 0.82, 0.52), # Mint Lime
-        (0.85, 0.65, 0.55), # Peach Twilight
-        (0.42, 0.72, 0.58), # Soft Teal
-        (0.60, 0.80, 0.40), # Golden Meadow
-        (0.50, 0.75, 0.60), # Sage Garden
-        (0.70, 0.60, 0.80), # Lavender Field
-        (0.82, 0.55, 0.45), # Autumn Terraces
-        (0.45, 0.65, 0.82), # Celestial Blue
-        (0.68, 0.58, 0.75)  # Amethyst Plateau
+    # Distinct Island Themes matching the 10 chapters:
+    # 0: Sakura Spring, 1: Golden Autumn, 2: Turquoise Mushroom, 3: Coral Sunset Palm,
+    # 4: Purple Cloud Pine, 5: Azure Weeping Willow, 6: Alabaster World Tree, 7: Pagoda Autumn Vista,
+    # 8: Prismatic Ghost Woods, 9: Starlight Midnight Citadel
+    theme_palettes = [
+        {"grass": (0.55, 0.91, 0.60), "dirt": (0.49, 0.31, 0.25), "rock": (0.24, 0.16, 0.13), "flora": "sakura"},
+        {"grass": (0.90, 0.62, 0.23), "dirt": (0.43, 0.24, 0.09), "rock": (0.26, 0.16, 0.08), "flora": "autumn_oak"},
+        {"grass": (0.07, 0.72, 0.52), "dirt": (0.14, 0.23, 0.21), "rock": (0.10, 0.18, 0.16), "flora": "mushroom"},
+        {"grass": (0.96, 0.68, 0.33), "dirt": (0.71, 0.33, 0.04), "rock": (0.27, 0.10, 0.02), "flora": "sunset_palm"},
+        {"grass": (0.59, 0.46, 0.98), "dirt": (0.36, 0.24, 0.58), "rock": (0.18, 0.11, 0.32), "flora": "cloud_pine"},
+        {"grass": (0.22, 0.74, 0.97), "dirt": (0.01, 0.52, 0.78), "rock": (0.06, 0.09, 0.16), "flora": "weeping_willow"},
+        {"grass": (0.32, 0.81, 0.40), "dirt": (0.36, 0.25, 0.20), "rock": (0.20, 0.23, 0.25), "flora": "world_tree"},
+        {"grass": (0.76, 0.25, 0.05), "dirt": (0.49, 0.18, 0.07), "rock": (0.25, 0.11, 0.08), "flora": "pagoda_vista"},
+        {"grass": (0.18, 0.83, 0.75), "dirt": (0.06, 0.46, 0.43), "rock": (0.07, 0.31, 0.29), "flora": "ghost_tree"},
+        {"grass": (0.19, 0.18, 0.51), "dirt": (0.12, 0.11, 0.29), "rock": (0.06, 0.05, 0.15), "flora": "midnight_citadel"}
     ]
-    grass_col = grass_palettes[island_idx % len(grass_palettes)]
-    rock_dark = (0.28, 0.24, 0.22)
-    rock_mid = (0.42, 0.38, 0.35)
+    pal = theme_palettes[island_idx % len(theme_palettes)]
+    grass_col = pal["grass"]
+    dirt_col = pal["dirt"]
+    rock_dark = pal["rock"]
+    rock_mid = tuple(min(1.0, c * 1.5) for c in rock_dark)
 
     segments = 14
     
@@ -322,83 +327,107 @@ def add_floating_island(builder, center, radius, island_idx):
     add_cylinder(builder, (cx, cy, cz), radius, radius * 0.95, 0.6, segments, grass_col, grass_col, grass_col)
     
     # 2. Dirt Layer directly beneath grass
-    add_cylinder(builder, (cx, cy - 0.5, cz), radius * 0.95, radius * 0.85, 0.7, segments, (0.50, 0.38, 0.28), rock_mid)
+    add_cylinder(builder, (cx, cy - 0.5, cz), radius * 0.95, radius * 0.85, 0.7, segments, dirt_col, rock_mid)
 
     # 3. Craggy Inverted Rocky Underside (cones down to a tip)
     add_cylinder(builder, (cx, cy - 2.0, cz), radius * 0.85, radius * 0.4, 2.3, segments, rock_mid, rock_dark)
-    add_cylinder(builder, (cx, cy - 3.8, cz), radius * 0.4, 0.1, 1.6, 7, rock_dark, (0.18, 0.15, 0.14))
+    add_cylinder(builder, (cx, cy - 3.8, cz), radius * 0.4, 0.1, 1.6, 7, rock_dark, rock_dark)
 
-    # 4. Stylized Trees
-    num_trees = 3 + (island_idx % 3)
-    tree_colors = [
-        (0.95, 0.60, 0.68), # Sakura pink
-        (0.98, 0.72, 0.48), # Peach
-        (0.40, 0.78, 0.55), # Emerald
-        (0.95, 0.82, 0.45), # Gold
-        (0.65, 0.55, 0.85)  # Purple
-    ]
+    # 4. Stylized Trees matching Island's Flora Theme
+    flora_kind = pal["flora"]
+    num_trees = 3 + (island_idx % 2)
 
     for t in range(num_trees):
         angle = t * (2 * math.pi / num_trees) + 0.3
-        dist = radius * 0.45 + (t % 2) * (radius * 0.2)
+        dist = radius * 0.48 + (t % 2) * (radius * 0.15)
         tx = cx + dist * math.cos(angle)
         tz = cz + dist * math.sin(angle)
         ty = cy + 0.3
 
-        trunk_h = 1.0 + (t % 2) * 0.4
-        # Tree trunk
-        add_cylinder(builder, (tx, ty + trunk_h/2, tz), 0.12, 0.18, trunk_h, 6, (0.45, 0.30, 0.20), (0.35, 0.22, 0.15))
-        # Tree foliage tiers
-        f_col = tree_colors[(island_idx + t) % len(tree_colors)]
-        f_base = ty + trunk_h
-        add_cylinder(builder, (tx, f_base + 0.4, tz), 0.8, 0.9, 0.7, 7, f_col, f_col)
-        add_cylinder(builder, (tx, f_base + 0.9, tz), 0.5, 0.7, 0.6, 6, f_col, f_col)
-        add_cylinder(builder, (tx, f_base + 1.3, tz), 0.1, 0.4, 0.5, 5, f_col, f_col)
+        if flora_kind == "sakura":
+            # Sakura Cherry Blossom: dark trunk + pink blossom tiers
+            add_cylinder(builder, (tx, ty + 0.6, tz), 0.12, 0.18, 1.2, 5, (0.35, 0.22, 0.15), (0.35, 0.22, 0.15))
+            f_col = (1.0, 0.65, 0.72)
+            add_cylinder(builder, (tx, ty + 1.5, tz), 0.75, 0.85, 0.6, 7, f_col, f_col)
+            add_cylinder(builder, (tx, ty + 2.0, tz), 0.45, 0.65, 0.5, 6, (1.0, 0.75, 0.80), f_col)
+        elif flora_kind == "autumn_oak":
+            # Golden Autumn Oak: thick trunk + puffy golden-amber crown
+            add_cylinder(builder, (tx, ty + 0.7, tz), 0.20, 0.32, 1.4, 6, (0.38, 0.26, 0.18), (0.38, 0.26, 0.18))
+            f_col = (0.96, 0.62, 0.0) if t % 2 == 0 else (0.99, 0.77, 0.10)
+            add_cylinder(builder, (tx, ty + 1.7, tz), 0.95, 1.05, 0.8, 8, f_col, f_col)
+            add_cylinder(builder, (tx, ty + 2.3, tz), 0.6, 0.8, 0.6, 7, (1.0, 0.72, 0.2), f_col)
+        elif flora_kind == "mushroom":
+            # Giant Turquoise Spotted Mushroom: cream stalk + turquoise dome cap
+            add_cylinder(builder, (tx, ty + 0.7, tz), 0.22, 0.38, 1.4, 7, (0.98, 0.92, 0.84), (0.98, 0.92, 0.84))
+            add_cylinder(builder, (tx, ty + 1.6, tz), 0.2, 1.1, 0.9, 9, (0.07, 0.72, 0.52), (0.07, 0.72, 0.52))
+        elif flora_kind == "sunset_palm":
+            # Curved Sunset Palm: leaning segmented trunk + coral fronds
+            add_cylinder(builder, (tx, ty + 0.8, tz), 0.12, 0.16, 1.6, 5, (0.55, 0.42, 0.34), (0.55, 0.42, 0.34))
+            add_cylinder(builder, (tx, ty + 1.8, tz), 0.8, 0.2, 0.5, 6, (0.98, 0.42, 0.42), (0.98, 0.42, 0.42))
+        elif flora_kind == "cloud_pine":
+            # Purple Cloud Pine: slender trunk + 3 lavender/purple horizontal cloud pads
+            add_cylinder(builder, (tx, ty + 0.8, tz), 0.10, 0.16, 1.6, 5, (0.35, 0.22, 0.15), (0.35, 0.22, 0.15))
+            add_cylinder(builder, (tx, ty + 1.2, tz), 0.4, 0.85, 0.25, 6, (0.59, 0.46, 0.98), (0.59, 0.46, 0.98))
+            add_cylinder(builder, (tx, ty + 1.7, tz), 0.3, 0.65, 0.22, 6, (0.52, 0.37, 0.97), (0.52, 0.37, 0.97))
+            add_cylinder(builder, (tx, ty + 2.1, tz), 0.1, 0.45, 0.20, 6, (0.69, 0.59, 0.99), (0.69, 0.59, 0.99))
+        elif flora_kind == "weeping_willow":
+            # Azure Weeping Willow: grey trunk + cascading cyan tendrils
+            add_cylinder(builder, (tx, ty + 0.8, tz), 0.22, 0.35, 1.6, 6, (0.42, 0.38, 0.36), (0.42, 0.38, 0.36))
+            add_cylinder(builder, (tx, ty + 1.8, tz), 0.85, 0.95, 0.7, 8, (0.45, 0.75, 0.99), (0.45, 0.75, 0.99))
+            add_cylinder(builder, (tx, ty + 1.2, tz), 0.7, 0.3, 1.0, 8, (0.65, 0.85, 1.0), (0.65, 0.85, 1.0))
+        elif flora_kind == "world_tree" or flora_kind == "ghost_tree":
+            # Alabaster Ghost Tree: bone white silver branches
+            add_cylinder(builder, (tx, ty + 0.9, tz), 0.22, 0.40, 1.8, 6, (0.96, 0.97, 0.98), (0.96, 0.97, 0.98))
+            add_cylinder(builder, (tx, ty + 2.0, tz), 0.7, 0.2, 0.8, 6, (0.92, 0.95, 0.98), (0.92, 0.95, 0.98))
+        else:
+            add_cylinder(builder, (tx, ty + 0.6, tz), 0.12, 0.18, 1.2, 5, (0.35, 0.22, 0.15), (0.35, 0.22, 0.15))
+            add_cylinder(builder, (tx, ty + 1.4, tz), 0.7, 0.8, 0.6, 6, (0.45, 0.78, 0.55), (0.45, 0.78, 0.55))
 
     # 5. Distinctive Island Centerpiece
     if island_idx == 0:
-        # Coffee Cup monument (Java Primer)
-        add_cylinder(builder, (cx, cy + 0.7, cz), 0.5, 0.4, 0.8, 10, (0.92, 0.88, 0.82), (0.85, 0.80, 0.75))
-        add_cylinder(builder, (cx, cy + 1.05, cz), 0.45, 0.45, 0.1, 8, (0.32, 0.18, 0.10), (0.32, 0.18, 0.10)) # Coffee liquid
+        # Coffee Cup monument (Java Primer) + Steam
+        add_cylinder(builder, (cx, cy + 0.7, cz), 0.5, 0.4, 0.8, 10, (0.95, 0.95, 0.95), (0.90, 0.90, 0.90))
+        add_cylinder(builder, (cx, cy + 1.05, cz), 0.45, 0.45, 0.1, 8, (0.24, 0.14, 0.08), (0.24, 0.14, 0.08))
     elif island_idx == 1:
         # Glowing Variable Crystals
-        add_cylinder(builder, (cx - 0.3, cy + 0.8, cz), 0.15, 0.25, 1.2, 5, (0.4, 0.9, 0.7), (0.2, 0.7, 0.5))
-        add_cylinder(builder, (cx + 0.4, cy + 0.6, cz + 0.2), 0.12, 0.20, 0.9, 5, (0.4, 0.9, 0.7), (0.2, 0.7, 0.5))
+        add_cylinder(builder, (cx - 0.3, cy + 0.8, cz), 0.15, 0.25, 1.2, 5, (0.37, 0.92, 0.83), (0.08, 0.72, 0.65))
+        add_cylinder(builder, (cx + 0.4, cy + 0.6, cz + 0.2), 0.12, 0.20, 0.9, 5, (0.37, 0.92, 0.83), (0.08, 0.72, 0.65))
     elif island_idx == 2:
         # Forking Stone Gate (If/Else)
-        add_cylinder(builder, (cx - 0.6, cy + 0.9, cz), 0.15, 0.18, 1.5, 6, (0.7, 0.7, 0.7), (0.6, 0.6, 0.6))
-        add_cylinder(builder, (cx + 0.6, cy + 0.9, cz), 0.15, 0.18, 1.5, 6, (0.7, 0.7, 0.7), (0.6, 0.6, 0.6))
-        add_cylinder(builder, (cx, cy + 1.7, cz), 0.8, 0.8, 0.2, 4, (0.8, 0.4, 0.3), (0.8, 0.4, 0.3))
+        add_cylinder(builder, (cx - 0.6, cy + 0.9, cz), 0.12, 0.15, 1.6, 6, (0.02, 0.59, 0.41), (0.02, 0.59, 0.41))
+        add_cylinder(builder, (cx + 0.6, cy + 0.9, cz), 0.12, 0.15, 1.6, 6, (0.02, 0.59, 0.41), (0.02, 0.59, 0.41))
+        add_cylinder(builder, (cx, cy + 1.8, cz), 0.9, 0.9, 0.2, 4, (0.02, 0.59, 0.41), (0.02, 0.59, 0.41))
     elif island_idx == 3:
-        # Stone Circle Shrine (Loops)
-        for s in range(5):
-            th = s * 2 * math.pi / 5
-            add_cylinder(builder, (cx + 0.8*math.cos(th), cy + 0.6, cz + 0.8*math.sin(th)), 0.15, 0.18, 0.8, 5, (0.65, 0.65, 0.7), (0.5, 0.5, 0.55))
+        # Stepped Matrix Blocks (Arrays)
+        for dx in [-0.4, 0.4]:
+            for dz in [-0.4, 0.4]:
+                add_cylinder(builder, (cx + dx, cy + 0.5, cz + dz), 0.3, 0.3, 0.45, 4, (0.97, 0.45, 0.09), (0.97, 0.45, 0.09))
     elif island_idx == 4:
-        # Matrix Blocks (Arrays)
-        for dx in [-0.5, 0.5]:
-            for dz in [-0.5, 0.5]:
-                add_cylinder(builder, (cx + dx, cy + 0.5, cz + dz), 0.3, 0.3, 0.5, 4, (0.3, 0.6, 0.85), (0.2, 0.5, 0.75))
+        # Clockwork Watchtower (Methods)
+        add_cylinder(builder, (cx, cy + 1.1, cz), 0.35, 0.45, 2.0, 6, (0.49, 0.23, 0.93), (0.49, 0.23, 0.93))
+        add_cylinder(builder, (cx, cy + 2.3, cz), 0.6, 0.1, 0.7, 6, (0.96, 0.62, 0.04), (0.96, 0.62, 0.04))
     elif island_idx == 5:
-        # Library Pagoda (Strings & IO)
-        add_cylinder(builder, (cx, cy + 0.6, cz), 0.7, 0.8, 0.8, 6, (0.85, 0.75, 0.65), (0.7, 0.6, 0.5))
-        add_cylinder(builder, (cx, cy + 1.2, cz), 1.0, 0.7, 0.4, 6, (0.75, 0.3, 0.25), (0.75, 0.3, 0.25))
+        # Open-air Stream Pavilion & Waterfall (Streams & IO)
+        add_cylinder(builder, (cx, cy + 0.6, cz), 0.7, 0.8, 0.8, 6, (0.88, 0.95, 1.0), (0.88, 0.95, 1.0))
+        add_cylinder(builder, (cx, cy - 1.0, cz + radius * 0.85), 0.6, 0.6, 2.2, 4, (0.40, 0.91, 0.98), (0.40, 0.91, 0.98))
     elif island_idx == 6:
-        # Blueprint Gazebo (OOP)
-        add_cylinder(builder, (cx, cy + 0.5, cz), 0.8, 0.85, 0.4, 8, (0.9, 0.9, 0.92), (0.8, 0.8, 0.85))
-        add_cylinder(builder, (cx, cy + 1.3, cz), 0.9, 0.1, 0.7, 6, (0.25, 0.6, 0.75), (0.25, 0.6, 0.75))
+        # Central Gathering Gazebo (OOP)
+        add_cylinder(builder, (cx, cy + 0.6, cz), 0.85, 0.95, 0.7, 8, (0.97, 0.98, 0.99), (0.97, 0.98, 0.99))
+        add_cylinder(builder, (cx, cy + 1.3, cz), 1.1, 0.2, 0.7, 8, (0.06, 0.73, 0.51), (0.06, 0.73, 0.51))
     elif island_idx == 7:
-        # Ancient Ancestral Tree (Inheritance)
-        add_cylinder(builder, (cx, cy + 1.2, cz), 0.35, 0.5, 2.0, 7, (0.4, 0.28, 0.18), (0.3, 0.2, 0.12))
-        add_cylinder(builder, (cx, cy + 2.5, cz), 1.5, 1.8, 1.2, 8, (0.95, 0.70, 0.85), (0.95, 0.70, 0.85))
+        # Multi-tiered Pagoda Tower (Inheritance)
+        add_cylinder(builder, (cx, cy + 0.7, cz), 0.9, 0.9, 0.6, 4, (0.73, 0.11, 0.11), (0.73, 0.11, 0.11))
+        add_cylinder(builder, (cx, cy + 1.2, cz), 1.2, 0.3, 0.4, 4, (0.85, 0.47, 0.02), (0.85, 0.47, 0.02))
+        add_cylinder(builder, (cx, cy + 1.6, cz), 0.65, 0.65, 0.5, 4, (0.73, 0.11, 0.11), (0.73, 0.11, 0.11))
+        add_cylinder(builder, (cx, cy + 2.0, cz), 0.9, 0.2, 0.4, 4, (0.85, 0.47, 0.02), (0.85, 0.47, 0.02))
     elif island_idx == 8:
-        # Abstract Portal Spire (Interfaces)
-        add_cylinder(builder, (cx, cy + 1.5, cz), 0.2, 0.3, 2.4, 4, (0.75, 0.85, 0.98), (0.5, 0.65, 0.9))
-        add_cylinder(builder, (cx, cy + 2.8, cz), 0.4, 0.05, 0.6, 4, (1.0, 0.85, 0.4), (1.0, 0.85, 0.4))
+        # Prismatic Quartz Crystals (Interfaces)
+        add_cylinder(builder, (cx - 0.3, cy + 1.1, cz), 0.18, 0.28, 1.8, 5, (0.88, 0.91, 1.0), (0.65, 0.71, 0.99))
+        add_cylinder(builder, (cx + 0.4, cy + 0.8, cz + 0.2), 0.15, 0.22, 1.3, 5, (0.88, 0.91, 1.0), (0.65, 0.71, 0.99))
     elif island_idx == 9:
-        # Citadel Shield Tower (Exceptions)
-        add_cylinder(builder, (cx, cy + 0.9, cz), 0.7, 0.8, 1.4, 8, (0.6, 0.65, 0.7), (0.45, 0.5, 0.55))
-        add_cylinder(builder, (cx, cy + 1.8, cz), 0.4, 0.7, 0.7, 8, (0.9, 0.45, 0.35), (0.9, 0.45, 0.35))
+        # Starlight Warning Beacon Citadel (Exceptions)
+        add_cylinder(builder, (cx, cy + 1.1, cz), 0.65, 0.85, 2.0, 8, (0.19, 0.18, 0.51), (0.19, 0.18, 0.51))
+        add_cylinder(builder, (cx, cy + 2.3, cz), 0.4, 0.4, 0.5, 6, (0.22, 0.74, 0.97), (0.22, 0.74, 0.97))
 
     # 6. Floating Satellite Mini-Rocks
     for r in range(2):

@@ -7,137 +7,180 @@
 (function () {
   'use strict';
 
-  // 10 Island Definitions corresponding to the 10 Java Chapters (DATA indices 0 to 9)
+  // 10 Distinct Island Themes corresponding to the 10 Java Chapters (DATA indices 0 to 9)
+  // Trees match the 7 flora models from the 3D reference:
+  // 1: Purple Cloud Pine, 2: Golden Autumn Oak, 3: Turquoise Spotted Mushroom, 4: Sakura Cherry Blossom,
+  // 5: Sunset Coral Palm, 6: Azure Weeping Willow, 7: Ancient Ghost Silver / Alabaster Tree
   const ISLAND_DATA = [
     {
       idx: 0,
       code: "★",
       name: "Primer Isle",
       fullName: "Java Study Primer",
-      topic: "Introduction, Environment, JVM & Memory Mental Models",
-      desc: "Warm harbor with steaming coffee kiosks and study primer pavilions.",
+      themeName: "Sakura Spring Sanctuary",
+      themeBadge: "🌸 Sakura Spring",
+      themeDesc: "Pastel cherry blossom haven with fragrant pink canopies and steaming coffee kiosks.",
       pos: [-40, 1.2, -4],
-      radius: 4.0,
-      color: 0x78b874,
+      radius: 4.2,
+      grassColor: 0x8ce99a, // fresh spring blossom green
+      dirtColor: 0x7c4f3f,  // warm clay
+      rockColor: 0x3d2822,  // deep volcanic stone
+      floraType: "sakura",
       props: "coffee",
-      foliage: [0xf8a5b2, 0xfcb578]
+      foliage: [0xffc9c9, 0xffa8b6]
     },
     {
       idx: 1,
       code: "Ch 2",
       name: "Fundamentals Atoll",
       fullName: "Java Fundamentals",
-      topic: "Variables, Primitive Types, Casting & Arithmetic",
-      desc: "Lush atoll adorned with crystalline variable spires and arithmetic monoliths.",
+      themeName: "Golden Autumn Harvest Grove",
+      themeBadge: "🍂 Golden Grove",
+      themeDesc: "Sun-dappled harvest forest with puffy golden-orange oaks and floating numeric runes.",
       pos: [-30, -0.6, -17],
-      radius: 3.6,
-      color: 0x82c87b,
+      radius: 3.8,
+      grassColor: 0xe59f3b, // golden harvest amber grass
+      dirtColor: 0x6e3d16,  // rich sienna
+      rockColor: 0x422915,  // dark bronze crag
+      floraType: "autumn_oak",
       props: "crystals",
-      foliage: [0x86efac, 0x6ee7b7]
+      foliage: [0xf59f00, 0xfcc419]
     },
     {
       idx: 2,
       code: "Ch 3 & 4",
       name: "Control Archipelago",
       fullName: "Flow Of Control",
-      topic: "If-Else Decisions, Switch & Loops (While, For)",
-      desc: "Branching pathways with forking archways and perpetual waterwheels.",
+      themeName: "Turquoise Mushroom Glen",
+      themeBadge: "🍄 Mushroom Glen",
+      themeDesc: "Enchanted fungal forest with giant spotted turquoise toadstools and branching decision gates.",
       pos: [-19, 0.9, 12],
-      radius: 3.8,
-      color: 0xf6ad7b,
+      radius: 4.0,
+      grassColor: 0x12b886, // vivid teal-emerald moss
+      dirtColor: 0x243b35,  // dark forest humus
+      rockColor: 0x1a2e28,  // deep pine stone
+      floraType: "mushroom",
       props: "forkgate",
-      foliage: [0xfcb86c, 0xf87171]
+      foliage: [0x20c997, 0x38d9a9]
     },
     {
       idx: 3,
       code: "Ch 5",
       name: "Arrays Sanctuary",
       fullName: "Arrays & Matrices",
-      topic: "1D Arrays, 2D Grids, Memory References & Traversal",
-      desc: "Geometric stepped terraces and perfectly aligned stone garden matrices.",
+      themeName: "Tropical Sunset Coral Oasis",
+      themeBadge: "🌴 Coral Oasis",
+      themeDesc: "Sun-drenched tropical atoll with curved sunset palms and stepped matrix coral terraces.",
       pos: [-9, -0.4, -11],
-      radius: 3.9,
-      color: 0x6bbdb2,
+      radius: 4.1,
+      grassColor: 0xf6ad55, // warm beach sand & coral turf
+      dirtColor: 0xb45309,  // copper clay
+      rockColor: 0x451a03,  // volcanic reef rock
+      floraType: "sunset_palm",
       props: "matrix",
-      foliage: [0x93c5fd, 0x67e8f9]
+      foliage: [0xff6b6b, 0xfa5252]
     },
     {
       idx: 4,
       code: "Ch 6",
       name: "Methods Haven",
       fullName: "Methods & Modular Code",
-      topic: "Method Signatures, Call Stack, Overloading & Scopes",
-      desc: "Twin clockwork towers with harmonic bells and modular transmission arches.",
+      themeName: "Twilight Lavender Highlands",
+      themeBadge: "🌲 Cloud Pine",
+      themeDesc: "Misty purple mountains with tiered umbrella cloud pines and modular watchtowers.",
       pos: [1, 1.3, 16],
       radius: 4.1,
-      color: 0xa4c639,
+      grassColor: 0x9775fa, // twilight violet heather
+      dirtColor: 0x5b3e94,  // amethyst loam
+      rockColor: 0x2e1d52,  // dark purple basalt
+      floraType: "cloud_pine",
       props: "clocks",
-      foliage: [0xfde047, 0x86efac]
+      foliage: [0xb197fc, 0x845ef7]
     },
     {
       idx: 5,
       code: "Ch 7",
       name: "Streams & IO Isle",
       fullName: "File I/O & Streams",
-      topic: "Scanner, File Readers, Streams & Text Parsing",
-      desc: "Grand open-air library pagoda with drifting floating parchment lanterns.",
+      themeName: "Azure Weeping Willow Falls",
+      themeBadge: "💧 Azure Falls",
+      themeDesc: "Luminous cyan weeping willows with sky waterfalls cascading over floating paper archives.",
       pos: [13, -0.6, -13],
-      radius: 3.7,
-      color: 0x7bb5b9,
+      radius: 3.9,
+      grassColor: 0x38bdf8, // azure riverbank jade
+      dirtColor: 0x0284c7,  // deep aquatic clay
+      rockColor: 0x0f172a,  // wet slate cliff
+      floraType: "weeping_willow",
       props: "library",
-      foliage: [0xf472b6, 0xc084fc]
+      foliage: [0x74c0fc, 0x4dabf7]
     },
     {
       idx: 6,
       code: "Ch 8",
       name: "OOP Citadel",
       fullName: "Classes & Objects",
-      topic: "Blueprint Construction, Constructors, this & Encapsulation",
-      desc: "Cozy architectural observatory with blueprint draft tables and marble pillars.",
+      themeName: "The Great World Tree of Life",
+      themeBadge: "🌳 Gathering Isle",
+      themeDesc: "The bustling central gathering hub with a monumental ancient ivory tree and architect gazebo.",
       pos: [24, 0.8, 11],
-      radius: 4.2,
-      color: 0x8cc574,
+      radius: 4.7,
+      grassColor: 0x51cf66, // lush imperial emerald lawn
+      dirtColor: 0x5c4033,  // rich garden earth
+      rockColor: 0x343a40,  // granite bedrock
+      floraType: "world_tree",
       props: "gazebo",
-      foliage: [0xa78bfa, 0x818cf8]
+      foliage: [0xfce7f3, 0xf9a8d4]
     },
     {
       idx: 7,
       code: "Ch 9",
       name: "Inheritance Plateau",
       fullName: "Inheritance & Polymorphism",
-      topic: "Extends Hierarchy, Super Keyword & Method Overriding",
-      desc: "The grand gathering island with a towering ancient blossom tree and cascading waterfalls.",
+      themeName: "Imperial Pagoda Autumn Vista",
+      themeBadge: "⛩️ Pagoda Vista",
+      themeDesc: "Eastern shrine with a multi-tiered red pagoda, golden oaks, and vermilion torii gates.",
       pos: [35, 0.0, -13],
-      radius: 4.6,
-      color: 0x89cc86,
-      props: "grandtree",
-      foliage: [0xf9a8d4, 0xf472b6]
+      radius: 4.5,
+      grassColor: 0xc2410c, // autumn maple crimson turf
+      dirtColor: 0x7c2d12,  // red cedar soil
+      rockColor: 0x3f1d14,  // dark ironstone
+      floraType: "mixed_oriental",
+      props: "pagoda_shrine",
+      foliage: [0xf59f00, 0xb197fc]
     },
     {
       idx: 8,
       code: "Ch 10",
       name: "Interfaces Spire",
       fullName: "Abstract & Interfaces",
-      topic: "Contracts, Abstract Classes, Default Methods & Multiple Interfaces",
-      desc: "Floating ethereal crystal spires hovering over a shimmering glass pool.",
+      themeName: "Prismatic Ghost Silver Woods",
+      themeBadge: "💎 Ghost Woods",
+      themeDesc: "Mystical realm of gnarled silver ghost trees and floating multifaceted iridescent quartz spires.",
       pos: [45, 1.4, 12],
-      radius: 3.8,
-      color: 0x76c2af,
-      props: "spire",
-      foliage: [0x67e8f9, 0xa5b4fc]
+      radius: 4.0,
+      grassColor: 0x2dd4bf, // crystalline cyan moss
+      dirtColor: 0x0f766e,  // deep mineral loam
+      rockColor: 0x134e4a,  // quartz vein stone
+      floraType: "ghost_tree",
+      props: "crystals",
+      foliage: [0xe2e8f0, 0x67e8f9]
     },
     {
       idx: 9,
       code: "Ch 11",
       name: "Exception Fortress",
       fullName: "Exception Handling",
-      topic: "Try-Catch-Finally, Throw/Throws & Defensive Design",
-      desc: "Fortified beacon citadel projecting a luminous protective dome over the skies.",
+      themeName: "Starlight Midnight Citadel",
+      themeBadge: "🛡️ Star Citadel",
+      themeDesc: "Midnight obsidian fortress with glowing turquoise mushroom spores and defensive beacon towers.",
       pos: [55, 0.6, -3],
-      radius: 4.2,
-      color: 0xb589b2,
+      radius: 4.4,
+      grassColor: 0x312e81, // midnight starry indigo turf
+      dirtColor: 0x1e1b4b,  // obsidian gravel
+      rockColor: 0x0f0e26,  // abyssal rock
+      floraType: "midnight_spore",
       props: "fortress",
-      foliage: [0xf87171, 0xfb923c]
+      foliage: [0x20c997, 0x818cf8]
     }
   ];
 
@@ -352,7 +395,288 @@
     buildArchipelagoBridges();
   }
 
-  // Create a stylized floating island
+  // -------------------------------------------------------------
+  // 7 DISTINCT FLORA MODELS (Directly modeled from reference photo)
+  // -------------------------------------------------------------
+
+  // 1. Purple Cloud Pine (Pagoda Pine - Model 1 in Photo)
+  function createPurpleCloudPine() {
+    const tree = new THREE.Group();
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4a3221, roughness: 0.9, flatShading: true });
+    
+    // Slender curving segmented trunk
+    const seg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.22, 1.2, 5), trunkMat);
+    seg1.position.set(0, 0.6, 0);
+    seg1.rotation.z = 0.08;
+    seg1.castShadow = true;
+    tree.add(seg1);
+
+    const seg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.12, 1.2, 5), trunkMat);
+    seg2.position.set(0.12, 1.6, 0);
+    seg2.rotation.z = -0.12;
+    seg2.castShadow = true;
+    tree.add(seg2);
+
+    // 3 Distinct Horizontal Cloud Pads (Lavender & Lilac Tiers)
+    const tiers = [
+      { y: 1.35, r: 0.95, h: 0.32, color: 0x9775fa, x: -0.2, z: 0.1 },
+      { y: 2.1,  r: 0.75, h: 0.28, color: 0x845ef7, x: 0.2,  z: -0.1 },
+      { y: 2.7,  r: 0.55, h: 0.24, color: 0xb197fc, x: 0.05, z: 0.05 }
+    ];
+    tiers.forEach(t => {
+      const padMat = new THREE.MeshStandardMaterial({ color: t.color, roughness: 0.75, flatShading: true });
+      const pad = new THREE.Mesh(new THREE.CylinderGeometry(t.r * 0.45, t.r, t.h, 7), padMat);
+      pad.position.set(t.x, t.y, t.z);
+      pad.castShadow = true;
+      tree.add(pad);
+
+      const top = new THREE.Mesh(new THREE.ConeGeometry(t.r * 0.78, t.h * 1.4, 7), padMat);
+      top.position.set(t.x, t.y + t.h * 0.65, t.z);
+      top.castShadow = true;
+      tree.add(top);
+    });
+    return tree;
+  }
+
+  // 2. Golden Autumn Oak (Puffy Amber Cloud Canopy - Model 2 in Photo)
+  function createGoldenAutumnOak() {
+    const tree = new THREE.Group();
+    // Sturdy oak trunk
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x5a4233, roughness: 0.9, flatShading: true });
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.45, 1.5, 6), trunkMat);
+    trunk.position.y = 0.75;
+    trunk.castShadow = true;
+    tree.add(trunk);
+
+    // Puffy billowing golden-amber crown clumps
+    const clumps = [
+      { x: 0,    y: 2.2, z: 0,    r: 1.15, c: 0xf59f00 },
+      { x: -0.6, y: 1.9, z: 0.4,  r: 0.85, c: 0xfcc419 },
+      { x: 0.65, y: 1.8, z: -0.3, r: 0.9,  c: 0xd97706 },
+      { x: 0.2,  y: 2.7, z: 0.3,  r: 0.8,  c: 0xffb84d },
+      { x: -0.3, y: 2.5, z: -0.4, r: 0.75, c: 0xf59f00 }
+    ];
+    clumps.forEach(cl => {
+      const folMat = new THREE.MeshStandardMaterial({ color: cl.c, roughness: 0.8, flatShading: true });
+      const fol = new THREE.Mesh(new THREE.DodecahedronGeometry(cl.r, 1), folMat);
+      fol.position.set(cl.x, cl.y, cl.z);
+      fol.castShadow = true;
+      tree.add(fol);
+    });
+    return tree;
+  }
+
+  // 3. Giant Turquoise Mushroom (Spotted Toadstool - Model 3 in Photo)
+  function createTurquoiseMushroom() {
+    const shroom = new THREE.Group();
+    // Cream stalk
+    const stalkMat = new THREE.MeshStandardMaterial({ color: 0xffe8d6, roughness: 0.8, flatShading: true });
+    const stalk = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.52, 1.6, 8), stalkMat);
+    stalk.position.y = 0.8;
+    stalk.castShadow = true;
+    shroom.add(stalk);
+
+    // Turquoise dome/cone cap
+    const capMat = new THREE.MeshStandardMaterial({
+      color: 0x12b886,
+      emissive: 0x0ca678,
+      emissiveIntensity: 0.28,
+      roughness: 0.5,
+      flatShading: true
+    });
+    const cap = new THREE.Mesh(new THREE.ConeGeometry(1.4, 1.25, 10), capMat);
+    cap.position.y = 1.95;
+    cap.castShadow = true;
+    shroom.add(cap);
+
+    // White polka-dot speckles around cap
+    const dotMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const dotAngles = [0, 0.9, 1.8, 2.7, 3.6, 4.5, 5.4];
+    dotAngles.forEach((a, i) => {
+      const dot = new THREE.Mesh(new THREE.SphereGeometry(0.12, 5, 5), dotMat);
+      const r = 0.78;
+      const y = 1.75 + (i % 2) * 0.25;
+      dot.position.set(Math.cos(a) * r, y, Math.sin(a) * r);
+      shroom.add(dot);
+    });
+
+    // 2 Baby companion mushrooms at base
+    [-0.65, 0.6].forEach((bx, idx) => {
+      const bStalk = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.14, 0.5, 6), stalkMat);
+      bStalk.position.set(bx, 0.25, (idx === 0 ? 0.35 : -0.2));
+      const bCap = new THREE.Mesh(new THREE.ConeGeometry(0.4, 0.42, 8), capMat);
+      bCap.position.set(bx, 0.55, (idx === 0 ? 0.35 : -0.2));
+      shroom.add(bStalk, bCap);
+    });
+    return shroom;
+  }
+
+  // 4. Sakura Cherry Blossom (Blush Petal Clusters - Model 4 in Photo)
+  function createSakuraTree() {
+    const tree = new THREE.Group();
+    // Branched dark wood trunk
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4a3221, roughness: 0.9, flatShading: true });
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.28, 1.6, 6), trunkMat);
+    trunk.position.set(0, 0.8, 0);
+    trunk.rotation.z = -0.06;
+    trunk.castShadow = true;
+    tree.add(trunk);
+
+    // Blossom puffs in blush and soft pink
+    const puffs = [
+      { x: 0,    y: 2.1, z: 0,    r: 1.05, c: 0xffa8b6 },
+      { x: -0.5, y: 1.8, z: 0.3,  r: 0.75, c: 0xffc9c9 },
+      { x: 0.6,  y: 1.9, z: -0.2, r: 0.8,  c: 0xf783ac },
+      { x: 0.1,  y: 2.6, z: 0.2,  r: 0.7,  c: 0xffd1dc },
+      { x: -0.2, y: 2.3, z: -0.4, r: 0.7,  c: 0xffa8b6 }
+    ];
+    puffs.forEach(p => {
+      const folMat = new THREE.MeshStandardMaterial({ color: p.c, roughness: 0.7, flatShading: true });
+      const fol = new THREE.Mesh(new THREE.DodecahedronGeometry(p.r, 1), folMat);
+      fol.position.set(p.x, p.y, p.z);
+      fol.castShadow = true;
+      tree.add(fol);
+    });
+    return tree;
+  }
+
+  // 5. Tropical Sunset Palm (Curved Palm with Coral Fronds - Model 5 in Photo)
+  function createSunsetPalm() {
+    const palm = new THREE.Group();
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x8c6d58, roughness: 0.9, flatShading: true });
+    
+    // Leaning textured curved trunk
+    const segs = 5;
+    let prevY = 0;
+    let prevX = 0;
+    for (let i = 0; i < segs; i++) {
+      const seg = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.12 - i * 0.015, 0.15 - i * 0.015, 0.5, 6),
+        trunkMat
+      );
+      const curve = (i * i) * 0.045;
+      seg.position.set(curve, 0.25 + i * 0.45, 0);
+      seg.rotation.z = -0.09 * (i + 1);
+      seg.castShadow = true;
+      palm.add(seg);
+      prevY = 0.25 + i * 0.45;
+      prevX = curve;
+    }
+
+    // Radiating crown of warm coral/vermilion fronds
+    const frondColors = [0xff6b6b, 0xfa5252, 0xf03e3e, 0xff8787];
+    const frondCount = 7;
+    for (let f = 0; f < frondCount; f++) {
+      const angle = (f / frondCount) * Math.PI * 2;
+      const frondGeo = new THREE.ConeGeometry(0.38, 1.45, 4);
+      frondGeo.rotateX(Math.PI / 2.7);
+      const frondMat = new THREE.MeshStandardMaterial({
+        color: frondColors[f % frondColors.length],
+        roughness: 0.65,
+        flatShading: true,
+        side: THREE.DoubleSide
+      });
+      const frond = new THREE.Mesh(frondGeo, frondMat);
+      frond.position.set(prevX, prevY + 0.35, 0);
+      frond.rotation.y = angle;
+      frond.rotation.z = 0.45;
+      frond.castShadow = true;
+      palm.add(frond);
+    }
+    return palm;
+  }
+
+  // 6. Bioluminescent Weeping Willow (Cascading Cyan Tendrils - Model 6 in Photo)
+  function createWeepingWillow() {
+    const tree = new THREE.Group();
+    // Twisted weathered trunk
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x5c504d, roughness: 0.9, flatShading: true });
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.45, 1.8, 6), trunkMat);
+    trunk.position.y = 0.9;
+    trunk.castShadow = true;
+    tree.add(trunk);
+
+    // Crown core
+    const topMat = new THREE.MeshStandardMaterial({ color: 0x74c0fc, roughness: 0.7, flatShading: true });
+    const crown = new THREE.Mesh(new THREE.DodecahedronGeometry(1.0, 1), topMat);
+    crown.position.set(0, 2.2, 0);
+    crown.castShadow = true;
+    tree.add(crown);
+
+    // Cascading draped vertical tendrils
+    const tendrilCount = 8;
+    const tendrilMat = new THREE.MeshStandardMaterial({
+      color: 0xa5d8ff,
+      emissive: 0x4dabf7,
+      emissiveIntensity: 0.35,
+      roughness: 0.5,
+      transparent: true,
+      opacity: 0.92,
+      flatShading: true
+    });
+    for (let i = 0; i < tendrilCount; i++) {
+      const angle = (i / tendrilCount) * Math.PI * 2 + (i % 2) * 0.2;
+      const dist = 0.75 + (i % 3) * 0.2;
+      const tLen = 1.6 + (i % 2) * 0.5;
+      const tendril = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.08, tLen, 5), tendrilMat);
+      tendril.position.set(Math.cos(angle) * dist, 1.9 - tLen * 0.45, Math.sin(angle) * dist);
+      tendril.castShadow = true;
+      tree.add(tendril);
+    }
+    return tree;
+  }
+
+  // 7. Ancient Ghost / Alabaster Tree (Gnarled Silver Branches - Model 7 in Photo)
+  function createGhostAlabasterTree(isGrand) {
+    const tree = new THREE.Group();
+    const scale = isGrand ? 1.45 : 1.0;
+    const trunkMat = new THREE.MeshStandardMaterial({
+      color: 0xf8f9fa,
+      emissive: 0xdbeafe,
+      emissiveIntensity: 0.25,
+      roughness: 0.6,
+      flatShading: true
+    });
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.28 * scale, 0.55 * scale, 1.8 * scale, 7), trunkMat);
+    trunk.position.y = 0.9 * scale;
+    trunk.castShadow = true;
+    tree.add(trunk);
+
+    // Gnarled branching silver boughs
+    const branchAngles = [0, 1.3, 2.5, 3.8, 5.0];
+    branchAngles.forEach((a, idx) => {
+      const bLen = (1.2 + (idx % 2) * 0.4) * scale;
+      const branch = new THREE.Mesh(new THREE.CylinderGeometry(0.08 * scale, 0.16 * scale, bLen, 5), trunkMat);
+      branch.position.set(Math.cos(a) * 0.3 * scale, 1.8 * scale, Math.sin(a) * 0.3 * scale);
+      branch.rotation.z = Math.sin(a) * 0.45;
+      branch.rotation.x = Math.cos(a) * 0.45;
+      branch.castShadow = true;
+      tree.add(branch);
+
+      const tip = new THREE.Mesh(new THREE.ConeGeometry(0.12 * scale, 0.6 * scale, 4), trunkMat);
+      tip.position.set(Math.cos(a) * 0.7 * scale, 2.4 * scale, Math.sin(a) * 0.7 * scale);
+      tip.rotation.y = a;
+      tree.add(tip);
+    });
+
+    if (isGrand) {
+      // Golden celestial fairy lantern orbs hanging from branches
+      for (let l = 0; l < 4; l++) {
+        const la = (l / 4) * Math.PI * 2;
+        const orb = new THREE.Mesh(
+          new THREE.DodecahedronGeometry(0.22, 0),
+          new THREE.MeshStandardMaterial({ color: 0xfef08a, emissive: 0xf59e0b, emissiveIntensity: 0.9 })
+        );
+        orb.position.set(Math.cos(la) * 1.5, 1.6, Math.sin(la) * 1.5);
+        tree.add(orb);
+      }
+    }
+    return tree;
+  }
+
+  // -------------------------------------------------------------
+  // CREATE THEMED FLOATING ISLAND
+  // -------------------------------------------------------------
   function createSingleIsland(data) {
     const group = new THREE.Group();
     group.position.set(data.pos[0], data.pos[1], data.pos[2]);
@@ -367,10 +691,10 @@
 
     const r = data.radius;
 
-    // 1. Lush Grass Top (Cylinder with slightly irregular facet)
+    // 1. Lush Themed Grass Plateau
     const grassGeo = new THREE.CylinderGeometry(r, r * 0.95, 0.7, 14);
     const grassMat = new THREE.MeshStandardMaterial({
-      color: data.color,
+      color: data.grassColor || 0x78b874,
       roughness: 0.8,
       metalness: 0.05,
       flatShading: true
@@ -380,10 +704,10 @@
     grassMesh.receiveShadow = true;
     group.add(grassMesh);
 
-    // 2. Earth / Dirt Ring directly below
+    // 2. Earth / Dirt Ring with thematic soil tone
     const dirtGeo = new THREE.CylinderGeometry(r * 0.95, r * 0.82, 0.8, 14);
     const dirtMat = new THREE.MeshStandardMaterial({
-      color: 0x5c4331,
+      color: data.dirtColor || 0x5c4331,
       roughness: 0.9,
       metalness: 0.0,
       flatShading: true
@@ -398,7 +722,7 @@
     const rockGeo = new THREE.ConeGeometry(r * 0.82, 3.8, 10);
     rockGeo.rotateX(Math.PI);
     const rockMat = new THREE.MeshStandardMaterial({
-      color: 0x483d38,
+      color: data.rockColor || 0x483d38,
       roughness: 0.95,
       metalness: 0.05,
       flatShading: true
@@ -409,16 +733,51 @@
     rockMesh.receiveShadow = true;
     group.add(rockMesh);
 
-    // 4. Stylized Low-Poly Trees
-    const treeCount = 3 + (data.idx % 2);
+    // 4. Stylized Low-Poly Flora according to Island's Distinct Theme
+    const treeCount = data.radius > 4.4 ? 4 : 3;
     for (let t = 0; t < treeCount; t++) {
-      const angle = (t * (Math.PI * 2) / treeCount) + (data.idx * 0.4);
-      const dist = (r * 0.5) + (t % 2) * (r * 0.18);
+      const angle = (t * (Math.PI * 2) / treeCount) + (data.idx * 0.5);
+      const dist = (r * 0.48) + (t % 2) * (r * 0.16);
       const tx = Math.cos(angle) * dist;
       const tz = Math.sin(angle) * dist;
 
-      const tree = createTree(data.foliage[t % data.foliage.length]);
+      let tree = null;
+      switch (data.floraType) {
+        case "sakura":
+          tree = createSakuraTree();
+          break;
+        case "autumn_oak":
+          tree = createGoldenAutumnOak();
+          break;
+        case "mushroom":
+          tree = createTurquoiseMushroom();
+          break;
+        case "sunset_palm":
+          tree = createSunsetPalm();
+          break;
+        case "cloud_pine":
+          tree = createPurpleCloudPine();
+          break;
+        case "weeping_willow":
+          tree = createWeepingWillow();
+          break;
+        case "world_tree":
+          tree = (t === 0) ? createGhostAlabasterTree(true) : createGoldenAutumnOak();
+          break;
+        case "mixed_oriental":
+          tree = (t === 0) ? createPurpleCloudPine() : (t === 1 ? createGoldenAutumnOak() : createSakuraTree());
+          break;
+        case "ghost_tree":
+          tree = createGhostAlabasterTree(false);
+          break;
+        case "midnight_spore":
+          tree = (t % 2 === 0) ? createTurquoiseMushroom() : createPurpleCloudPine();
+          break;
+        default:
+          tree = createGoldenAutumnOak();
+      }
       tree.position.set(tx, 0.35, tz);
+      tree.rotation.y = angle + t;
       group.add(tree);
     }
 
@@ -430,14 +789,18 @@
       const sAngle = s * 2.1 + data.idx * 0.5;
       const sDist = r + 1.2 + (s % 2) * 0.8;
       const sGeo = new THREE.DodecahedronGeometry(0.35 + (s % 2) * 0.2, 0);
-      const sMat = new THREE.MeshStandardMaterial({ color: 0x5a4f48, roughness: 0.9, flatShading: true });
+      const sMat = new THREE.MeshStandardMaterial({
+        color: data.rockColor || 0x5a4f48,
+        roughness: 0.9,
+        flatShading: true
+      });
       const sMesh = new THREE.Mesh(sGeo, sMat);
       sMesh.position.set(Math.cos(sAngle) * sDist, -1.0 + (s % 2) * 0.6, Math.sin(sAngle) * sDist);
       sMesh.castShadow = true;
       group.add(sMesh);
     }
 
-    // 7. Interactive Invisible Hover Hitbox (slightly larger for effortless click/tap targets)
+    // 7. Interactive Invisible Hover Hitbox
     const hitGeo = new THREE.CylinderGeometry(r * 1.3, r * 1.2, 5.0, 12);
     const hitMat = new THREE.MeshBasicMaterial({ visible: false, wireframe: false });
     const hitMesh = new THREE.Mesh(hitGeo, hitMat);
@@ -445,7 +808,7 @@
     hitMesh.userData = { isHitbox: true, parentGroup: group };
     group.add(hitMesh);
 
-    // 8. Radiant Selection Ring (hidden until hovered/focused)
+    // 8. Radiant Selection Ring
     const ringGeo = new THREE.RingGeometry(r * 1.05, r * 1.25, 32);
     ringGeo.rotateX(-Math.PI / 2);
     const ringMat = new THREE.MeshBasicMaterial({
@@ -463,42 +826,10 @@
     return group;
   }
 
-  // Create a cute low-poly tree
-  function createTree(foliageColor) {
-    const tree = new THREE.Group();
-
-    // Trunk
-    const trunkGeo = new THREE.CylinderGeometry(0.12, 0.18, 1.2, 5);
-    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4a3221, roughness: 0.9, flatShading: true });
-    const trunk = new THREE.Mesh(trunkGeo, trunkMat);
-    trunk.position.y = 0.6;
-    trunk.castShadow = true;
-    tree.add(trunk);
-
-    // Foliage Tier 1
-    const fol1Geo = new THREE.ConeGeometry(0.85, 0.9, 6);
-    const folMat = new THREE.MeshStandardMaterial({ color: foliageColor, roughness: 0.7, flatShading: true });
-    const fol1 = new THREE.Mesh(fol1Geo, folMat);
-    fol1.position.y = 1.3;
-    fol1.castShadow = true;
-    tree.add(fol1);
-
-    // Foliage Tier 2
-    const fol2Geo = new THREE.ConeGeometry(0.6, 0.75, 6);
-    const fol2 = new THREE.Mesh(fol2Geo, folMat);
-    fol2.position.y = 1.8;
-    fol2.castShadow = true;
-    tree.add(fol2);
-
-    return tree;
-  }
-
-  // Add chapter-specific landmark props
+  // Add chapter-specific landmark architecture
   function addIslandThemedProps(group, data) {
-    const pMat = new THREE.MeshStandardMaterial({ roughness: 0.6, metalness: 0.2, flatShading: true });
-
     if (data.props === "coffee") {
-      // Ch ★ Primer: Steaming Coffee Cup Monument
+      // Ch ★ Primer: Steaming Coffee Cup Monument + Torii Arch
       const cupGeo = new THREE.CylinderGeometry(0.6, 0.45, 0.9, 12);
       const cupMat = new THREE.MeshStandardMaterial({ color: 0xfafafa, roughness: 0.2 });
       const cup = new THREE.Mesh(cupGeo, cupMat);
@@ -506,133 +837,145 @@
       cup.castShadow = true;
       group.add(cup);
 
-      const coffeeGeo = new THREE.CylinderGeometry(0.55, 0.55, 0.1, 12);
-      const coffeeMat = new THREE.MeshStandardMaterial({ color: 0x3d2314, roughness: 0.4 });
-      const coffee = new THREE.Mesh(coffeeGeo, coffeeMat);
+      const coffee = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.55, 0.55, 0.1, 12),
+        new THREE.MeshStandardMaterial({ color: 0x3d2314, roughness: 0.4 })
+      );
       coffee.position.set(0, 1.2, 0);
       group.add(coffee);
+
+      // Steam particles
+      for (let st = 0; st < 3; st++) {
+        const steam = new THREE.Mesh(
+          new THREE.DodecahedronGeometry(0.12, 0),
+          new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.6 })
+        );
+        steam.position.set((st - 1) * 0.15, 1.45 + st * 0.18, 0);
+        group.add(steam);
+      }
     } else if (data.props === "crystals") {
-      // Ch 2 Fundamentals: Glowing Variable Crystals
+      // Ch 2 & Ch 10: Radiant Multicolored Crystals
       for (let c = 0; c < 3; c++) {
         const cGeo = new THREE.ConeGeometry(0.25, 1.4 + c * 0.3, 5);
         const cMat = new THREE.MeshStandardMaterial({
-          color: 0x5eead4,
-          emissive: 0x14b8a6,
-          emissiveIntensity: 0.35,
+          color: (data.idx === 8 ? 0xe0e7ff : 0x5eead4),
+          emissive: (data.idx === 8 ? 0xa5b4fc : 0x14b8a6),
+          emissiveIntensity: 0.45,
           roughness: 0.2
         });
         const crystal = new THREE.Mesh(cGeo, cMat);
         crystal.position.set(-0.4 + c * 0.4, 0.9 + c * 0.1, -0.2 + (c % 2) * 0.5);
-        crystal.rotation.z = (c - 1) * 0.15;
+        crystal.rotation.z = (c - 1) * 0.18;
         crystal.castShadow = true;
         group.add(crystal);
       }
     } else if (data.props === "forkgate") {
-      // Ch 3 & 4 Control: Forking Torii Stone Gate
+      // Ch 3 & 4 Control: Forking Archway with Decision Torii
       const pillarGeo = new THREE.CylinderGeometry(0.12, 0.15, 1.6, 6);
-      const gateMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.6, flatShading: true });
+      const gateMat = new THREE.MeshStandardMaterial({ color: 0x059669, roughness: 0.6, flatShading: true });
       const p1 = new THREE.Mesh(pillarGeo, gateMat);
       p1.position.set(-0.6, 1.1, 0);
-      p1.castShadow = true;
       const p2 = new THREE.Mesh(pillarGeo, gateMat);
       p2.position.set(0.6, 1.1, 0);
-      p2.castShadow = true;
-      const topGeo = new THREE.BoxGeometry(1.8, 0.2, 0.3);
-      const topBeam = new THREE.Mesh(topGeo, gateMat);
+      const topBeam = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.2, 0.3), gateMat);
       topBeam.position.set(0, 1.9, 0);
-      topBeam.castShadow = true;
       group.add(p1, p2, topBeam);
     } else if (data.props === "matrix") {
-      // Ch 5 Arrays: Stepped Stone Matrix Blocks
-      const bMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.5, flatShading: true });
+      // Ch 5 Arrays: Stepped Coral Matrix Blocks
+      const bMat = new THREE.MeshStandardMaterial({ color: 0xf97316, roughness: 0.5, flatShading: true });
       for (let x = -0.5; x <= 0.5; x += 0.5) {
         for (let z = -0.5; z <= 0.5; z += 0.5) {
-          const bGeo = new THREE.BoxGeometry(0.35, 0.35 + Math.abs(x) * 0.3, 0.35);
-          const block = new THREE.Mesh(bGeo, bMat);
+          const block = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.35 + Math.abs(x) * 0.3, 0.35), bMat);
           block.position.set(x, 0.5 + Math.abs(x) * 0.15, z);
           block.castShadow = true;
           group.add(block);
         }
       }
+    } else if (data.props === "clocks") {
+      // Ch 6 Methods: Clockwork Watchtower
+      const tower = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.4, 0.55, 2.2, 6),
+        new THREE.MeshStandardMaterial({ color: 0x7c3aed, roughness: 0.6, flatShading: true })
+      );
+      tower.position.set(0, 1.3, 0);
+      tower.castShadow = true;
+      const roof = new THREE.Mesh(
+        new THREE.ConeGeometry(0.7, 0.8, 6),
+        new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.4 })
+      );
+      roof.position.set(0, 2.7, 0);
+      group.add(tower, roof);
     } else if (data.props === "library") {
-      // Ch 7 File I/O: Pagoda Archive
-      const pagGeo = new THREE.BoxGeometry(1.2, 1.0, 1.2);
-      const pagMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.6, flatShading: true });
-      const pagoda = new THREE.Mesh(pagGeo, pagMat);
-      pagoda.position.set(0, 0.85, 0);
-      pagoda.castShadow = true;
-      const roofGeo = new THREE.ConeGeometry(1.3, 0.7, 4);
-      roofGeo.rotateY(Math.PI / 4);
-      const roofMat = new THREE.MeshStandardMaterial({ color: 0xb91c1c, roughness: 0.5 });
-      const roof = new THREE.Mesh(roofGeo, roofMat);
-      roof.position.set(0, 1.65, 0);
-      roof.castShadow = true;
-      group.add(pagoda, roof);
-    } else if (data.props === "grandtree") {
-      // Ch 9 Inheritance: The Gathering Island Giant Blossom Tree (Central landmark from Photo 1!)
-      const trunkGeo = new THREE.CylinderGeometry(0.5, 0.8, 2.5, 8);
-      const trunkMat = new THREE.MeshStandardMaterial({ color: 0x3d2716, roughness: 0.9, flatShading: true });
-      const trunk = new THREE.Mesh(trunkGeo, trunkMat);
-      trunk.position.set(0, 1.6, 0);
-      trunk.castShadow = true;
-      group.add(trunk);
-
-      // Massive Multi-Puff Cloud Foliage Canopy
-      const folMat = new THREE.MeshStandardMaterial({
-        color: 0xfce7f3, // Soft peach-cherry canopy
-        roughness: 0.8,
-        flatShading: true
-      });
-      const puffOffsets = [
-        [0, 3.2, 0, 1.8],
-        [-0.9, 2.8, 0.6, 1.3],
-        [0.9, 2.9, -0.5, 1.4],
-        [0.4, 3.8, 0.3, 1.2],
-        [-0.5, 3.6, -0.6, 1.1]
-      ];
-      puffOffsets.forEach(([px, py, pz, pr]) => {
-        const puffGeo = new THREE.DodecahedronGeometry(pr, 1);
-        const puff = new THREE.Mesh(puffGeo, folMat);
-        puff.position.set(px, py, pz);
-        puff.castShadow = true;
-        group.add(puff);
-      });
-
-      // Waterfall spilling into clouds
-      const wfGeo = new THREE.PlaneGeometry(0.6, 2.5);
+      // Ch 7 Streams & I/O: Cascading River Waterfall spilling into clouds
+      const wfGeo = new THREE.PlaneGeometry(0.9, 3.2);
       const wfMat = new THREE.MeshBasicMaterial({
-        color: 0xa5f3fc,
+        color: 0x67e8f9,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.78,
         side: THREE.DoubleSide
       });
       const waterfall = new THREE.Mesh(wfGeo, wfMat);
-      waterfall.position.set(0, -1.0, data.radius * 0.9);
+      waterfall.position.set(0, -1.2, data.radius * 0.9);
       group.add(waterfall);
+
+      // Open-air scroll gazebo
+      const gMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.75, 0.85, 0.8, 6),
+        new THREE.MeshStandardMaterial({ color: 0xe0f2fe, roughness: 0.6, flatShading: true })
+      );
+      gMesh.position.set(0, 0.75, 0);
+      group.add(gMesh);
+    } else if (data.props === "gazebo") {
+      // Ch 8 OOP Citadel: Central Architect Gazebo
+      const gaz = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.9, 1.0, 0.7, 8),
+        new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.4, flatShading: true })
+      );
+      gaz.position.set(0, 0.7, 0);
+      gaz.castShadow = true;
+      const dome = new THREE.Mesh(
+        new THREE.ConeGeometry(1.2, 0.8, 8),
+        new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.5 })
+      );
+      dome.position.set(0, 1.4, 0);
+      group.add(gaz, dome);
+    } else if (data.props === "pagoda_shrine") {
+      // Ch 9 Inheritance: Multi-tiered Pagoda Tower
+      for (let t = 0; t < 2; t++) {
+        const body = new THREE.Mesh(
+          new THREE.BoxGeometry(1.1 - t * 0.3, 0.6, 1.1 - t * 0.3),
+          new THREE.MeshStandardMaterial({ color: 0xb91c1c, roughness: 0.6 })
+        );
+        body.position.set(0, 0.65 + t * 0.8, 0);
+        const roof = new THREE.Mesh(
+          new THREE.ConeGeometry(1.3 - t * 0.3, 0.4, 4),
+          new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.5 })
+        );
+        roof.rotateY(Math.PI / 4);
+        roof.position.set(0, 1.05 + t * 0.8, 0);
+        group.add(body, roof);
+      }
     } else if (data.props === "fortress") {
-      // Ch 11 Exception Fortress: Beacon Tower
-      const towerGeo = new THREE.CylinderGeometry(0.7, 0.85, 2.0, 8);
-      const tMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.8, flatShading: true });
-      const tower = new THREE.Mesh(towerGeo, tMat);
-      tower.position.set(0, 1.3, 0);
+      // Ch 11 Exception Fortress: Starlight Warning Beacon
+      const tower = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.7, 0.9, 2.2, 8),
+        new THREE.MeshStandardMaterial({ color: 0x312e81, roughness: 0.8, flatShading: true })
+      );
+      tower.position.set(0, 1.4, 0);
       tower.castShadow = true;
 
-      const beaconGeo = new THREE.DodecahedronGeometry(0.4, 0);
-      const bMat = new THREE.MeshStandardMaterial({
-        color: 0xf59e0b,
-        emissive: 0xd97706,
-        emissiveIntensity: 0.8
-      });
-      const beacon = new THREE.Mesh(beaconGeo, bMat);
-      beacon.position.set(0, 2.6, 0);
+      const beacon = new THREE.Mesh(
+        new THREE.DodecahedronGeometry(0.45, 0),
+        new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.9 })
+      );
+      beacon.position.set(0, 2.8, 0);
       group.add(tower, beacon);
     } else {
-      // General gazebo / stone pavilion
-      const gGeo = new THREE.CylinderGeometry(0.7, 0.8, 0.6, 6);
-      const gMat = new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.5, flatShading: true });
-      const gaz = new THREE.Mesh(gGeo, gMat);
+      const gaz = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.7, 0.8, 0.6, 6),
+        new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.5, flatShading: true })
+      );
       gaz.position.set(0, 0.65, 0);
-      gaz.castShadow = true;
       group.add(gaz);
     }
   }
@@ -735,6 +1078,7 @@
       sign.innerHTML = `
         <span class="sign-code">${data.code}</span>
         <span class="sign-name">${data.name}</span>
+        <span class="sign-theme-badge">${data.themeBadge}</span>
         <span class="sign-action">Quiz ➔</span>
       `;
 
@@ -912,9 +1256,11 @@
     card.innerHTML = `
       <div class="hover-card-header">
         <span class="hover-card-badge">${data.code}</span>
+        <span class="hover-card-theme-tag">${data.themeBadge}</span>
         <h4 class="hover-card-title">${data.fullName}</h4>
       </div>
-      <p class="hover-card-desc">${data.desc}</p>
+      <div class="hover-card-theme-line">Theme: <b>${data.themeName}</b></div>
+      <p class="hover-card-desc">${data.themeDesc || data.desc}</p>
       <div class="hover-card-topics"><b>Key Topics:</b> ${data.topic}</div>
       <div class="hover-card-cta">
         <span>Click island to launch Chapter Quiz</span>
