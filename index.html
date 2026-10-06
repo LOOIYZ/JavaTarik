@@ -2366,27 +2366,6 @@
       color: #18181b;
     }
 
-    .quiz-set-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 99px;
-      background: rgba(37, 99, 235, 0.12);
-      color: #2563eb;
-      border: 1px solid rgba(37, 99, 235, 0.25);
-      margin-left: 10px;
-      vertical-align: middle;
-      letter-spacing: 0.01em;
-    }
-    [data-color-scheme="dark"] .quiz-set-badge,
-    [data-theme="dark"] .quiz-set-badge {
-      background: rgba(96, 165, 250, 0.16);
-      color: #93c5fd;
-      border-color: rgba(96, 165, 250, 0.3);
-    }
     .quiz-q-meta-badges {
       display: flex;
       align-items: center;
@@ -5287,11 +5266,10 @@
       quizUserAnswers = {};
       quizViewMode = "question";
 
-      // Set Header Title with Set Indicator & Bank Badge
+      // Set Header Title
       const titleEl = $("#quiz-modal-title");
       if (titleEl) {
-        const chLabel = (ch.num === "★" ? "Java Study Primer" : ch.name + " (Ch " + ch.num + ")");
-        titleEl.innerHTML = `<span>Final Exam Prep: ${esc(chLabel)}</span> <span class="quiz-set-badge" title="100 Questions memory bank divided into 10 balanced sets">Set ${setIdx + 1} of 10 · 100 Qs Bank</span>`;
+        titleEl.textContent = "Final Exam Prep: " + (ch.num === "★" ? "Java Study Primer" : ch.name + " (Ch " + ch.num + ")");
       }
 
       renderQuizSegments();
