@@ -1,0 +1,1602 @@
+[
+  {
+    "q": "What is the root class of the entire exception and error hierarchy in Java?",
+    "options": [
+      "`java.lang.Exception`",
+      "`java.lang.Throwable`",
+      "`java.lang.Error`",
+      "`java.lang.RuntimeException`"
+    ],
+    "answer": 1,
+    "explain": "`java.lang.Throwable` is the superclass of all errors and exceptions in Java. Only objects that inherit from `Throwable` can be thrown by the JVM or `throw` statement.",
+    "topic": "Throwable Root Hierarchy",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Identifies Throwable as the root of the Java exception hierarchy.",
+    "weakness": "`java.lang.Throwable` is the superclass of all exceptions and errors in Java."
+  },
+  {
+    "q": "What are the two direct subclasses of `java.lang.Throwable`?",
+    "options": [
+      "`CheckedException` and `UncheckedException`",
+      "`java.lang.Exception` and `java.lang.Error`",
+      "`RuntimeException` and `IOException`",
+      "`FatalError` and `Warning`"
+    ],
+    "answer": 1,
+    "explain": "`Throwable` branches directly into `Exception` (conditions that a reasonable application might want to catch) and `Error` (serious problems that an application should not try to catch, like `OutOfMemoryError`).",
+    "topic": "Branches of Throwable",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes Exception from Error branches under Throwable.",
+    "weakness": "`Throwable` divides directly into `Exception` and `Error`."
+  },
+  {
+    "q": "What is the difference between checked exceptions and unchecked exceptions in Java?",
+    "options": [
+      "Checked exceptions happen at compile time; unchecked happen at runtime",
+      "Checked exceptions (subclasses of Exception excluding RuntimeException) are checked by the compiler and MUST be caught or declared; unchecked exceptions (RuntimeException and Error) are NOT enforced at compile time",
+      "Checked exceptions cannot be caught",
+      "Unchecked exceptions are fatal hardware crashes"
+    ],
+    "answer": 1,
+    "explain": "The Java compiler enforces the Catch-or-Specify requirement strictly on checked exceptions. Unchecked exceptions (`RuntimeException`) represent programming logic defects.",
+    "topic": "Checked vs Unchecked Exceptions",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Clearly distinguishes checked exceptions from unchecked runtime exceptions.",
+    "weakness": "Checked exceptions must be caught or declared (`throws`); unchecked exceptions are not enforced by the compiler."
+  },
+  {
+    "q": "Which of the following is an UNCHECKED (runtime) exception in Java?",
+    "options": [
+      "`java.io.IOException`",
+      "`java.io.FileNotFoundException`",
+      "`java.lang.NullPointerException`",
+      "`java.lang.ClassNotFoundException`"
+    ],
+    "answer": 2,
+    "explain": "`NullPointerException` is a subclass of `RuntimeException`, making it an unchecked exception. The others are checked exceptions.",
+    "topic": "Unchecked Exception Identification",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Identifies NullPointerException as an unchecked RuntimeException.",
+    "weakness": "`NullPointerException`, `ArrayIndexOutOfBoundsException`, and `ArithmeticException` are unchecked."
+  },
+  {
+    "q": "Which of the following is a CHECKED exception in Java?",
+    "options": [
+      "`java.lang.ArithmeticException`",
+      "`java.io.IOException`",
+      "`java.lang.ArrayIndexOutOfBoundsException`",
+      "`java.lang.ClassCastException`"
+    ],
+    "answer": 1,
+    "explain": "`IOException` is a checked exception directly inheriting from `Exception`. The others are subclasses of `RuntimeException` (unchecked).",
+    "topic": "Checked Exception Identification",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Identifies IOException as a checked exception.",
+    "weakness": "`IOException`, `FileNotFoundException`, and `SQLException` are checked exceptions."
+  },
+  {
+    "q": "What is the purpose of the `finally` block in a `try-catch-finally` structure?",
+    "options": [
+      "It only executes if an exception occurs",
+      "It executes ALWAYS, whether an exception was thrown, caught, or not thrown at all, ensuring cleanup code runs reliably",
+      "It executes only if no exception occurs",
+      "It catches uncaught errors"
+    ],
+    "answer": 1,
+    "explain": "The `finally` block is guaranteed to execute following a `try` block (even if a `return` statement is executed inside `try` or `catch`), making it ideal for resource cleanup.",
+    "topic": "Finally Block Guarantee",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands that the finally block executes unconditionally.",
+    "weakness": "The `finally` block always executes regardless of whether an exception occurred."
+  },
+  {
+    "q": "Under what extreme circumstance will a `finally` block NOT execute?",
+    "options": [
+      "If an unhandled exception is thrown",
+      "If the method returns null",
+      "If the JVM process is terminated abruptly (e.g. `System.exit(0)` or catastrophic JVM crash/power loss)",
+      "If the try block has a return statement"
+    ],
+    "answer": 2,
+    "explain": "A `finally` block executes under all normal Java execution conditions, EXCEPT when `System.exit(status)` is called or the underlying OS process/JVM crashes.",
+    "topic": "Finally Block Bypassing via System.exit",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands that System.exit() halts the JVM before finally executes.",
+    "weakness": "`finally` blocks do not run if `System.exit(0)` terminates the JVM process."
+  },
+  {
+    "q": "What is the difference between the `throw` keyword and the `throws` keyword in Java?",
+    "options": [
+      "`throw` is used in method headers; `throws` is inside method bodies",
+      "`throw` is an executable statement used to explicitly throw an exception instance; `throws` is a clause in a method declaration indicating exceptions the method might throw",
+      "They are identical synonyms",
+      "`throws` is only for custom exceptions"
+    ],
+    "answer": 1,
+    "explain": "`throw new MyException();` throws an exception object. `void m() throws IOException` declares that the method may pass checked exceptions to its caller.",
+    "topic": "Throw vs Throws Keywords",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes throw statement from throws method clause.",
+    "weakness": "`throw` triggers an exception instance; `throws` declares exception types in method headers."
+  },
+  {
+    "q": "What rule governs the ordering of multiple `catch` blocks for related exception classes?",
+    "options": [
+      "Catch blocks must be arranged from most general (superclass) to most specific (subclass)",
+      "Catch blocks must be arranged from most specific (subclass) to most general (superclass), otherwise the compiler rejects unreachable catch blocks",
+      "Catch blocks can be in any random order",
+      "Only one catch block is permitted per try"
+    ],
+    "answer": 1,
+    "explain": "Because exceptions are caught by the first matching block, placing a superclass (e.g. `Exception`) before a subclass (e.g. `IOException`) makes the subclass unreachable, causing a compile error.",
+    "topic": "Catch Block Ordering Hierarchy",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands specific-to-general ordering requirements for catch blocks.",
+    "weakness": "Arrange catch blocks from most specific subclass to most general superclass."
+  },
+  {
+    "q": "What is the multi-catch feature (introduced in Java 7)?",
+    "options": [
+      "Catching an exception in multiple threads",
+      "Handling multiple distinct exception types in a single catch block using the pipe `|` operator: `catch (IOException | SQLException e)`",
+      "Having multiple finally blocks",
+      "Catching exceptions without a try block"
+    ],
+    "answer": 1,
+    "explain": "Multi-catch reduces boilerplate by grouping unrelated exceptions in one block: `catch (IOException | SQLException e)`. In multi-catch, parameter `e` is implicitly `final`.",
+    "topic": "Multi-Catch Syntax",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands multi-catch syntax and semantics.",
+    "weakness": "Multi-catch groups exception types with `|`: `catch (IOException | SQLException e)`."
+  },
+  {
+    "q": "How do you define a custom CHECKED exception class in Java?",
+    "options": [
+      "Extend `java.lang.RuntimeException`",
+      "Extend `java.lang.Exception` (or any existing checked exception subclass)",
+      "Extend `java.lang.Throwable` directly",
+      "Implement `java.lang.Runnable`"
+    ],
+    "answer": 1,
+    "explain": "To create a checked exception, create a class that extends `java.lang.Exception` (excluding `RuntimeException`).",
+    "topic": "Custom Checked Exception Creation",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows how to create custom checked exceptions by extending Exception.",
+    "weakness": "Extend `java.lang.Exception` to create custom checked exceptions."
+  },
+  {
+    "q": "How do you define a custom UNCHECKED exception class in Java?",
+    "options": [
+      "Extend `java.lang.Exception` directly",
+      "Extend `java.lang.RuntimeException`",
+      "Extend `java.lang.Error`",
+      "Implement `java.lang.AutoCloseable`"
+    ],
+    "answer": 1,
+    "explain": "To create an unchecked (runtime) exception, create a class that extends `java.lang.RuntimeException`.",
+    "topic": "Custom Unchecked Exception Creation",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows how to create custom unchecked exceptions by extending RuntimeException.",
+    "weakness": "Extend `java.lang.RuntimeException` to create custom unchecked exceptions."
+  },
+  {
+    "q": "What is exception propagation in Java?",
+    "options": [
+      "Converting checked exceptions to errors",
+      "The automatic unwinding of the thread call stack: if an exception is not caught in the current method, it is passed up to the calling method, continuing until caught or terminating the thread",
+      "Writing exceptions to a database",
+      "Catching exceptions in a loop"
+    ],
+    "answer": 1,
+    "explain": "When an exception occurs, the JVM searches the call stack backwards (unwinding stack frames) until a matching `catch` block is located.",
+    "topic": "Exception Stack Unwinding & Propagation",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands call stack unwinding during exception propagation.",
+    "weakness": "Exceptions propagate up the call stack until caught or terminating the thread."
+  },
+  {
+    "q": "What does `e.printStackTrace()` do when an exception is caught?",
+    "options": [
+      "Deletes the stack trace",
+      "Prints the exception class name, error message, and the full sequence of method invocations and line numbers leading up to the failure point to `System.err`",
+      "Restarts the application",
+      "Converts the exception to a string"
+    ],
+    "answer": 1,
+    "explain": "`e.printStackTrace()` prints diagnostic stack trace information to standard error, showing the exact source files and line numbers where the exception originated.",
+    "topic": "printStackTrace Diagnostic Output",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the diagnostic purpose of printStackTrace().",
+    "weakness": "`e.printStackTrace()` outputs the full chain of method call locations to standard error."
+  },
+  {
+    "q": "What is exception chaining (wrapped exceptions) in Java?",
+    "options": [
+      "Catching an exception and discarding it",
+      "Wrapping an original low-level exception inside a higher-level domain exception as the 'cause' (`new DomainException(\"Failed\", cause)`), preserving the root cause stack trace",
+      "Throwing 5 exceptions in a row",
+      "Chaining catch blocks"
+    ],
+    "answer": 1,
+    "explain": "Exception chaining allows a method to catch a low-level technical exception (e.g. `SQLException`) and throw a meaningful domain exception (`BankingException`) while retaining the original cause.",
+    "topic": "Exception Chaining Pattern",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands preserving root causes via exception chaining.",
+    "weakness": "Wrap low-level exceptions inside high-level exceptions using `new CustomException(msg, cause)`."
+  },
+  {
+    "q": "What is the effect of an uncaught exception occurring on the main thread?",
+    "options": [
+      "The operating system restarts",
+      "The thread terminates, the JVM prints the unhandled exception stack trace to `System.err`, and the program exits (if no non-daemon threads are running)",
+      "The CPU pauses",
+      "The exception is ignored"
+    ],
+    "answer": 1,
+    "explain": "If an exception propagates all the way out of `main` without being caught, the main thread terminates abruptly and prints the stack trace.",
+    "topic": "Uncaught Exception Behavior",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the consequence of uncaught exceptions on thread lifecycle.",
+    "weakness": "Uncaught exceptions terminate the active thread and print the stack trace."
+  },
+  {
+    "q": "What is an `Error` in Java (such as `OutOfMemoryError` or `StackOverflowError`)?",
+    "options": [
+      "A minor syntax error",
+      "A serious JVM subsystem failure or hardware resource exhaustion condition that a reasonable application should NOT attempt to catch or recover from",
+      "A checked exception",
+      "A warning message"
+    ],
+    "answer": 1,
+    "explain": "Classes extending `Error` represent catastrophic conditions (memory exhaustion, linkage errors) where the JVM's execution environment is fatally compromised.",
+    "topic": "Error Hierarchy Meaning",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes fatal Errors from catchable Exceptions.",
+    "weakness": "`Error` represents severe JVM failures (e.g. `OutOfMemoryError`) that applications should not catch."
+  },
+  {
+    "q": "Can a `catch` block rethrow an exception?",
+    "options": [
+      "No, once caught an exception is erased",
+      "Yes, a catch block can rethrow the caught exception (`throw e;`) or wrap and throw a new exception after performing partial cleanup or logging",
+      "Only in Java 17+",
+      "Only if marked with final"
+    ],
+    "answer": 1,
+    "explain": "Rethrowing allows catching an exception to perform local logging or rollbacks, and then re-throwing it so outer layers are notified of the failure.",
+    "topic": "Exception Rethrowing Pattern",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands rethrowing exceptions from catch blocks.",
+    "weakness": "A catch block can log or clean up and then rethrow the exception using `throw e;`."
+  },
+  {
+    "q": "What happens if a `try` block contains a `return` statement, and the `finally` block ALSO contains a `return` statement?",
+    "options": [
+      "Compilation error: dual returns",
+      "The `return` statement in the `finally` block completely overrides and swallows the `return` statement from the `try` block",
+      "Both values are combined",
+      "The JVM crashes"
+    ],
+    "answer": 1,
+    "explain": "A `return` in `finally` discards any pending return value or unhandled exception from the `try` block, which is considered a severe anti-pattern.",
+    "topic": "Return in Finally Anti-Pattern",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Mastered the danger of return statements inside finally blocks.",
+    "weakness": "A `return` in `finally` overwrites any return or exception from the `try` block."
+  },
+  {
+    "q": "What happens if an exception is thrown inside a `try` block, and ANOTHER exception is thrown inside the `finally` block?",
+    "options": [
+      "Both exceptions are merged into a list",
+      "The exception thrown in the `finally` block suppresses and replaces the original exception from the `try` block, unless try-with-resources is used",
+      "The program crashes before finally",
+      "The finally exception is ignored"
+    ],
+    "answer": 1,
+    "explain": "In traditional `try-finally`, an exception in `finally` swallows the original exception. Try-with-resources solves this by attaching suppressed exceptions via `e.addSuppressed()`.",
+    "topic": "Suppressed Exceptions in Finally",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Understands how exceptions in finally mask original exceptions.",
+    "weakness": "Traditional finally exceptions mask try exceptions; try-with-resources preserves them via suppressed exceptions."
+  },
+  {
+    "q": "Can a `try` block exist with ONLY a `finally` block (no `catch` blocks)?",
+    "options": [
+      "No, every try requires at least one catch block",
+      "Yes, a `try-finally` block is completely valid syntax, commonly used to ensure cleanup code runs even when exceptions are allowed to propagate upward",
+      "Only in Java 8+",
+      "Only if no checked exceptions are thrown"
+    ],
+    "answer": 1,
+    "explain": "`try { ... } finally { ... }` is legal syntax, guaranteeing cleanup while allowing exceptions to propagate unhindered to callers.",
+    "topic": "Try-Finally Without Catch",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows that try-finally without catch is valid syntax.",
+    "weakness": "`try-finally` without `catch` is valid and ensures cleanup while propagating exceptions."
+  },
+  {
+    "q": "What is the `getMessage()` method in `Throwable`?",
+    "options": [
+      "Returns the operating system version",
+      "Returns the detailed error message string passed when the exception object was constructed, or null if none was provided",
+      "Returns the line number",
+      "Returns the stack trace"
+    ],
+    "answer": 1,
+    "explain": "`getMessage()` retrieves the human-readable explanation message supplied during exception instantiation: `new Exception(\"Detailed message\")`.",
+    "topic": "Throwable getMessage Method",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the purpose of getMessage() in Throwable.",
+    "weakness": "`e.getMessage()` returns the descriptive error message string of the exception."
+  },
+  {
+    "q": "Why is catching `java.lang.Throwable` or `java.lang.Error` generally considered a bad practice in application code?",
+    "options": [
+      "It causes a compile error",
+      "It catches severe JVM errors like `OutOfMemoryError` and `ThreadDeath`, preventing the JVM from shutting down cleanly and leaving the application in an unstable, corrupted state",
+      "Throwable cannot be caught",
+      "It slows down arithmetic"
+    ],
+    "answer": 1,
+    "explain": "Catching `Throwable` intercepts fatal JVM internal errors that applications cannot safely handle, masking catastrophic failures and destabilizing the system.",
+    "topic": "Catching Throwable Anti-Pattern",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands why catching Throwable/Error is dangerous.",
+    "weakness": "Avoid catching `Throwable` or `Error`; catch specific `Exception` subclasses instead."
+  },
+  {
+    "q": "What is an empty catch block (`catch (Exception e) {}`) and why is it dangerous?",
+    "options": [
+      "A syntax error",
+      "An anti-pattern known as 'swallowing exceptions': it silences errors completely without logging or recovery, making bugs invisible and impossible to debug",
+      "A recommended way to improve performance",
+      "A way to restart the JVM"
+    ],
+    "answer": 1,
+    "explain": "Swallowing exceptions silently hides failures. The application continues running in a corrupted state with zero diagnostic logs.",
+    "topic": "Swallowing Exceptions Anti-Pattern",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Identifies the danger of empty catch blocks.",
+    "weakness": "Never leave catch blocks empty; at minimum log the error or rethrow it."
+  },
+  {
+    "q": "Can an overriding method in a subclass declare FEWER checked exceptions in its `throws` clause than the superclass method?",
+    "options": [
+      "No, it must declare the exact same list",
+      "Yes! An overriding method can declare fewer checked exceptions, or even NO checked exceptions at all",
+      "Only if it is marked private",
+      "Only if it returns void"
+    ],
+    "answer": 1,
+    "explain": "An overriding method cannot declare broader or new checked exceptions, but it is completely free to narrow the list, declare subclasses, or declare NO exceptions at all.",
+    "topic": "Narrowing Throws Clause in Overriding",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Mastered exception narrowing rules in method overriding.",
+    "weakness": "Overriding methods can declare fewer checked exceptions or omit the `throws` clause entirely."
+  },
+  {
+    "q": "Why does the following code produce a compilation error?\n```java\ntry {\n    int x = 10 / 0;\n} catch (Exception e) {\n    System.out.println(\"Error\");\n} catch (ArithmeticException e) {\n    System.out.println(\"Div by zero\");\n}\n```",
+    "options": [
+      "Division by zero is illegal",
+      "Unreachable code: `ArithmeticException` is a subclass of `Exception`, so the second catch block is already covered and can never be reached",
+      "try cannot divide",
+      "Exception e must be capitalized"
+    ],
+    "answer": 1,
+    "explain": "Because `ArithmeticException` extends `Exception`, the first catch block intercepts all arithmetic exceptions. The second block is unreachable, causing a compile error.",
+    "topic": "Unreachable Catch Block Hierarchy Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted unreachable catch block due to improper ordering.",
+    "weakness": "Place subclass catch blocks BEFORE superclass catch blocks."
+  },
+  {
+    "q": "What compilation error occurs in this method?\n```java\npublic void readFile(String path) {\n    throw new java.io.IOException(\"Disk failure\");\n}\n```",
+    "options": [
+      "IOException cannot take a string",
+      "Unreported exception `java.io.IOException`; must be caught or declared to be thrown in method header (`throws IOException`)",
+      "throw must be throws",
+      "readFile must be static"
+    ],
+    "answer": 1,
+    "explain": "Throwing a checked exception (`IOException`) requires the method to declare `throws IOException` or handle it with `try-catch`.",
+    "topic": "Unreported Thrown Checked Exception Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught missing throws declaration on thrown checked exception.",
+    "weakness": "Methods throwing checked exceptions must declare `throws ExceptionType` in their header."
+  },
+  {
+    "q": "Identify the syntax error in this multi-catch block:\n```java\ntry {\n    // do work\n} catch (IOException | FileNotFoundException e) {\n    System.out.println(e);\n}\n```",
+    "options": [
+      "e must be declared twice",
+      "Compilation error: alternative `FileNotFoundException` is a subclass of alternative `IOException` (multi-catch alternatives cannot be related by inheritance)",
+      "Pipe operator `|` is illegal in catch",
+      "IOException cannot be caught"
+    ],
+    "answer": 1,
+    "explain": "In multi-catch, alternatives cannot be subclasses of one another. Because `FileNotFoundException` extends `IOException`, listing both causes: 'Types in multi-catch must be disjoint'.",
+    "topic": "Disjoint Types Rule in Multi-Catch Error",
+    "type": "error",
+    "level": "hard",
+    "strength": "Caught non-disjoint inheritance hierarchy in multi-catch.",
+    "weakness": "Types in a multi-catch block must be disjoint (cannot have parent-child relationship)."
+  },
+  {
+    "q": "Why does this try block fail to compile?\n```java\ntry {\n    System.out.println(\"Hello\");\n}\n```",
+    "options": [
+      "println cannot be in try",
+      "Syntax error: 'try' without 'catch', 'finally', or resource declarations",
+      "Hello must be in single quotes",
+      "try is deprecated"
+    ],
+    "answer": 1,
+    "explain": "A `try` statement must be followed by at least one `catch` block, a `finally` block, or declare resources in parentheses `try (...)`.",
+    "topic": "Try Without Catch or Finally Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized invalid standalone try statement.",
+    "weakness": "A `try` block must be accompanied by at least one `catch`, `finally`, or resource header."
+  },
+  {
+    "q": "What is wrong with this code?\n```java\ntry {\n    int a = 5;\n} catch (ArithmeticException e) {\n    System.out.println(a);\n}\n```",
+    "options": [
+      "ArithmeticException cannot be caught",
+      "Cannot find symbol: variable 'a' is local to the try block and cannot be accessed inside the catch block",
+      "a is not divided",
+      "e is not used"
+    ],
+    "answer": 1,
+    "explain": "Variables declared inside the `try` block are block-scoped to that block. They are out of scope inside `catch` and `finally` blocks.",
+    "topic": "Try Block Variable Scope Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught referencing try-scoped variable in catch block.",
+    "weakness": "Variables declared inside a try block are out of scope in catch and finally blocks."
+  },
+  {
+    "q": "Why does this multi-catch block fail to compile?\n```java\ntry {\n    // work\n} catch (IOException | SQLException e) {\n    e = new IOException();\n}\n```",
+    "options": [
+      "SQLException is not imported",
+      "Cannot assign a value to final variable 'e': multi-catch parameters are implicitly `final` and cannot be reassigned",
+      "catch cannot take new",
+      "IOException has no no-arg constructor"
+    ],
+    "answer": 1,
+    "explain": "In Java multi-catch, the exception parameter `e` is implicitly `final`. Reassigning `e` causes a compilation error.",
+    "topic": "Multi-Catch Parameter Reassignment Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands that multi-catch parameters are implicitly final.",
+    "weakness": "Multi-catch parameters are implicitly `final` and cannot be reassigned."
+  },
+  {
+    "q": "What error occurs in this method definition?\n```java\npublic void process() throw Exception {\n    // work\n}\n```",
+    "options": [
+      "Exception cannot be thrown",
+      "Syntax error: the keyword for method declarations is `throws` (plural), not `throw`",
+      "process must return int",
+      "Missing try block"
+    ],
+    "answer": 1,
+    "explain": "In method headers, use `throws Exception` (plural). `throw` (singular) is an executable statement inside method bodies.",
+    "topic": "Throw vs Throws Keyword Mix-up",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught `throw` keyword mistakenly used in method header.",
+    "weakness": "Use `throws` in method headers and `throw` inside method bodies."
+  },
+  {
+    "q": "Why does this code cause a compilation error?\n```java\ntry {\n    String s = \"test\";\n} catch (java.io.IOException e) {\n    System.out.println(e);\n}\n```",
+    "options": [
+      "s is not used",
+      "Unreachable catch block: exception `IOException` is never thrown in the body of the corresponding try statement",
+      "IOException cannot be caught",
+      "String cannot be in try"
+    ],
+    "answer": 1,
+    "explain": "The compiler strictly forbids catching a checked exception that is provably never thrown by any statement within the `try` block.",
+    "topic": "Unreachable Catch for Unthrown Checked Exception",
+    "type": "error",
+    "level": "hard",
+    "strength": "Recognized compiler rejection of catching checked exceptions never thrown in try block.",
+    "weakness": "The compiler rejects catching checked exceptions that cannot possibly be thrown in the try block."
+  },
+  {
+    "q": "What is the compilation issue in this code?\n```java\ntry {\n    int x = 1;\n} finally {\n    System.out.println(\"Finally\");\n} catch (Exception e) {\n    System.out.println(\"Catch\");\n}\n```",
+    "options": [
+      "try-finally cannot have catch",
+      "Syntax error: `catch` block cannot follow `finally`; `catch` blocks must precede `finally`",
+      "println cannot be in finally",
+      "x is not modified"
+    ],
+    "answer": 1,
+    "explain": "In a `try-catch-finally` statement, all `catch` blocks must appear BEFORE the `finally` block.",
+    "topic": "Misplaced Catch Block After Finally",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted catch block placed after finally block.",
+    "weakness": "Catch blocks must strictly precede the `finally` block."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\npublic class CustomException extends Throwable {\n    public void test() {\n        throw this;\n    }\n}\n// in caller:\npublic void run() {\n    new CustomException().test();\n}\n```",
+    "options": [
+      "CustomException cannot extend Throwable",
+      "Unreported exception `CustomException`: classes extending `Throwable` directly are treated as checked exceptions and must be declared or caught",
+      "throw this is illegal",
+      "test must return void"
+    ],
+    "answer": 1,
+    "explain": "`Throwable` and direct subclasses of `Throwable` (that do not extend `RuntimeException`) are checked exceptions and require handling.",
+    "topic": "Direct Throwable Subclass is Checked Exception",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands that direct subclasses of Throwable are checked.",
+    "weakness": "Direct subclasses of `Throwable` are checked exceptions requiring handling."
+  },
+  {
+    "q": "Identify the bug in this code:\n```java\nint x = 10;\ntry {\n    x = 20;\n    int y = 10 / 0;\n} catch (ArithmeticException e) {\n    // do nothing\n}\nSystem.out.println(x);\n```",
+    "options": [
+      "x is not updated",
+      "Swallowing exception: x becomes 20 before the exception occurs, and the exception is silently ignored, leaving system in unexpected state with no error logs",
+      "Compilation error",
+      "y is printed"
+    ],
+    "answer": 1,
+    "explain": "Swallowing the exception silently conceals the failure. While syntactically valid, it is a severe code defect.",
+    "topic": "Silent Exception Swallowing Bug",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized silent exception swallowing defect.",
+    "weakness": "Never swallow exceptions silently; log or handle them properly."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nclass Base {\n    public void load() throws java.io.IOException {}\n}\nclass Sub extends Base {\n    @Override\n    public void load() throws Exception {}\n}\n```",
+    "options": [
+      "IOException cannot be thrown",
+      "`load()` in `Sub` cannot override `load()` in `Base`: overridden method does not throw `Exception` (subclass cannot throw broader checked exception `Exception`)",
+      "Sub must be abstract",
+      "load must return int"
+    ],
+    "answer": 1,
+    "explain": "An overriding method cannot declare broader checked exceptions. `Exception` is broader than `IOException`, violating method overriding rules.",
+    "topic": "Broader Checked Exception in Overriding Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Spotted illegal broader checked exception in overriding method.",
+    "weakness": "Overriding methods cannot declare broader checked exceptions than the superclass method."
+  },
+  {
+    "q": "What runtime exception is thrown by `Integer.parseInt(\"abc\")`?\n",
+    "options": [
+      "`java.lang.NumberFormatException`",
+      "`InputMismatchException`",
+      "`ClassCastException`",
+      "`NullPointerException`"
+    ],
+    "answer": 0,
+    "explain": "`Integer.parseInt()` throws `NumberFormatException` (a subclass of `IllegalArgumentException`) when the string does not contain a parsable integer.",
+    "topic": "NumberFormatException",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified NumberFormatException on unparsable string.",
+    "weakness": "`Integer.parseInt()` throws `NumberFormatException` on invalid numeric strings."
+  },
+  {
+    "q": "Why does this code cause a compiler error?\n```java\npublic void check() {\n    throw null;\n}\n```",
+    "options": [
+      "throw cannot take null",
+      "It compiles! Throwing `null` is valid syntax, but throws a `NullPointerException` at runtime when executed",
+      "check must be static",
+      "check must return Object"
+    ],
+    "answer": 1,
+    "explain": "`throw null;` is syntactically valid in Java. However, at runtime the JVM attempts to dereference it to inspect the exception object, throwing a `NullPointerException`.",
+    "topic": "Throwing Null Literal Runtime Behavior",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that throw null compiles but raises NPE at runtime.",
+    "weakness": "`throw null` compiles cleanly but throws `NullPointerException` at runtime."
+  },
+  {
+    "q": "What is the issue with this custom exception?\n```java\npublic class MyException {\n    public MyException(String msg) {}\n}\n// in method:\nthrow new MyException(\"Error\");\n```",
+    "options": [
+      "msg cannot be string",
+      "Incompatible types: `MyException` cannot be converted to `java.lang.Throwable` (only subclasses of Throwable can be thrown)",
+      "new is illegal with exceptions",
+      "MyException has no constructor"
+    ],
+    "answer": 1,
+    "explain": "In Java, only classes that extend `java.lang.Throwable` (or `Exception`/`RuntimeException`) can be used with the `throw` keyword.",
+    "topic": "Non-Throwable Cannot Be Thrown Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught attempting to throw an object that does not extend Throwable.",
+    "weakness": "Classes thrown with `throw` must inherit from `java.lang.Throwable`."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\ntry {\n    int a = 5;\n} catch (Exception e) {\n    System.out.println(e);\n}\nSystem.out.println(e.getMessage());\n```",
+    "options": [
+      "a is not initialized",
+      "Cannot find symbol: variable 'e' is local to the catch block and out of scope outside it",
+      "getMessage() is private",
+      "e must be final"
+    ],
+    "answer": 1,
+    "explain": "The exception parameter `e` is scoped exclusively to its `catch` block. It cannot be accessed outside the block.",
+    "topic": "Catch Parameter Scope Leak Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized exception parameter out of scope outside catch block.",
+    "weakness": "Exception parameters declared in catch headers are local to that catch block."
+  },
+  {
+    "q": "What happens when running this code?\n```java\nString s = null;\nSystem.out.println(s.length());\n```",
+    "options": [
+      "Prints 0",
+      "Throws `java.lang.NullPointerException` at runtime",
+      "Prints null",
+      "Compilation error: s is null"
+    ],
+    "answer": 1,
+    "explain": "Attempting to invoke an instance method on a `null` reference throws `NullPointerException`.",
+    "topic": "NullPointerException on Null Method Call",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified NullPointerException when dereferencing null.",
+    "weakness": "Calling methods on a null reference throws `NullPointerException`."
+  },
+  {
+    "q": "Why does this code cause a compiler error?\n```java\npublic void divide(int a, int b) {\n    if (b == 0) {\n        throw new ArithmeticException(\"Zero\");\n        System.out.println(\"Failed\");\n    }\n}\n```",
+    "options": [
+      "ArithmeticException cannot take string",
+      "Unreachable statement: `System.out.println` appears immediately after an unconditional `throw` statement",
+      "b == 0 is invalid",
+      "divide must return int"
+    ],
+    "answer": 1,
+    "explain": "An unconditional `throw` statement terminates the current execution path immediately. Any statement placed directly after it is unreachable.",
+    "topic": "Unreachable Code After Throw",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught unreachable statement following unconditional throw.",
+    "weakness": "Statements placed immediately after an unconditional `throw` are unreachable."
+  },
+  {
+    "q": "What is the compilation issue in this code?\n```java\ntry {\n    // work\n} catch (IOException e) {\n} catch (IOException e) {\n}\n```",
+    "options": [
+      "IOException cannot be caught",
+      "Exception `IOException` has already been caught: duplicate catch block for the same exception type",
+      "e cannot be used twice",
+      "try is empty"
+    ],
+    "answer": 1,
+    "explain": "Multiple catch blocks cannot catch the exact same exception type within the same try statement.",
+    "topic": "Duplicate Catch Block Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized duplicate catch block for identical exception type.",
+    "weakness": "A try statement cannot have duplicate catch blocks for the same exception type."
+  },
+  {
+    "q": "Why does this code throw a runtime exception?\n```java\nint[] arr = new int[5];\nSystem.out.println(arr[-1]);\n```",
+    "options": [
+      "Returns 0",
+      "Throws `ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 5`",
+      "Returns null",
+      "Compilation error"
+    ],
+    "answer": 1,
+    "explain": "Negative indices are out of bounds in Java and throw `ArrayIndexOutOfBoundsException`.",
+    "topic": "Negative Index ArrayIndexOutOfBoundsException",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified ArrayIndexOutOfBoundsException on negative array index.",
+    "weakness": "Array indices must be non-negative; negative indices throw `ArrayIndexOutOfBoundsException`."
+  },
+  {
+    "q": "What error occurs in this code snippet?\n```java\nObject x = Integer.valueOf(42);\nString s = (String) x;\n```",
+    "options": [
+      "Prints null",
+      "Throws `ClassCastException: class java.lang.Integer cannot be cast to class java.lang.String`",
+      "Converts to \"42\"",
+      "Compilation error"
+    ],
+    "answer": 1,
+    "explain": "An `Integer` instance cannot be cast to `String`. It throws `ClassCastException` at runtime.",
+    "topic": "Integer to String ClassCastException",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified ClassCastException on invalid type cast.",
+    "weakness": "Casting incompatible types (Integer to String) throws `ClassCastException`."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\npublic class Test {\n    public static void main(String[] args) throws RuntimeException {\n        throw new Exception();\n    }\n}\n```",
+    "options": [
+      "RuntimeException cannot be declared in throws",
+      "Unreported exception `java.lang.Exception`: `main` declares `throws RuntimeException` (unchecked), but throws `Exception` (checked)",
+      "throw cannot be in main",
+      "Exception has no constructor"
+    ],
+    "answer": 1,
+    "explain": "`Exception` is a checked exception. Declaring `throws RuntimeException` does not satisfy the compiler because `Exception` is a superclass of `RuntimeException`, not a subclass.",
+    "topic": "Insufficient Throws Declaration Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands that declaring RuntimeException does not cover checked Exception.",
+    "weakness": "Declaring `throws RuntimeException` does not satisfy checked `Exception` throws."
+  },
+  {
+    "q": "Identify the bug in this code:\n```java\ntry {\n    int res = 10 / 0;\n} finally {\n    return;\n}\n```",
+    "options": [
+      "finally cannot have return",
+      "The `return;` statement in `finally` swallows and completely discards the `ArithmeticException`, making the method return silently without throwing",
+      "Compilation error",
+      "Throws ArithmeticException"
+    ],
+    "answer": 1,
+    "explain": "Executing `return` in `finally` aborts exception propagation, discarding the `ArithmeticException`. Callers will never know an error occurred.",
+    "topic": "Swallowed Exception via Finally Return",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands that finally return discards active exceptions.",
+    "weakness": "A `return` in `finally` discards any pending exception, hiding errors."
+  },
+  {
+    "q": "What is the compilation issue in this code?\n```java\npublic class Custom extends Exception {\n    public Custom(String msg) {\n        // no call to super\n    }\n}\n```",
+    "options": [
+      "Custom must be final",
+      "It compiles cleanly! The compiler automatically inserts `super();`, though calling `super(msg)` is recommended to preserve the message string in `getMessage()`",
+      "msg cannot be string",
+      "Custom cannot extend Exception"
+    ],
+    "answer": 1,
+    "explain": "The code compiles cleanly. However, omitting `super(msg)` means `getMessage()` will return `null`. It is a semantic bug, not a compilation error.",
+    "topic": "Custom Exception Missing super(msg) Semantic Trap",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized that missing super(msg) compiles but leaves getMessage() as null.",
+    "weakness": "Always pass error message to `super(msg)` in custom exception constructors."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nvoid test() {\n    try {\n        int x = 5;\n    } catch (NullPointerException e1) {\n    } catch (NullPointerException e2) {\n    }\n}\n```",
+    "options": [
+      "NPE cannot be caught",
+      "Compilation error: exception `NullPointerException` has already been caught",
+      "e1 and e2 must have same name",
+      "try has no code"
+    ],
+    "answer": 1,
+    "explain": "Duplicate catch blocks for the exact same exception type violate Java syntax and are rejected at compile time.",
+    "topic": "Duplicate Catch Type Syntax Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught duplicate catch type declaration.",
+    "weakness": "Cannot declare duplicate catch blocks for the same exception type."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\ntry {\n    System.out.print(\"A \");\n    int x = 10 / 0;\n    System.out.print(\"B \");\n} catch (ArithmeticException e) {\n    System.out.print(\"C \");\n} finally {\n    System.out.print(\"D \");\n}\nSystem.out.print(\"E \");\n```",
+    "options": [
+      "A C D E ",
+      "A B C D E ",
+      "A D E ",
+      "A C D "
+    ],
+    "answer": 0,
+    "explain": "1) Prints `\"A \"`. 2) `10 / 0` throws `ArithmeticException` (skipping `\"B \"`). 3) Catch block runs, printing `\"C \"`. 4) Finally block runs, printing `\"D \"`. 5) Normal flow resumes, printing `\"E \"`. Output: `A C D E `.",
+    "topic": "Try-Catch-Finally Execution Order Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced try-catch-finally execution flow.",
+    "weakness": "Execution flow: Try (before error) -> Catch -> Finally -> Following code: `A C D E `."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic static int test() {\n    try {\n        return 1;\n    } finally {\n        return 2;\n    }\n}\npublic static void main(String[] args) {\n    System.out.println(test());\n}\n```",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "Compilation error"
+    ],
+    "answer": 1,
+    "explain": "The `finally` block always executes before the method returns. The `return 2;` in `finally` overwrites the pending `return 1;`. Outputs 2.",
+    "topic": "Finally Return Overrides Try Return Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Recognized that return in finally overrides return in try.",
+    "weakness": "`finally` executes before method returns; `return 2` in finally overrides `return 1`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic static int compute() {\n    int x = 10;\n    try {\n        return x;\n    } finally {\n        x = 20;\n    }\n}\npublic static void main(String[] args) {\n    System.out.println(compute());\n}\n```",
+    "options": [
+      "10",
+      "20",
+      "30",
+      "0"
+    ],
+    "answer": 0,
+    "explain": "`return x;` evaluates `x` (10) and places 10 on the operand stack for return. The `finally` block runs, mutating local variable `x = 20`, but the return value is already fixed at 10. Outputs 10.",
+    "topic": "Primitive Return Value Latching in Finally Output",
+    "type": "output",
+    "level": "hard",
+    "strength": "Mastered primitive return value latching prior to finally execution.",
+    "weakness": "The return value (10) is evaluated before finally runs; mutating local variable in finally does not alter the return value."
+  },
+  {
+    "q": "What does the following code print?\n```java\ntry {\n    System.out.print(\"1 \");\n    int[] arr = new int[2];\n    arr[5] = 10;\n    System.out.print(\"2 \");\n} catch (ArrayIndexOutOfBoundsException e) {\n    System.out.print(\"3 \");\n} finally {\n    System.out.print(\"4 \");\n}\n```",
+    "options": [
+      "1 3 4 ",
+      "1 2 3 4 ",
+      "1 4 ",
+      "1 2 4 "
+    ],
+    "answer": 0,
+    "explain": "`arr[5]` throws `ArrayIndexOutOfBoundsException`, skipping \"2 \". Catch block prints `\"3 \"`. Finally block prints `\"4 \"`. Output: `1 3 4 `.",
+    "topic": "ArrayIndexOutOfBoundsException Catch Flow",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced array bounds exception catch flow.",
+    "weakness": "Exception skips line 2, executes catch (3), then finally (4): `1 3 4 `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    System.out.print(\"Try \");\n} finally {\n    System.out.print(\"Finally \");\n}\nSystem.out.print(\"Done \");\n```",
+    "options": [
+      "Try Finally Done ",
+      "Try Done ",
+      "Finally Done ",
+      "Try Done Finally "
+    ],
+    "answer": 0,
+    "explain": "Without exceptions, `try` runs (`\"Try \"`), then `finally` runs (`\"Finally \"`), then subsequent code executes (`\"Done \"`). Output: `Try Finally Done `.",
+    "topic": "Clean Try-Finally Flow",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced normal execution through try-finally block.",
+    "weakness": "Normal flow executes try body, then finally, then resumes: `Try Finally Done `."
+  },
+  {
+    "q": "What does this code print?\n```java\ntry {\n    throw new NullPointerException(\"Boom\");\n} catch (Exception e) {\n    System.out.println(e.getMessage());\n}\n```",
+    "options": [
+      "Boom",
+      "NullPointerException",
+      "null",
+      "Boom Boom"
+    ],
+    "answer": 0,
+    "explain": "`e.getMessage()` returns the detail message string passed to the constructor: `\"Boom\"`.",
+    "topic": "Exception getMessage Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Extracted exception message string via getMessage().",
+    "weakness": "`e.getMessage()` outputs the message string `Boom`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint count = 0;\ntry {\n    count = 1;\n    throw new Exception();\n} catch (Exception e) {\n    count = 2;\n} finally {\n    count = 3;\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "0"
+    ],
+    "answer": 2,
+    "explain": "`count` becomes 1, then exception jumps to catch where `count` becomes 2. Finally block executes unconditionally, setting `count = 3`. Outputs 3.",
+    "topic": "Variable State Tracking Across Try-Catch-Finally",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked sequential variable assignments across exception blocks.",
+    "weakness": "Finally block executes last, setting `count = 3`."
+  },
+  {
+    "q": "What does this code print?\n```java\ntry {\n    int a = 10 / 2;\n    System.out.print(\"Success \");\n} catch (ArithmeticException e) {\n    System.out.print(\"Catch \");\n} finally {\n    System.out.print(\"Finally \");\n}\n```",
+    "options": [
+      "Success Finally ",
+      "Success ",
+      "Catch Finally ",
+      "Success Catch Finally "
+    ],
+    "answer": 0,
+    "explain": "No exception occurs. The try block prints `\"Success \"`. Catch block is skipped. Finally block executes, printing `\"Finally \"`. Output: `Success Finally `.",
+    "topic": "No-Exception Try-Catch-Finally Path",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced exception-free execution path.",
+    "weakness": "Without exceptions, catch is bypassed and finally executes: `Success Finally `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    try {\n        throw new ArithmeticException(\"Inner\");\n    } finally {\n        System.out.print(\"F1 \");\n    }\n} catch (Exception e) {\n    System.out.print(\"C1 \");\n}\n```",
+    "options": [
+      "F1 C1 ",
+      "C1 F1 ",
+      "F1 ",
+      "C1 "
+    ],
+    "answer": 0,
+    "explain": "The inner exception triggers the inner `finally` block first, printing `\"F1 \"`. The exception propagates to the outer `catch` block, printing `\"C1 \"`. Output: `F1 C1 `.",
+    "topic": "Nested Try-Finally Propagation Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced exception propagation through nested try-finally blocks.",
+    "weakness": "Inner finally runs before outer catch block executes: `F1 C1 `."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic static void m() {\n    try {\n        System.out.print(\"A \");\n        return;\n    } finally {\n        System.out.print(\"B \");\n    }\n}\npublic static void main(String[] args) {\n    m();\n    System.out.print(\"C \");\n}\n```",
+    "options": [
+      "A B C ",
+      "A C B ",
+      "A B ",
+      "A C "
+    ],
+    "answer": 0,
+    "explain": "`m()` prints `\"A \"`. The `return` statement triggers `finally`, which prints `\"B \"`. Method returns to `main`, which prints `\"C \"`. Output: `A B C `.",
+    "topic": "Return Triggers Finally Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Understands that return in try executes finally before returning to caller.",
+    "weakness": "Return in try executes finally before returning: `A B C `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    throw new IllegalArgumentException();\n} catch (NullPointerException | ArithmeticException e) {\n    System.out.print(\"One \");\n} catch (RuntimeException e) {\n    System.out.print(\"Two \");\n}\n```",
+    "options": [
+      "One ",
+      "Two ",
+      "One Two ",
+      "Uncaught exception"
+    ],
+    "answer": 1,
+    "explain": "`IllegalArgumentException` does not match `NullPointerException` or `ArithmeticException`. It falls through to `catch (RuntimeException e)`, printing `\"Two \"`.",
+    "topic": "Multi-Catch Mismatch Fall-Through Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced exception matching and fall-through across multiple catch blocks.",
+    "weakness": "`IllegalArgumentException` bypasses first catch and matches `RuntimeException`: `Two `."
+  },
+  {
+    "q": "What does this code print?\n```java\ntry {\n    int[] a = null;\n    System.out.print(a.length);\n} catch (NullPointerException e) {\n    System.out.print(\"Null \");\n} catch (Exception e) {\n    System.out.print(\"Ex \");\n}\n```",
+    "options": [
+      "Null ",
+      "Ex ",
+      "0 ",
+      "Null Ex "
+    ],
+    "answer": 0,
+    "explain": "`a.length` on a null reference throws `NullPointerException`, caught by the first matching catch block. Prints `Null `.",
+    "topic": "NullPointerException First Match Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Identified first matching catch block for NullPointerException.",
+    "weakness": "The first matching catch block (`NullPointerException`) handles the error: `Null `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    throw new Exception(\"Error1\");\n} catch (Exception e) {\n    try {\n        throw new Exception(\"Error2\");\n    } catch (Exception ex) {\n        System.out.print(ex.getMessage() + \" \");\n    }\n    System.out.print(e.getMessage());\n}\n```",
+    "options": [
+      "Error2 Error1",
+      "Error1 Error2",
+      "Error1",
+      "Error2"
+    ],
+    "answer": 0,
+    "explain": "Inner catch handles `ex` and prints `\"Error2 \"`. Then outer catch prints `e.getMessage()` (`\"Error1\"`). Output: `Error2 Error1`.",
+    "topic": "Nested Catch Block Scopes Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced separate exception scopes in nested try-catch blocks.",
+    "weakness": "Inner catch prints Error2, then outer code prints Error1: `Error2 Error1`."
+  },
+  {
+    "q": "What does this code print?\n```java\nclass MyException extends Exception {\n    public MyException(String m) { super(m); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            throw new MyException(\"Custom\");\n        } catch (MyException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}\n```",
+    "options": [
+      "Custom",
+      "MyException",
+      "null",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "Custom exception passes \"Custom\" to `super(m)`. `e.getMessage()` returns `\"Custom\"`.",
+    "topic": "Custom Exception getMessage Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Retrieved custom exception message passed to super constructor.",
+    "weakness": "`e.getMessage()` outputs `Custom`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    int x = 5 / 0;\n} catch (ArithmeticException e) {\n    System.out.print(\"Catch1 \");\n    try {\n        int y = 5 / 0;\n    } catch (ArithmeticException ex) {\n        System.out.print(\"Catch2 \");\n    }\n}\n```",
+    "options": [
+      "Catch1 Catch2 ",
+      "Catch1 ",
+      "Catch2 ",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "Outer catch runs, printing `\"Catch1 \"`. Inner division throws another exception, caught by the inner catch, printing `\"Catch2 \"`. Output: `Catch1 Catch2 `.",
+    "topic": "Exception in Catch Block Handled by Nested Try",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced exception thrown and caught within a catch block.",
+    "weakness": "Exception thrown inside catch is caught by inner try-catch: `Catch1 Catch2 `."
+  },
+  {
+    "q": "What does this code print?\n```java\nString s = \"123a\";\ntry {\n    int n = Integer.parseInt(s);\n    System.out.println(n);\n} catch (NumberFormatException e) {\n    System.out.println(\"Invalid\");\n}\n```",
+    "options": [
+      "Invalid",
+      "123",
+      "0",
+      "NumberFormatException"
+    ],
+    "answer": 0,
+    "explain": "`\"123a\"` contains the non-numeric character 'a', throwing `NumberFormatException`. Caught and prints `Invalid`.",
+    "topic": "NumberFormatException Catch Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Caught NumberFormatException from Integer.parseInt.",
+    "weakness": "Unparsable string throws NumberFormatException, caught printing `Invalid`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint x = 0;\ntry {\n    x = 1;\n    if (x == 1) throw new RuntimeException();\n    x = 2;\n} catch (RuntimeException e) {\n    x = 3;\n}\nSystem.out.println(x);\n```",
+    "options": [
+      "3",
+      "1",
+      "2",
+      "0"
+    ],
+    "answer": 0,
+    "explain": "`x` is set to 1. Exception is thrown, skipping `x = 2`. Catch block executes and sets `x = 3`. Outputs 3.",
+    "topic": "Execution Branch Flow on Throw Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked variable assignment skipping on thrown exception.",
+    "weakness": "Exception skips `x = 2` and assigns `x = 3` in catch."
+  },
+  {
+    "q": "What does this code print?\n```java\ntry {\n    throw new Exception(\"A\");\n} catch (Exception e) {\n    System.out.print(e.getMessage() + \" \");\n    throw new RuntimeException(\"B\");\n} finally {\n    System.out.print(\"C \");\n}\n```",
+    "options": [
+      "A C followed by uncaught RuntimeException B",
+      "A B C ",
+      "A C ",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "Catch block prints `\"A \"` and throws `RuntimeException(\"B\")`. Before the exception propagates out, `finally` executes, printing `\"C \"`. Then `RuntimeException: B` terminates the program.",
+    "topic": "Finally Executes Before Rethrown Exception Propagates",
+    "type": "output",
+    "level": "hard",
+    "strength": "Mastered that finally executes even when a catch block rethrows an exception.",
+    "weakness": "`finally` executes before rethrown exception propagates out: prints `A C ` then throws."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic static void f() throws Exception {\n    throw new Exception(\"Fail\");\n}\npublic static void main(String[] args) {\n    try {\n        f();\n    } catch (Exception e) {\n        System.out.println(\"Caught in main\");\n    }\n}\n```",
+    "options": [
+      "Caught in main",
+      "Fail",
+      "Error",
+      "Nothing"
+    ],
+    "answer": 0,
+    "explain": "Method `f()` throws an exception that propagates to `main`, where it is caught and prints `Caught in main`.",
+    "topic": "Propagated Exception Caught in Caller",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced exception propagation caught by caller method.",
+    "weakness": "Exception propagates to caller's try-catch block: `Caught in main`."
+  },
+  {
+    "q": "What does this code print?\n```java\ntry {\n    int[] arr = {1, 2};\n    System.out.print(arr[1] + \" \");\n} finally {\n    System.out.print(\"F \");\n}\n```",
+    "options": [
+      "2 F ",
+      "F 2 ",
+      "2 ",
+      "F "
+    ],
+    "answer": 0,
+    "explain": "`arr[1]` is 2 (prints `\"2 \"`). Finally block prints `\"F \"`. Output: `2 F `.",
+    "topic": "Normal Flow with Valid Array Access Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced valid array access through try-finally block.",
+    "weakness": "Valid access prints 2, followed by finally block F: `2 F `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    throw new ArithmeticException();\n} catch (Exception e) {\n    System.out.println(e.getClass().getSimpleName());\n}\n```",
+    "options": [
+      "ArithmeticException",
+      "Exception",
+      "Throwable",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`e.getClass().getSimpleName()` inspects the runtime class of the caught object, which is `ArithmeticException`.",
+    "topic": "Exception Runtime Class Introspection Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Retrieved runtime exception class name.",
+    "weakness": "`getClass().getSimpleName()` returns `ArithmeticException`."
+  },
+  {
+    "q": "What does this code print?\n```java\nint res = 0;\ntry {\n    res = 100 / 10;\n} catch (Exception e) {\n    res = -1;\n} finally {\n    res += 5;\n}\nSystem.out.println(res);\n```",
+    "options": [
+      "15",
+      "10",
+      "-1",
+      "4"
+    ],
+    "answer": 0,
+    "explain": "Try block succeeds: `res = 10`. Catch is bypassed. Finally block executes: `res += 5` -> `10 + 5 = 15`. Outputs 15.",
+    "topic": "Try Success with Finally Arithmetic",
+    "type": "output",
+    "level": "easy",
+    "strength": "Computed cumulative variable changes in try and finally.",
+    "weakness": "`10 + 5 = 15`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    String s = null;\n    s.toString();\n} catch (NullPointerException e) {\n    System.out.print(\"NPE \");\n} catch (RuntimeException e) {\n    System.out.print(\"RE \");\n}\n```",
+    "options": [
+      "NPE ",
+      "RE ",
+      "NPE RE ",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`NullPointerException` matches the first specific catch block (`NPE `). The second catch block is skipped. Outputs `NPE `.",
+    "topic": "Catch Specificity First Match Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Identified exact match in specific catch block.",
+    "weakness": "First matching catch block (`NPE `) executes."
+  },
+  {
+    "q": "What does this code print?\n```java\ntry {\n    int a = Integer.parseInt(\"10\");\n    int b = Integer.parseInt(\"20\");\n    System.out.println(a + b);\n} catch (NumberFormatException e) {\n    System.out.println(\"Err\");\n}\n```",
+    "options": [
+      "30",
+      "1020",
+      "Err",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "Both string tokens parse cleanly to integers 10 and 20. `10 + 20 = 30`. Outputs 30.",
+    "topic": "Successful Number Parsing Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Computed sum of successfully parsed numeric tokens.",
+    "weakness": "`10 + 20 = 30`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ntry {\n    throw new RuntimeException(\"Test\");\n} catch (RuntimeException e) {\n    System.out.println(e.getCause());\n}\n```",
+    "options": [
+      "null",
+      "Test",
+      "RuntimeException",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "When an exception is instantiated without a cause parameter, `e.getCause()` returns `null`.",
+    "topic": "Unchained Exception getCause Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Understands that unchained exceptions have null getCause().",
+    "weakness": "`e.getCause()` returns `null` when no underlying cause exception is wrapped."
+  },
+  {
+    "q": "You are building an ATM software application in Java. A customer attempts to withdraw RM 1,000 from an account with only RM 200. What is the standard object-oriented exception handling approach?",
+    "options": [
+      "Return `-1` and let the caller guess what went wrong",
+      "Throw a custom domain exception `throw new InsufficientFundsException(\"Required: 1000, Available: 200\");`",
+      "Print 'Error' to the screen and continue processing",
+      "Call `System.exit(0)` immediately"
+    ],
+    "answer": 1,
+    "explain": "Throwing a custom business exception (`InsufficientFundsException`) cleanly communicates the failure reason to the caller with structured context, preventing corrupted state.",
+    "topic": "Custom Business Exception Design",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Designed custom domain exception for business rule violations.",
+    "weakness": "Use custom domain exceptions (e.g. `InsufficientFundsException`) to signal business rule violations."
+  },
+  {
+    "q": "A web application reads a JSON configuration file `config.json` on startup. If the file is missing, the application cannot function and must abort startup with a clear message. Why should `FileNotFoundException` be caught and handled at the application bootstrap entry point?",
+    "options": [
+      "To delete the database",
+      "To log a descriptive, user-friendly error message informing the administrator of the missing configuration file, rather than spewing an unhandled raw stack trace crash",
+      "To allow the app to run without configuration",
+      "Because Java requires all files to be optional"
+    ],
+    "answer": 1,
+    "explain": "Catching checked I/O exceptions at application boundaries allows logging clear, actionable diagnostic guidance for operators rather than crashing abruptly with raw stack traces.",
+    "topic": "Graceful Bootstrap Failure Handling",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Handled startup configuration exceptions with clear operator diagnostics.",
+    "weakness": "Catch startup exceptions to display actionable diagnostic messages to administrators."
+  },
+  {
+    "q": "A REST API client sends payment requests over the internet. Network timeouts (`SocketTimeoutException`) occur intermittently due to mobile connectivity drops. What is the resilient exception handling pattern?",
+    "options": [
+      "Crash the mobile app on the first timeout",
+      "Retry pattern: catch the timeout exception in a loop with exponential backoff (e.g. up to 3 retries), only failing if all retries are exhausted",
+      "Ignore the error and assume payment succeeded",
+      "Throw an OutOfMemoryError"
+    ],
+    "answer": 1,
+    "explain": "Transient network exceptions should be handled using retry loops with exponential backoff before surfacing errors to the user.",
+    "topic": "Transient Network Retry Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied exponential backoff retry pattern for transient I/O exceptions.",
+    "weakness": "Catch transient network exceptions and retry with exponential backoff before aborting."
+  },
+  {
+    "q": "A banking service executes a multi-step fund transfer (deducting from Account A, crediting Account B). If crediting Account B throws an unexpected exception, how does exception handling guarantee transactional integrity?",
+    "options": [
+      "Ignore the exception and let Account B stay empty",
+      "Catch the exception, execute a compensating transaction (rollback) to refund Account A, and rethrow a `TransferFailedException`",
+      "Restart the JVM",
+      "Call System.gc()"
+    ],
+    "answer": 1,
+    "explain": "When a multi-step operation fails midway, catching the exception allows rolling back previous operations to maintain database consistency before propagating the error.",
+    "topic": "Transactional Compensating Rollback Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Implemented compensating rollback in multi-step business transactions.",
+    "weakness": "Catch exceptions midway through multi-step transactions to execute rollback actions before rethrowing."
+  },
+  {
+    "q": "A microservice catches a low-level `java.sql.SQLException: Connection timeout` when querying the user database. How should this exception be translated before passing it to the UI presentation layer?",
+    "options": [
+      "Expose raw SQL query text and database port to the user in a popup",
+      "Exception Translation (Chaining): wrap the low-level technical exception into a domain exception: `throw new ServiceUnavailableException(\"User service temporarily unavailable\", sqlEx);`",
+      "Ignore the exception and return null",
+      "Throw an Error"
+    ],
+    "answer": 1,
+    "explain": "Exception translation shields calling layers from low-level database details, preventing information leakage while preserving the underlying cause for debugging.",
+    "topic": "Exception Translation & Information Hiding",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied exception translation to prevent leaking low-level infrastructure details.",
+    "weakness": "Translate low-level technical exceptions into high-level domain exceptions using exception chaining."
+  },
+  {
+    "q": "A student is writing an input validation function for user age. If the user enters a negative number or a value over 150, what built-in Java exception should be thrown?",
+    "options": [
+      "`NullPointerException`",
+      "`java.lang.IllegalArgumentException`",
+      "`ArithmeticException`",
+      "`ClassNotFoundException`"
+    ],
+    "answer": 1,
+    "explain": "`IllegalArgumentException` is the standard Java exception thrown to indicate that a method has been passed an illegal or inappropriate argument.",
+    "topic": "IllegalArgumentException Validation Idiom",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Selected IllegalArgumentException for invalid method parameters.",
+    "weakness": "Throw `IllegalArgumentException` when method arguments fail domain validation rules."
+  },
+  {
+    "q": "A video game inventory system has a method `equipItem(int slotIndex)`. If the player provides an index that exceeds the inventory array size, what exception should be thrown?",
+    "options": [
+      "`java.lang.IndexOutOfBoundsException`",
+      "`FileNotFoundException`",
+      "`ArithmeticException`",
+      "`ClassCastException`"
+    ],
+    "answer": 0,
+    "explain": "`IndexOutOfBoundsException` signals that an index is out of range, making it the idiomatic choice for collection and array index violations.",
+    "topic": "IndexOutOfBoundsException for Bounded State",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Selected IndexOutOfBoundsException for out-of-range slot indices.",
+    "weakness": "Throw `IndexOutOfBoundsException` when requested indices violate collection capacity."
+  },
+  {
+    "q": "A user attempts to call `.start()` on a `Thread` or media player that has already been stopped and disposed of. What standard Java runtime exception represents calling a method when the object is in an invalid state?",
+    "options": [
+      "`IllegalArgumentException`",
+      "`java.lang.IllegalStateException`",
+      "`NullPointerException`",
+      "`SecurityException`"
+    ],
+    "answer": 1,
+    "explain": "`IllegalStateException` signals that a method was invoked at an inappropriate time, or that the object environment is in an improper state for the requested operation.",
+    "topic": "IllegalStateException for State Invariants",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Selected IllegalStateException for invalid object lifecycle states.",
+    "weakness": "Throw `IllegalStateException` when an object is in an inappropriate lifecycle state for the requested operation."
+  },
+  {
+    "q": "A medical patient database encrypts records on disk. When decrypting a patient record, a checksum mismatch indicates the file has been tampered with. Why should the decryptor throw an exception rather than returning partially corrupted data?",
+    "options": [
+      "Exceptions make the code run faster",
+      "Fail-Fast Principle: returning corrupted medical data could lead to fatal clinical misdiagnoses; failing fast immediately alerts clinicians to the data integrity breach",
+      "Medical records cannot have checksums",
+      "Java requires all files to be deleted"
+    ],
+    "answer": 1,
+    "explain": "The Fail-Fast principle dictates that systems should immediately abort on corrupted data to prevent catastrophic downstream consequences.",
+    "topic": "Fail-Fast Security Principle",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Applied the Fail-Fast principle to protect critical data integrity.",
+    "weakness": "Adhere to the Fail-Fast principle: throw exceptions immediately upon detecting corrupted state."
+  },
+  {
+    "q": "A batch import worker reads a CSV file with 10,000 rows. A developer uses `try { ... } catch (Exception e) {}` inside the loop with an empty catch block. What consequence will this have in production?",
+    "options": [
+      "The file import will be twice as fast",
+      "Silent data loss: defective rows with missing fields will fail silently without inserting into the database, with zero log records to alert the operations team",
+      "The computer will run out of memory",
+      "The CSV will be deleted automatically"
+    ],
+    "answer": 1,
+    "explain": "Swallowing exceptions creates silent failures where lost records go completely undetected, causing serious data discrepancies in production.",
+    "topic": "Consequences of Swallowed Exceptions in Production",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Recognized the severe business impact of swallowing exceptions in batch processing.",
+    "weakness": "Never swallow exceptions; silent failures cause undetected data corruption and loss."
+  },
+  {
+    "q": "A developer writes a custom `UserNotFoundException`. Should it extend `Exception` (checked) or `RuntimeException` (unchecked) if the user ID comes from an external URL parameter where missing users are expected normal occurrences?",
+    "options": [
+      "Extend `Throwable` directly",
+      "Extend `RuntimeException` (or return `Optional<User>`): checked exceptions should not be used for expected, non-fatal flow control conditions",
+      "Extend `Error`",
+      "Exceptions cannot be used for users"
+    ],
+    "answer": 1,
+    "explain": "Modern Java best practices discourage using checked exceptions for routine control flow. Use `RuntimeException` or `Optional<User>` instead.",
+    "topic": "Checked vs Unchecked Design Choice",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands modern Java preferences for RuntimeException and Optional over checked exceptions for flow control.",
+    "weakness": "Use unchecked exceptions or `Optional<T>` for expected business alternatives instead of checked exceptions."
+  },
+  {
+    "q": "A banking login system locks a user account after 3 consecutive failed password attempts. What custom exception cleanly models this scenario for the authentication controller?",
+    "options": [
+      "`AccountLockedException extends AuthenticationException`",
+      "`NullPointerException`",
+      "`ArithmeticException`",
+      "`ArrayIndexOutOfBoundsException`"
+    ],
+    "answer": 0,
+    "explain": "Creating a specific exception hierarchy (`AccountLockedException extends AuthenticationException`) allows the UI controller to display a dedicated 'Account Locked' screen.",
+    "topic": "Custom Authentication Exception Hierarchy",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Designed specific domain exception hierarchy for authentication flows.",
+    "weakness": "Model specific failure modes with dedicated domain exceptions (e.g. `AccountLockedException`)."
+  },
+  {
+    "q": "A web server handles thousands of concurrent HTTP requests. If one request thread throws an unhandled `RuntimeException`, does it crash the entire web server?",
+    "options": [
+      "Yes, any unhandled exception crashes the entire operating system",
+      "No: Java threads are independent execution units; an uncaught exception terminates only that individual request thread, while the server's thread pool continues serving other users",
+      "All memory is wiped",
+      "The server enters read-only mode"
+    ],
+    "answer": 1,
+    "explain": "Threads execute independently. An unhandled exception terminates only the failing thread; the application server continues operating.",
+    "topic": "Thread Isolation Under Failure",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands thread-level exception isolation in multi-threaded servers.",
+    "weakness": "Unhandled exceptions terminate only the failing thread; sibling threads continue running."
+  },
+  {
+    "q": "An IoT smart thermostat connects to Wi-Fi. In the network connection loop, why should resources like sockets be closed in a try-with-resources statement rather than an unmanaged loop?",
+    "options": [
+      "Sockets close automatically after 1 second",
+      "If a connection timeout or network glitch throws an exception, unclosed sockets leak OS file descriptors and socket handles, eventually exhausting system resources",
+      "Wi-Fi networks require try-with-resources",
+      "Sockets cannot throw exceptions"
+    ],
+    "answer": 1,
+    "explain": "Leaking socket descriptors starves the operating system of network ports, eventually causing socket exhaustion (`Too many open files`). Try-with-resources guarantees closure.",
+    "topic": "Socket Descriptor Leak Prevention",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Prevented operating system socket descriptor exhaustion with try-with-resources.",
+    "weakness": "Always manage network sockets and file streams with try-with-resources to prevent descriptor leaks."
+  },
+  {
+    "q": "A developer is implementing a database repository. When a query fails, they catch `SQLException` and log it. What is the recommended way to log the exception object using modern logging frameworks (SLF4J / Logback)?",
+    "options": [
+      "`logger.error(e.getMessage());` (Loses full stack trace!)",
+      "`logger.error(\"Database query failed for user {}\", userId, e);` (Logs context and passes exception object to capture full stack trace)",
+      "`System.out.println(\"Error\");`",
+      "`e.toString();`"
+    ],
+    "answer": 1,
+    "explain": "Passing the exception object `e` as the final argument in logger calls captures the full stack trace, root causes, and line numbers in server logs.",
+    "topic": "Modern Logging Best Practice with Stack Traces",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied SLF4J logging best practice to preserve full stack trace context.",
+    "weakness": "Pass the exception object as the last argument in logger calls to preserve full stack trace diagnostics."
+  },
+  {
+    "q": "A high-speed trading system validates stock trade orders. A method checks: `quantity > 0`, `ticker != null`, `price > 0.0`. If any check fails, what exception should be thrown?",
+    "options": [
+      "`IllegalArgumentException` with a specific descriptive error message",
+      "`NullPointerException` for all three",
+      "`ArithmeticException`",
+      "`ClassNotFoundException`"
+    ],
+    "answer": 0,
+    "explain": "`IllegalArgumentException` with a precise message (`\"Order quantity must be positive: \" + quantity`) makes debugging instantaneous for API consumers.",
+    "topic": "Precondition Enforcement with Descriptive Messages",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Formulated informative IllegalArgumentException messages for precondition violations.",
+    "weakness": "Include the invalid argument value in the `IllegalArgumentException` message for rapid diagnosis."
+  },
+  {
+    "q": "A file parser parses a configuration line `port = 8080`. When splitting by `=`, if the line is missing the `=` sign, `parts[1]` throws `ArrayIndexOutOfBoundsException`. How should the parser validate the split array?",
+    "options": [
+      "`if (parts.length < 2) throw new InvalidConfigurationException(\"Missing '=' in config line: \" + line);`",
+      "Ignore the line silently",
+      "Add a 0 to parts",
+      "Restart the parser"
+    ],
+    "answer": 0,
+    "explain": "Validating array length before accessing index 1 allows throwing a meaningful domain exception (`InvalidConfigurationException`) rather than a cryptic array bounds error.",
+    "topic": "Defensive Array Length Guard in Parsing",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Guarded array indexing to throw informative domain parsing exceptions.",
+    "weakness": "Check array length before indexing to provide descriptive parsing exceptions."
+  },
+  {
+    "q": "A cloud microservice calls a payment API. If the API returns HTTP 503 (Service Unavailable), the microservice throws `PaymentGatewayUnavailableException`. Should this exception be caught by the service layer or allowed to propagate to the global exception handler?",
+    "options": [
+      "Swallow it and return a fake success receipt",
+      "Allow it to propagate to a Global Exception Handler (e.g. `@ControllerAdvice` in Spring Boot) to map it into an HTTP 503 response and return standardized JSON error details to the client",
+      "Crash the whole application",
+      "Print to console only"
+    ],
+    "answer": 1,
+    "explain": "Centralized Global Exception Handlers intercept unhandled domain exceptions at the perimeter, translating them into standardized HTTP status codes and JSON error responses.",
+    "topic": "Global Exception Handling Architecture",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands centralized global exception handling architecture in web services.",
+    "weakness": "Propagate unhandled domain exceptions to global handlers for centralized HTTP response mapping."
+  },
+  {
+    "q": "A game developer creates a level loader. If a required texture file `player.png` is missing from the game directory, the loader catches `FileNotFoundException`. What should the loader do?",
+    "options": [
+      "Crash the computer",
+      "Substitute a default 'missing texture' checkerboard image, log a warning, and allow the level to continue loading",
+      "Delete the game save file",
+      "Infinite loop"
+    ],
+    "answer": 1,
+    "explain": "Graceful degradation: catching resource missing exceptions allows substituting fallback assets (e.g. placeholder textures) so games and apps remain playable.",
+    "topic": "Graceful Degradation Fallback Pattern",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied graceful degradation fallback on missing asset exceptions.",
+    "weakness": "Implement fallback defaults upon catching non-critical missing resource exceptions."
+  },
+  {
+    "q": "A junior programmer writes code that uses exceptions for normal loop control:\n```java\ntry {\n    while (true) {\n        list.get(i++);\n    }\n} catch (IndexOutOfBoundsException e) {}\n```\nWhy is this considered an atrocious anti-pattern?",
+    "options": [
+      "Because it compiles slowly",
+      "Exceptions are designed for exceptional, erroneous conditions; constructing and unwinding stack frames is orders of magnitude slower than a simple `i < list.size()` condition check, and it obscures real bugs",
+      "IndexOutOfBoundsException is checked",
+      "While loops cannot use try"
+    ],
+    "answer": 1,
+    "explain": "Using exceptions for flow control is extremely slow (due to stack trace capture overhead), unreadable, and masks legitimate bugs.",
+    "topic": "Exceptions for Flow Control Anti-Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands the performance and design cost of using exceptions for normal loop flow control.",
+    "weakness": "Never use exceptions for normal control flow; use standard loop conditions."
+  },
+  {
+    "q": "A payment processing class connects to an external gateway. To ensure that sensitive credit card numbers are NOT exposed in logs if an exception occurs, what practice should be followed in custom exception constructors?",
+    "options": [
+      "Store the raw card number in the exception message",
+      "Sanitize and mask sensitive data (e.g. `\"Card ending in \" + last4`) before constructing the exception message, ensuring raw card numbers never enter stack traces or logs",
+      "Never throw exceptions",
+      "Convert credit card to int"
+    ],
+    "answer": 1,
+    "explain": "Exception messages frequently get written to logs, APM tools, and consoles. Masking PII (Personally Identifiable Information) in exception messages prevents data leaks and compliance violations.",
+    "topic": "PII Sanitization in Exception Messages",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Applied PII data protection and masking in exception messaging.",
+    "weakness": "Sanitize sensitive data (passwords, card numbers) before including them in exception messages."
+  },
+  {
+    "q": "A multi-threaded analytics pipeline uses worker threads to process chunks. If a worker thread throws an uncaught exception, how can an application install a safety net to log it before the thread dies?",
+    "options": [
+      "`Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> logger.error(...))`",
+      "Wrap the whole operating system in try-catch",
+      "Make all threads daemon",
+      "Check thread status in a while loop"
+    ],
+    "answer": 0,
+    "explain": "`Thread.setDefaultUncaughtExceptionHandler()` establishes a global JVM callback for any thread that encounters an unhandled exception, ensuring diagnostics are captured before death.",
+    "topic": "UncaughtExceptionHandler Global Safety Net",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Used UncaughtExceptionHandler as a safety net for multi-threaded systems.",
+    "weakness": "Set an `UncaughtExceptionHandler` to log unexpected exceptions on worker threads before termination."
+  },
+  {
+    "q": "A database transaction manager executes: `connection.setAutoCommit(false);`. If an exception occurs during the SQL queries, where should `connection.rollback()` be placed?",
+    "options": [
+      "In the catch block: `catch (SQLException e) { connection.rollback(); throw e; }`",
+      "Inside the try block after the queries",
+      "In a static initialization block",
+      "In the main method"
+    ],
+    "answer": 0,
+    "explain": "The catch block executes when an error occurs, making it the appropriate place to roll back uncommitted transactions before propagating the failure.",
+    "topic": "Database Transaction Rollback in Catch",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Placed database rollback logic inside the catch block.",
+    "weakness": "Execute transaction rollback in the catch block before propagating errors."
+  },
+  {
+    "q": "An audio recording studio app records microphone input to a WAV file. If the user unplugs the microphone midway, a `HardwareDisconnectedException` is thrown. How does try-with-resources ensure the file header is written cleanly before closing?",
+    "options": [
+      "It doesn't close the file",
+      "The audio writer's `close()` method is called automatically, which finalizes the WAV file header (writing total sample frames recorded so far) before closing the file descriptor",
+      "It deletes the recording",
+      "It restarts the computer"
+    ],
+    "answer": 1,
+    "explain": "Automatic invocation of `close()` via try-with-resources gives encoders the opportunity to flush headers and finalize partial data safely before exiting.",
+    "topic": "Clean File Finalization via AutoCloseable",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands that AutoCloseable.close() executes file header finalization during unexpected aborts.",
+    "weakness": "Try-with-resources guarantees `close()` execution, allowing file writers to finalize headers safely."
+  },
+  {
+    "q": "A system architect audits code quality. A developer wrote a method with `public void load() throws Exception`. Why does declaring generic `throws Exception` degrade code quality?",
+    "options": [
+      "Java limits throws to 10 characters",
+      "It hides the specific failure modes from callers, forcing callers to either catch generic `Exception` (which catches runtime exceptions accidentally) or re-declare generic `throws Exception` (violating precise contract design)",
+      "Exception cannot be declared in throws",
+      "It makes methods abstract"
+    ],
+    "answer": 1,
+    "explain": "Declaring generic `throws Exception` erodes the precision of method contracts. Methods should declare specific exceptions (`throws IOException, SQLException`) so callers can handle each appropriately.",
+    "topic": "Specific Exception Declaration vs Generic Throws",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands the importance of specific exception declarations over generic `throws Exception`.",
+    "weakness": "Declare specific checked exceptions (`throws IOException`) rather than generic `throws Exception`."
+  }
+]

@@ -1,0 +1,1602 @@
+[
+  {
+    "q": "What does the `java.io.File` class represent in Java?",
+    "options": [
+      "A physical open data stream connected to disk",
+      "An abstract representation of file and directory pathnames, not the actual file contents",
+      "A database table on disk",
+      "A temporary RAM buffer"
+    ],
+    "answer": 1,
+    "explain": "`java.io.File` represents an abstract path to a file or directory on the file system. It provides metadata methods (`exists()`, `length()`, `delete()`), not methods to read/write file content bytes.",
+    "topic": "File Class Abstraction",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands that File represents pathnames, not open streams.",
+    "weakness": "`java.io.File` encapsulates pathnames and metadata, not file stream contents."
+  },
+  {
+    "q": "Which checked exception must be handled or declared when instantiating a `Scanner` to read from a `File` (`new Scanner(new File(\"data.txt\"))`)?",
+    "options": [
+      "`IOException` or `FileNotFoundException`",
+      "`NullPointerException`",
+      "`NoSuchElementException`",
+      "`FileCorruptedException`"
+    ],
+    "answer": 0,
+    "explain": "`new Scanner(File)` throws `java.io.FileNotFoundException` (a subclass of `IOException`), which is a checked exception that must be caught or declared in a `throws` clause.",
+    "topic": "FileNotFoundException Checked Exception",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows that opening a file with Scanner requires handling FileNotFoundException.",
+    "weakness": "`FileNotFoundException` is a checked exception required when opening files with Scanner."
+  },
+  {
+    "q": "What is the primary advantage of the Java 7 'try-with-resources' statement (`try (PrintWriter pw = new PrintWriter(file)) { ... }`)?",
+    "options": [
+      "It automatically executes file writes on a background thread",
+      "It guarantees that the resource is automatically closed when the try block exits, even if an exception occurs, eliminating resource leaks",
+      "It doubles file transfer speeds",
+      "It prevents FileNotFoundException"
+    ],
+    "answer": 1,
+    "explain": "Try-with-resources automatically closes any resource implementing `AutoCloseable`, ensuring streams are closed reliably without verbose `finally` blocks.",
+    "topic": "Try-With-Resources Architecture",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands automatic resource closure via try-with-resources.",
+    "weakness": "Try-with-resources guarantees automatic closure of `AutoCloseable` streams."
+  },
+  {
+    "q": "What interface must a class implement to be eligible for use in a try-with-resources statement?",
+    "options": [
+      "`java.io.Serializable`",
+      "`java.lang.AutoCloseable`",
+      "`java.lang.Cloneable`",
+      "`java.lang.Runnable`"
+    ],
+    "answer": 1,
+    "explain": "Any resource managed in a try-with-resources header must implement `java.lang.AutoCloseable` (or its subinterface `java.io.Closeable`).",
+    "topic": "AutoCloseable Interface",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Identifies AutoCloseable as the contract for try-with-resources.",
+    "weakness": "Classes used in try-with-resources must implement `java.lang.AutoCloseable`."
+  },
+  {
+    "q": "What happens if you write data using `PrintWriter` but forget to invoke `.close()` or `.flush()`?",
+    "options": [
+      "The data is immediately written to disk regardless",
+      "Buffered data may remain stuck in memory buffers and never get written to the physical file on disk",
+      "The operating system crashes",
+      "A runtime BufferOverflowException is thrown"
+    ],
+    "answer": 1,
+    "explain": "`PrintWriter` buffers output for efficiency. Failing to `close()` or `flush()` means buffered data may be lost when the JVM terminates.",
+    "topic": "Buffer Flushing Importance",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands why streams must be flushed or closed.",
+    "weakness": "Always close or flush output streams to ensure buffered data is persisted to disk."
+  },
+  {
+    "q": "What is the difference between byte streams (`InputStream` / `OutputStream`) and character streams (`Reader` / `Writer`) in Java?",
+    "options": [
+      "Byte streams read 8-bit raw binary data (images, audio); character streams handle 16-bit Unicode characters with automatic encoding translation",
+      "Byte streams are for text; character streams are for binary",
+      "Character streams are deprecated",
+      "Byte streams cannot read files"
+    ],
+    "answer": 0,
+    "explain": "Byte streams process raw 8-bit bytes (ideal for images, audio, PDFs). Character streams process 16-bit Unicode characters, handling character sets like UTF-8.",
+    "topic": "Byte Streams vs Character Streams",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Distinguishes 8-bit binary streams from 16-bit character streams.",
+    "weakness": "Use Byte streams (`InputStream/OutputStream`) for binary and Character streams (`Reader/Writer`) for text."
+  },
+  {
+    "q": "How can you configure a `PrintWriter` to APPEND data to an existing file rather than overwriting it?",
+    "options": [
+      "`new PrintWriter(file, true)`",
+      "Wrap a `FileWriter` with append set to true: `new PrintWriter(new FileWriter(file, true))`",
+      "`new PrintWriter(file).setAppend(true)`",
+      "`new AppendPrintWriter(file)`"
+    ],
+    "answer": 1,
+    "explain": "`PrintWriter` has no direct append constructor for `File`. To append, wrap a `FileWriter` instantiated with `append = true`: `new PrintWriter(new FileWriter(\"data.txt\", true))`.",
+    "topic": "File Appending Pattern",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows the standard pattern for appending text to files in Java.",
+    "weakness": "Use `new PrintWriter(new FileWriter(fileName, true))` to append to existing files."
+  },
+  {
+    "q": "What exception is thrown if you call `scanner.nextInt()` when the next token in the file is the word \"Apple\"?",
+    "options": [
+      "`NumberFormatException`",
+      "`java.util.InputMismatchException`",
+      "`NoSuchElementException`",
+      "`FileNotFoundException`"
+    ],
+    "answer": 1,
+    "explain": "`Scanner.nextInt()` throws `InputMismatchException` when the available token cannot be parsed into the expected integer type.",
+    "topic": "InputMismatchException",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Recognized InputMismatchException when token type doesn't match.",
+    "weakness": "`Scanner.nextInt()` throws `InputMismatchException` on non-numeric tokens."
+  },
+  {
+    "q": "What exception is thrown if you call `scanner.next()` or `scanner.nextLine()` when there are no more tokens left in the file (End of File)?",
+    "options": [
+      "`EOFException`",
+      "`java.util.NoSuchElementException`",
+      "`NullPointerException`",
+      "`IndexOutOfBoundsException`"
+    ],
+    "answer": 1,
+    "explain": "`Scanner` throws `NoSuchElementException` when attempting to read past the end of the input stream without checking `hasNext()`.",
+    "topic": "End of File NoSuchElementException",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows NoSuchElementException occurs when reading past EOF with Scanner.",
+    "weakness": "Always check `scanner.hasNext()` before reading to avoid `NoSuchElementException` at EOF."
+  },
+  {
+    "q": "Which method of `java.io.File` should you invoke to test whether a physical file actually exists on disk before reading it?",
+    "options": [
+      "`file.isAvailable()`",
+      "`file.exists()`",
+      "`file.canRead()`",
+      "`file.isOpen()`"
+    ],
+    "answer": 1,
+    "explain": "`file.exists()` returns `true` if the file or directory denoted by the abstract pathname actually exists on disk.",
+    "topic": "File.exists() Method",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows File.exists() to verify file existence.",
+    "weakness": "Use `file.exists()` to check if a file is present on the file system."
+  },
+  {
+    "q": "What is the cross-platform way to reference the system file path separator character in Java (e.g. `/` on Unix vs `\\` on Windows)?",
+    "options": [
+      "Hardcode `\"/\"` everywhere",
+      "`File.separator` (or `System.getProperty(\"file.separator\")`)",
+      "`Path.delimiter`",
+      "`System.pathChar`"
+    ],
+    "answer": 1,
+    "explain": "`File.separator` provides the platform-specific directory separator character (`\\` on Windows, `/` on Linux/macOS), ensuring cross-platform portability.",
+    "topic": "Platform-Independent File.separator",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows File.separator for cross-platform filesystem paths.",
+    "weakness": "Use `File.separator` to avoid hardcoding platform-specific slashes."
+  },
+  {
+    "q": "What does `BufferedReader.readLine()` return when it reaches the end of the file (EOF)?",
+    "options": [
+      "Throws an `EOFException`",
+      "`null`",
+      "An empty string `\"\"`",
+      "`-1`"
+    ],
+    "answer": 1,
+    "explain": "`BufferedReader.readLine()` returns `null` when the end of the stream is reached, allowing clean while-loop condition checks: `while ((line = br.readLine()) != null)`.",
+    "topic": "BufferedReader EOF Marker",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands BufferedReader returns null at EOF.",
+    "weakness": "`BufferedReader.readLine()` returns `null` when End of File is reached."
+  },
+  {
+    "q": "What does `InputStream.read()` return when the end of the stream is reached?",
+    "options": [
+      "`0`",
+      "`null`",
+      "`-1`",
+      "Throws `EOFException`"
+    ],
+    "answer": 2,
+    "explain": "The `read()` method of byte input streams returns an `int` representing the byte read (0 to 255), or `-1` to signal the End of File.",
+    "topic": "Byte Stream EOF Marker",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows that byte read() returns -1 at EOF.",
+    "weakness": "`InputStream.read()` returns `-1` when End of File is reached."
+  },
+  {
+    "q": "Why is `BufferedReader` generally preferred over `Scanner` when processing very large text files (e.g. 500 MB)?",
+    "options": [
+      "Scanner cannot read files larger than 10MB",
+      "`BufferedReader` has a large default memory buffer (8KB) and performs simple line reads without regular expression parsing overhead, making it significantly faster",
+      "`BufferedReader` runs on the GPU",
+      "Scanner only works with System.in"
+    ],
+    "answer": 1,
+    "explain": "`Scanner` uses complex regular expressions for tokenizing on every read. `BufferedReader` reads large chunks into memory and parses lines simply, making it dramatically faster for high-volume I/O.",
+    "topic": "BufferedReader vs Scanner Performance",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands performance trade-offs between BufferedReader and Scanner.",
+    "weakness": "`BufferedReader` is much faster than `Scanner` because it avoids regex tokenization."
+  },
+  {
+    "q": "What happens when you create a new `PrintWriter(new File(\"existing.txt\"))` if the file already exists on disk?",
+    "options": [
+      "It throws a `FileAlreadyExistsException`",
+      "It truncates the file, completely overwriting its existing contents to an empty file",
+      "It appends to the existing file",
+      "It creates a backup file"
+    ],
+    "answer": 1,
+    "explain": "Instantiating a `PrintWriter` directly with a `File` or file name truncates the target file to 0 bytes if it already exists, overwriting all previous contents.",
+    "topic": "PrintWriter Default Overwrite",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands that new PrintWriter overwrites existing files.",
+    "weakness": "Instantiating `PrintWriter(File)` truncates and overwrites existing files."
+  },
+  {
+    "q": "What does `file.createNewFile()` do in Java?",
+    "options": [
+      "Deletes the file and recreates it",
+      "Atomically creates a new, empty file if and only if a file with this name does not yet exist, returning true; otherwise returns false",
+      "Throws an exception if the file does not exist",
+      "Creates a directory"
+    ],
+    "answer": 1,
+    "explain": "`file.createNewFile()` atomically creates an empty file only if it doesn't already exist. It returns `true` if created, `false` if already present.",
+    "topic": "File.createNewFile Atomic Semantics",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows File.createNewFile semantics.",
+    "weakness": "`file.createNewFile()` creates the file if it does not already exist."
+  },
+  {
+    "q": "How do you delete a file from the file system using the `File` class?",
+    "options": [
+      "`file.remove()`",
+      "`file.delete()`",
+      "`file.erase()`",
+      "`file.unlink()`"
+    ],
+    "answer": 1,
+    "explain": "`file.delete()` deletes the file or empty directory denoted by the abstract pathname and returns a boolean indicating success.",
+    "topic": "File.delete Method",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows File.delete() method.",
+    "weakness": "Use `file.delete()` to remove files or empty directories from disk."
+  },
+  {
+    "q": "What is the difference between an absolute path and a relative path in Java?",
+    "options": [
+      "Absolute paths are relative to the user's home folder; relative paths are from root",
+      "An absolute path begins from the file system root (e.g. `C:\\` or `/`); a relative path is resolved relative to the current working directory where the JVM was launched",
+      "Relative paths only work on Windows",
+      "There is no difference"
+    ],
+    "answer": 1,
+    "explain": "Absolute paths specify the complete location from the root directory. Relative paths are resolved against the current working directory (`System.getProperty(\"user.dir\")`).",
+    "topic": "Absolute vs Relative Paths",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes absolute filesystem paths from relative paths.",
+    "weakness": "Relative paths resolve against the JVM's current working directory."
+  },
+  {
+    "q": "What does `file.mkdir()` versus `file.mkdirs()` do in Java?",
+    "options": [
+      "`mkdir()` creates only the named directory (fails if parent folders are missing); `mkdirs()` creates the directory along with all necessary missing parent directories",
+      "`mkdir()` is for files; `mkdirs()` is for folders",
+      "`mkdirs()` creates hidden directories",
+      "They are identical synonyms"
+    ],
+    "answer": 0,
+    "explain": "`mkdir()` creates only the final directory if parent directories exist. `mkdirs()` creates the entire hierarchical folder path including any missing ancestor directories.",
+    "topic": "mkdir vs mkdirs",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Distinguishes single-level mkdir from recursive mkdirs.",
+    "weakness": "Use `mkdirs()` to create nested directories including missing parents."
+  },
+  {
+    "q": "What is a standard character encoding in Java for international text portability across operating systems?",
+    "options": [
+      "ASCII",
+      "UTF-8",
+      "Windows-1252",
+      "ISO-8859-1"
+    ],
+    "answer": 1,
+    "explain": "UTF-8 is the industry-standard variable-length character encoding capable of encoding all 1,112,064 valid character code points in Unicode.",
+    "topic": "UTF-8 Character Encoding",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Recognizes UTF-8 as standard character encoding.",
+    "weakness": "UTF-8 is the universal standard for cross-platform text encoding."
+  },
+  {
+    "q": "Can `java.io.File` be used to rename or move a file on disk?",
+    "options": [
+      "No, renaming requires deleting and creating a new file",
+      "Yes, using `file.renameTo(destFile)`",
+      "Yes, using `file.move()`",
+      "Only in Java 17+"
+    ],
+    "answer": 1,
+    "explain": "`file.renameTo(File dest)` renames or moves the file to the destination path atomically on most platforms.",
+    "topic": "File.renameTo Method",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows File.renameTo() for renaming and moving files.",
+    "weakness": "Use `file.renameTo(newFile)` to rename or move a file."
+  },
+  {
+    "q": "What happens if an unhandled `FileNotFoundException` is thrown inside a method that does NOT declare `throws FileNotFoundException` or `throws IOException`?",
+    "options": [
+      "The method compiles and ignores the exception",
+      "The compiler issues an 'unreported exception; must be caught or declared to be thrown' error",
+      "The JVM terminates at compile time",
+      "It converts into an unchecked RuntimeException automatically"
+    ],
+    "answer": 1,
+    "explain": "Because `FileNotFoundException` is a checked exception, the Java compiler enforces the Catch-or-Specify requirement. Failing to catch or declare it causes a compilation error.",
+    "topic": "Catch-or-Specify Requirement",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands compiler enforcement of checked exceptions.",
+    "weakness": "Checked exceptions must be caught in a try-catch or declared with `throws`."
+  },
+  {
+    "q": "What is the standard stream represented by `System.in` in Java?",
+    "options": [
+      "`java.io.PrintStream` connected to standard error",
+      "`java.io.InputStream` connected to standard input (typically keyboard)",
+      "`java.io.Reader`",
+      "`java.io.FileReader`"
+    ],
+    "answer": 1,
+    "explain": "`System.in` is a `java.io.InputStream` object representing the standard input stream provided by the host environment.",
+    "topic": "System.in Stream Type",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Identifies System.in as an InputStream.",
+    "weakness": "`System.in` is an instance of `java.io.InputStream`."
+  },
+  {
+    "q": "What is the standard stream represented by `System.out` in Java?",
+    "options": [
+      "`java.io.PrintWriter`",
+      "`java.io.PrintStream` connected to standard output",
+      "`java.io.Writer`",
+      "`java.io.OutputStream`"
+    ],
+    "answer": 1,
+    "explain": "`System.out` is an instance of `java.io.PrintStream` configured to write to the console's standard output.",
+    "topic": "System.out Stream Type",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Identifies System.out as a PrintStream.",
+    "weakness": "`System.out` is an instance of `java.io.PrintStream`."
+  },
+  {
+    "q": "Can a try-with-resources statement declare multiple resources in a single try header?",
+    "options": [
+      "No, only one resource per try statement",
+      "Yes, separated by semicolons: `try (Scanner sc = ...; PrintWriter pw = ...) { ... }`",
+      "Yes, separated by commas",
+      "Only if they are of the exact same type"
+    ],
+    "answer": 1,
+    "explain": "Multiple resources can be declared inside the try parentheses, separated by semicolons. They are closed in reverse order of declaration upon exit.",
+    "topic": "Multiple Resources in Try-With-Resources",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows syntax for managing multiple resources in try-with-resources.",
+    "weakness": "Separate multiple resources with semicolons in the try header."
+  },
+  {
+    "q": "Why does the following snippet fail to compile?\n```java\nimport java.util.Scanner;\nimport java.io.File;\npublic class Test {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(new File(\"input.txt\"));\n    }\n}\n```",
+    "options": [
+      "Scanner cannot accept File objects",
+      "Unreported exception `java.io.FileNotFoundException`; must be caught or declared to be thrown",
+      "new File is missing path extension",
+      "Scanner must be closed on line 5"
+    ],
+    "answer": 1,
+    "explain": "Instantiating `Scanner(File)` throws checked exception `FileNotFoundException`. `main` must either wrap it in `try-catch` or declare `throws FileNotFoundException`.",
+    "topic": "Unreported FileNotFoundException Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught unhandled checked exception on File Scanner creation.",
+    "weakness": "Handle or declare `FileNotFoundException` when creating a Scanner from a File."
+  },
+  {
+    "q": "What error occurs at runtime in this code if `scores.txt` is an empty file?\n```java\nScanner sc = new Scanner(new File(\"scores.txt\"));\nint firstScore = sc.nextInt();\n```",
+    "options": [
+      "Returns 0",
+      "`java.util.NoSuchElementException`",
+      "`NullPointerException`",
+      "`ArrayIndexOutOfBoundsException`"
+    ],
+    "answer": 1,
+    "explain": "Calling `sc.nextInt()` on an empty stream without verifying `sc.hasNextInt()` throws `NoSuchElementException` because no tokens are available.",
+    "topic": "NoSuchElementException on Empty File",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted reading from empty file without hasNextInt() guard.",
+    "weakness": "Check `scanner.hasNextInt()` before calling `scanner.nextInt()` to prevent NoSuchElementException."
+  },
+  {
+    "q": "Identify the bug in this file-reading loop:\n```java\nScanner sc = new Scanner(new File(\"data.txt\"));\nwhile (sc.hasNext()) {\n    String first = sc.next();\n    String second = sc.next();\n}\n```",
+    "options": [
+      "Syntax error in while condition",
+      "If the file contains an odd number of tokens, the second `sc.next()` call throws `NoSuchElementException` on the final loop iteration",
+      "sc.next() only reads numbers",
+      "Infinite loop"
+    ],
+    "answer": 1,
+    "explain": "Calling `sc.next()` twice per iteration assumes an even count of tokens. If odd, the second call fails with `NoSuchElementException` on EOF.",
+    "topic": "Dual Token Read Without Check Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught unsafe dual-token consumption without intermediate hasNext() check.",
+    "weakness": "Ensure each `next()` call has a matching `hasNext()` check."
+  },
+  {
+    "q": "Why does this file write operation produce an empty 0-byte file?\n```java\nPrintWriter pw = new PrintWriter(new File(\"output.txt\"));\npw.println(\"Hello World\");\n// program terminates\n```",
+    "options": [
+      "Hello World is an invalid string",
+      "The PrintWriter was never closed (`pw.close()`) or flushed (`pw.flush()`), leaving buffered data in memory before program termination",
+      "File output requires FileOutputStream",
+      "output.txt is read-only"
+    ],
+    "answer": 1,
+    "explain": "`PrintWriter` buffers output data. If the stream is not closed or flushed, data remains in the buffer and is discarded upon program exit.",
+    "topic": "Unclosed PrintWriter Buffer Loss",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized data loss due to missing close/flush on PrintWriter.",
+    "weakness": "Always close PrintWriter (or use try-with-resources) to flush data to disk."
+  },
+  {
+    "q": "Why does the following try-with-resources snippet fail to compile?\n```java\nString text = \"Hello\";\ntry (text) {\n    System.out.println(text);\n}\n```",
+    "options": [
+      "println cannot print text",
+      "Incompatible types: String does not implement `java.lang.AutoCloseable`",
+      "try cannot take variables",
+      "text must be final"
+    ],
+    "answer": 1,
+    "explain": "Only objects that implement `java.lang.AutoCloseable` can be used as resources in a try-with-resources statement. `String` does not implement `AutoCloseable`.",
+    "topic": "Non-AutoCloseable in Try-With-Resources",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught non-AutoCloseable object used in try-with-resources.",
+    "weakness": "Only classes implementing `AutoCloseable` can be managed in try-with-resources."
+  },
+  {
+    "q": "Identify the issue in this file path declaration on Windows:\n```java\nFile f = new File(\"C:\\data\\scores.txt\");\n```",
+    "options": [
+      "File cannot accept drive letters",
+      "Backslashes `\\d` and `\\s` are treated as escape sequences, causing compilation errors: illegal escape character",
+      "scores.txt must be uppercase",
+      "File path must end with a slash"
+    ],
+    "answer": 1,
+    "explain": "In Java string literals, a backslash `\\` introduces an escape sequence. Single backslashes must be escaped (`\"C:\\\\data\\\\scores.txt\"`) or forward slashes used (`\"C:/data/scores.txt\"`).",
+    "topic": "Unescaped Windows Backslash Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught unescaped backslashes in Windows file path literal.",
+    "weakness": "Escape backslashes (`\\\\`) or use forward slashes (`/`) in path strings."
+  },
+  {
+    "q": "What exception is thrown when running this code if `file.txt` contains \"42.5\"?\n```java\nScanner sc = new Scanner(new File(\"file.txt\"));\nint val = sc.nextInt();\n```",
+    "options": [
+      "`java.util.InputMismatchException`",
+      "`NumberFormatException`",
+      "`ClassCastException`",
+      "`ArithmeticException`"
+    ],
+    "answer": 0,
+    "explain": "`42.5` is a floating-point token. `sc.nextInt()` expects integer digits and throws `InputMismatchException`.",
+    "topic": "Scanner Float Token InputMismatchException",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified InputMismatchException on floating-point token.",
+    "weakness": "Use `sc.nextDouble()` when reading decimal numbers with Scanner."
+  },
+  {
+    "q": "Why does the following code fail to compile?\n```java\ntry (PrintWriter pw = new PrintWriter(\"out.txt\")) {\n    pw.println(\"Data\");\n}\npw.println(\"More Data\");\n```",
+    "options": [
+      "PrintWriter cannot take filename strings",
+      "Cannot find symbol: variable 'pw' is out of scope outside the try-with-resources block",
+      "println cannot be called twice",
+      "try must have a catch block"
+    ],
+    "answer": 1,
+    "explain": "Resources declared in the try-with-resources header have their scope confined strictly to the try block. They are inaccessible after the block closes.",
+    "topic": "Try-With-Resources Variable Scope Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized resource variable out of scope outside try block.",
+    "weakness": "Resources declared in try-with-resources are local to that try block."
+  },
+  {
+    "q": "What is the bug in this code intended to process comma-separated values?\n```java\nScanner sc = new Scanner(\"Apple,Orange,Banana\");\nwhile (sc.hasNext()) {\n    System.out.println(sc.next());\n}\n```",
+    "options": [
+      "Throws ClassCastException",
+      "Default Scanner delimiter is whitespace; since there are no spaces, it reads the entire string `Apple,Orange,Banana` in one single token instead of splitting by commas",
+      "Only prints Apple",
+      "sc cannot scan Strings"
+    ],
+    "answer": 1,
+    "explain": "By default, `Scanner` splits on whitespace. To tokenize comma-separated text, set `sc.useDelimiter(\",\");`.",
+    "topic": "Scanner Delimiter Configuration Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Spotted missing custom delimiter in comma-separated Scanner parsing.",
+    "weakness": "Call `sc.useDelimiter(\",\")` to split by commas instead of whitespace."
+  },
+  {
+    "q": "Identify the compilation error in this snippet:\n```java\nFile file = new File(\"data.txt\");\nfile.write(\"Hello\");\n```",
+    "options": [
+      "data.txt must exist",
+      "Cannot find symbol: method write(String) does not exist in `java.io.File`",
+      "write must return boolean",
+      "file must be opened first"
+    ],
+    "answer": 1,
+    "explain": "`java.io.File` does not have write methods. To write to a file, wrap it in a `PrintWriter`, `FileWriter`, or `FileOutputStream`.",
+    "topic": "File Class Has No Write Method Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized that java.io.File does not have read/write methods.",
+    "weakness": "Use `PrintWriter` or `FileWriter` to write text; `File` only manages path metadata."
+  },
+  {
+    "q": "What is wrong with this code that reads numbers until EOF?\n```java\nScanner sc = new Scanner(new File(\"nums.txt\"));\nwhile (sc.hasNextLine()) {\n    int n = sc.nextInt();\n    System.out.println(n);\n}\n```",
+    "options": [
+      "nums.txt cannot contain numbers",
+      "Mismatched condition: checking `hasNextLine()` does not guarantee the next token is an integer, leading to `InputMismatchException` or skipping lines without consuming newlines",
+      "nextInt cannot print",
+      "while must be for"
+    ],
+    "answer": 1,
+    "explain": "Checking `hasNextLine()` verifies a line exists, but `nextInt()` only reads a token. If the line is empty or contains non-numeric text, `sc.nextInt()` fails. Check `sc.hasNextInt()` instead.",
+    "topic": "Mismatched Scanner Check Condition",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught condition mismatch between hasNextLine() and nextInt().",
+    "weakness": "Pair `hasNextInt()` with `nextInt()`, and `hasNextLine()` with `nextLine()`."
+  },
+  {
+    "q": "Why does this code cause a compiler error?\n```java\nFileReader fr = new FileReader(\"data.txt\");\nint c = fr.read();\n```",
+    "options": [
+      "read() requires byte array",
+      "Unreported exceptions: `FileNotFoundException` (from FileReader) and `IOException` (from read()) must be caught or declared",
+      "c must be char",
+      "FileReader is deprecated"
+    ],
+    "answer": 1,
+    "explain": "Both `new FileReader` and `fr.read()` throw checked exceptions (`FileNotFoundException` and `IOException`) that must be handled or declared.",
+    "topic": "Multiple Checked Exceptions in I/O",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized unhandled checked exceptions from FileReader and read().",
+    "weakness": "Handle both `FileNotFoundException` and `IOException` when working with FileReader."
+  },
+  {
+    "q": "What is the issue with this resource leak pattern?\n```java\nScanner sc = new Scanner(new File(\"data.txt\"));\nint x = sc.nextInt();\nint result = 100 / x; // If x is 0, ArithmeticException thrown!\nsc.close();\n```",
+    "options": [
+      "data.txt is deleted",
+      "If `x == 0`, `ArithmeticException` is thrown before `sc.close()` executes, leaving the file handle unclosed and leaking system resources",
+      "Scanner cannot read into int",
+      "result must be double"
+    ],
+    "answer": 1,
+    "explain": "If an exception occurs before `sc.close()`, the close call is bypassed. Using try-with-resources guarantees closure even during exceptions.",
+    "topic": "Resource Leak on Exception Bypass",
+    "type": "error",
+    "level": "medium",
+    "strength": "Identified resource leak caused by unhandled exception bypassing close().",
+    "weakness": "Use try-with-resources to ensure streams close even when runtime exceptions occur."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nFile dir = new File(\"myFolder\");\nString[] files = dir.listFiles();\n```",
+    "options": [
+      "myFolder must be absolute path",
+      "Incompatible types: `dir.listFiles()` returns `File[]`, not `String[]` (use `dir.list()` for String array)",
+      "listFiles cannot be called on File",
+      "files must be List"
+    ],
+    "answer": 1,
+    "explain": "`dir.listFiles()` returns an array of `File` objects (`File[]`). To obtain an array of file name strings, use `dir.list()`.",
+    "topic": "listFiles vs list Return Type",
+    "type": "error",
+    "level": "easy",
+    "strength": "Distinguished listFiles() returning File[] from list() returning String[].",
+    "weakness": "`dir.listFiles()` returns `File[]`; `dir.list()` returns `String[]`."
+  },
+  {
+    "q": "What error occurs in this code snippet?\n```java\nPrintWriter pw = new PrintWriter(\"data.txt\");\npw.write(65);\npw.close();\n```",
+    "options": [
+      "Throws IllegalArgumentException",
+      "No compile error, but `pw.write(65)` interprets 65 as an ASCII/Unicode character code, writing the character 'A' instead of the number 65 (use `print(65)` for numbers)",
+      "data.txt cannot be created",
+      "65 is out of bounds"
+    ],
+    "answer": 1,
+    "explain": "`write(int)` writes the character corresponding to the integer code point (65 -> 'A'). To write the numeric text \"65\", call `pw.print(65)`.",
+    "topic": "PrintWriter write vs print Semantic Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught semantic bug: write(int) writes char code point instead of formatted integer.",
+    "weakness": "Use `pw.print(n)` or `pw.println(n)` to write formatted numeric text; `pw.write(n)` writes a single char."
+  },
+  {
+    "q": "Why does the following snippet fail to compile?\n```java\nScanner sc = new Scanner(new File(\"input.txt\"));\ntry {\n    // read\n} finally {\n    sc.close();\n}\n```",
+    "options": [
+      "finally cannot close Scanner",
+      "The `new Scanner(File)` instantiation is outside the try block and its checked `FileNotFoundException` is not caught or declared",
+      "sc is not visible in finally",
+      "Scanner cannot be closed in finally"
+    ],
+    "answer": 1,
+    "explain": "Because `new Scanner(new File(...))` is outside the `try` block, its checked `FileNotFoundException` remains unhandled.",
+    "topic": "Instantiation Outside Try Block Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught checked exception thrown prior to try block entry.",
+    "weakness": "Place file stream instantiations inside the try header or declare throws."
+  },
+  {
+    "q": "What is the bug in this line reading loop?\n```java\nScanner sc = new Scanner(new File(\"data.txt\"));\nwhile (sc.hasNextLine()) {\n    System.out.println(sc.next());\n}\n```",
+    "options": [
+      "Throws NullPointerException",
+      "Condition checks `hasNextLine()`, but body reads `sc.next()` (single word), desynchronizing token and line tracking and potentially causing infinite loop if spaces exist",
+      "next() is deprecated",
+      "sc must be closed"
+    ],
+    "answer": 1,
+    "explain": "`sc.next()` consumes only one whitespace-delimited word, while `hasNextLine()` checks for line presence. If a line has multiple words, this causes confusing mismatch logic.",
+    "topic": "hasNextLine vs next Token Desync",
+    "type": "error",
+    "level": "medium",
+    "strength": "Identified desynchronization between hasNextLine() and next().",
+    "weakness": "Pair `hasNextLine()` strictly with `nextLine()` to consume entire lines."
+  },
+  {
+    "q": "Why does this file deletion attempt fail silently at runtime?\n```java\nFile dir = new File(\"myDirectory\");\nboolean success = dir.delete();\n```",
+    "options": [
+      "dir must be a file, not a directory",
+      "If the directory is non-empty (contains files or subdirectories), `dir.delete()` fails and returns `false` without throwing an exception",
+      "delete() is not a method of File",
+      "Requires administrator privileges in all cases"
+    ],
+    "answer": 1,
+    "explain": "In Java, `File.delete()` can only delete directories that are completely empty. If files reside inside, it fails and returns `false`.",
+    "topic": "Non-Empty Directory Deletion Failure",
+    "type": "error",
+    "level": "easy",
+    "strength": "Understands that File.delete() requires directories to be empty.",
+    "weakness": "Directories must be empty before `file.delete()` can delete them."
+  },
+  {
+    "q": "What is the issue with this `FileWriter` instantiation?\n```java\nFileWriter fw = new FileWriter(\"data.txt\", false);\n```",
+    "options": [
+      "false is an illegal parameter",
+      "No syntax error, but `false` explicitly tells FileWriter to OVERWRITE the file instead of appending",
+      "FileWriter cannot take boolean",
+      "data.txt must exist"
+    ],
+    "answer": 1,
+    "explain": "The boolean parameter in `FileWriter(fileName, append)` controls append mode. Setting `false` explicitly overwrites existing file content.",
+    "topic": "FileWriter Append Parameter Flag",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized append flag boolean parameter in FileWriter.",
+    "weakness": "Pass `true` as the second parameter to append to a file: `new FileWriter(name, true)`."
+  },
+  {
+    "q": "Why does this code throw `NullPointerException`?\n```java\nFile dir = new File(\"nonExistentFolder\");\nfor (File f : dir.listFiles()) {\n    System.out.println(f.getName());\n}\n```",
+    "options": [
+      "f.getName() is null",
+      "If the path does not exist or is not a directory, `dir.listFiles()` returns `null`, causing the enhanced for-loop to throw `NullPointerException`",
+      "File cannot be iterated",
+      "println cannot print filenames"
+    ],
+    "answer": 1,
+    "explain": "`listFiles()` returns `null` (not an empty array) if the abstract pathname does not denote an existing directory. Iterating over `null` triggers `NullPointerException`.",
+    "topic": "listFiles Null Return Trap",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught NullPointerException from listFiles() on non-existent directory.",
+    "weakness": "Check `dir.exists() && dir.isDirectory()` before calling `dir.listFiles()`."
+  },
+  {
+    "q": "What compilation error occurs here?\n```java\nFile f = new File(\"data.txt\");\nScanner sc = new Scanner(f);\nsc.close();\nint x = sc.nextInt();\n```",
+    "options": [
+      "sc.close() cannot be called",
+      "No compile error, but throws `IllegalStateException: Scanner closed` at runtime when reading from closed Scanner",
+      "data.txt is deleted",
+      "x must be String"
+    ],
+    "answer": 1,
+    "explain": "Calling read methods on a `Scanner` that has already been closed throws `java.lang.IllegalStateException: Scanner closed`.",
+    "topic": "Reading from Closed Scanner",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified IllegalStateException when reading closed Scanner.",
+    "weakness": "Cannot read tokens from a Scanner after invoking `.close()`."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\ntry (Scanner sc = new Scanner(new File(\"in.txt\"))) {\n    int a = sc.nextInt();\n} catch (IOException e) {\n    System.out.println(e.getMessage());\n}\n```",
+    "options": [
+      "Scanner does not throw IOException",
+      "It compiles cleanly because `FileNotFoundException` is a subclass of `IOException` and is caught",
+      "in.txt cannot be read",
+      "catch block must be FileNotFoundException only"
+    ],
+    "answer": 1,
+    "explain": "Because `FileNotFoundException` extends `IOException`, catching `IOException` covers `FileNotFoundException` completely. The code compiles cleanly with no error.",
+    "topic": "Polymorphic Exception Catching in I/O",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized polymorphic catching of FileNotFoundException via IOException.",
+    "weakness": "Catching `IOException` safely catches `FileNotFoundException` as a subtype."
+  },
+  {
+    "q": "Identify the bug in this line count algorithm:\n```java\nScanner sc = new Scanner(new File(\"doc.txt\"));\nint lines = 0;\nwhile (sc.hasNextLine()) {\n    lines++;\n}\n```",
+    "options": [
+      "Throws ClassCastException",
+      "Infinite loop: `sc.hasNextLine()` checks for a line, but `sc.nextLine()` is never called inside the loop to consume it, causing `hasNextLine()` to remain true perpetually",
+      "lines cannot be incremented",
+      "lines starts at 0"
+    ],
+    "answer": 1,
+    "explain": "Checking `hasNextLine()` without calling `nextLine()` creates an infinite loop because the input position never advances.",
+    "topic": "Infinite Loop Missing nextLine Advance",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted infinite loop caused by missing nextLine() advancement.",
+    "weakness": "Call `sc.nextLine()` inside the loop to advance the stream position."
+  },
+  {
+    "q": "What is wrong with this code?\n```java\nPrintWriter pw = new PrintWriter(new File(\"res.txt\"));\npw.printf(\"Total: %d\", 45.5);\n```",
+    "options": [
+      "res.txt cannot be created",
+      "Throws `IllegalFormatConversionException` at runtime because `%d` cannot format a floating-point number (45.5)",
+      "pw cannot call printf",
+      "Total must be in single quotes"
+    ],
+    "answer": 1,
+    "explain": "`%d` expects an integer argument. Passing floating-point literal `45.5` causes a runtime `IllegalFormatConversionException`.",
+    "topic": "PrintWriter Formatted Output Type Mismatch",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted printf specifier mismatch in PrintWriter output.",
+    "weakness": "Use `%f` or `%.2f` for decimal numbers in `printf`."
+  },
+  {
+    "q": "Why does this try-with-resources statement produce an error?\n```java\nScanner sc = new Scanner(System.in);\ntry (sc) {\n    int n = sc.nextInt();\n}\n// in Java 8:\n```",
+    "options": [
+      "Scanner cannot be closed",
+      "In Java 8, resources in try-with-resources must be freshly declared inside the parentheses (`try (Scanner sc = ...)`); passing existing variables `try (sc)` was only added in Java 9",
+      "System.in is read-only",
+      "n is out of scope"
+    ],
+    "answer": 1,
+    "explain": "In Java 8, try-with-resources strictly required a new variable declaration within the header. Using effectively final existing variables was introduced in Java 9.",
+    "topic": "Java 8 Try-With-Resources Syntax Limitation",
+    "type": "error",
+    "level": "hard",
+    "strength": "Mastered version differences in try-with-resources variable declaration.",
+    "weakness": "In Java 8, declare resources directly in the try parentheses: `try (Scanner sc = ...)`."
+  },
+  {
+    "q": "What is the output of this code if \"test.txt\" contains the text `\"10 20 30\"`?\n```java\nScanner sc = new Scanner(new File(\"test.txt\"));\nint sum = 0;\nwhile (sc.hasNextInt()) {\n    sum += sc.nextInt();\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "60",
+      "10",
+      "30",
+      "0"
+    ],
+    "answer": 0,
+    "explain": "The scanner reads 10, 20, and 30 sequentially. `sum = 10 + 20 + 30 = 60`.",
+    "topic": "File Integer Sum Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Computed sum of tokens read from file via Scanner.",
+    "weakness": "Tokens 10, 20, 30 sum to 60."
+  },
+  {
+    "q": "What does this code print given a string-backed Scanner?\n```java\nScanner sc = new Scanner(\"One Two Three Four\");\nsc.next();\nString val = sc.next();\nSystem.out.println(val);\n```",
+    "options": [
+      "One",
+      "Two",
+      "Three",
+      "Four"
+    ],
+    "answer": 1,
+    "explain": "The first `sc.next()` consumes \"One\". The second `sc.next()` reads \"Two\". Outputs `Two`.",
+    "topic": "Sequential Token Consumption Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked token pointer progression in Scanner.",
+    "weakness": "First next() reads 'One'; second next() reads 'Two'."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"100 Java 200\");\nint a = sc.nextInt();\nString b = sc.next();\nint c = sc.nextInt();\nSystem.out.println(a + c + \" \" + b);\n```",
+    "options": [
+      "300 Java",
+      "100200 Java",
+      "100 Java 200",
+      "InputMismatchException"
+    ],
+    "answer": 0,
+    "explain": "`a = 100`, `b = \"Java\"`, `c = 200`. `a + c = 300`. Outputs `\"300 Java\"`.",
+    "topic": "Mixed Token Parsing Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Parsed mixed integer and string tokens.",
+    "weakness": "`100 + 200 = 300`, followed by String \"Java\"."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"cat,dog,bird\");\nsc.useDelimiter(\",\");\nint count = 0;\nwhile (sc.hasNext()) {\n    sc.next();\n    count++;\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "1",
+      "3",
+      "2",
+      "0"
+    ],
+    "answer": 1,
+    "explain": "Delimiter `,` splits into 3 tokens: `\"cat\"`, `\"dog\"`, `\"bird\"`. Count is 3.",
+    "topic": "Custom Delimiter Token Count",
+    "type": "output",
+    "level": "easy",
+    "strength": "Counted tokens using custom comma delimiter.",
+    "weakness": "3 comma-separated tokens yield count = 3."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\nFile f = new File(\"nonexistent_file_12345.xyz\");\nSystem.out.println(f.exists() + \" \" + f.length());\n```",
+    "options": [
+      "false 0",
+      "true 0",
+      "false -1",
+      "NullPointerException"
+    ],
+    "answer": 0,
+    "explain": "For non-existent files, `exists()` returns `false` and `length()` returns `0L` (0 bytes). Outputs `false 0`.",
+    "topic": "Non-Existent File Metadata Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Understands File metadata return values for non-existent paths.",
+    "weakness": "`f.exists()` is false; `f.length()` is 0 for non-existent files."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"12\\n34\\n56\");\nint count = 0;\nwhile (sc.hasNextLine()) {\n    sc.nextLine();\n    count++;\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "6"
+    ],
+    "answer": 2,
+    "explain": "The string contains 3 newline-separated lines (`12`, `34`, `56`). `count` is 3.",
+    "topic": "Line Count Scanner Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Counted newline-separated lines via Scanner.",
+    "weakness": "3 lines separated by \\n yield count = 3."
+  },
+  {
+    "q": "What is printed by this code?\n```java\nString s = \"42\";\nScanner sc = new Scanner(s);\nSystem.out.println(sc.hasNextInt() + \" \" + sc.hasNextDouble());\n```",
+    "options": [
+      "true true",
+      "true false",
+      "false true",
+      "false false"
+    ],
+    "answer": 0,
+    "explain": "An integer token like \"42\" can be interpreted as both a valid `int` (42) and a valid `double` (42.0). Both return `true`.",
+    "topic": "Scanner Dual Number Match Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Understands that integer tokens are also valid doubles for Scanner.",
+    "weakness": "\"42\" satisfies both `hasNextInt()` and `hasNextDouble()`."
+  },
+  {
+    "q": "What does this code print?\n```java\nScanner sc = new Scanner(\"10 20 stop 30 40\");\nint sum = 0;\nwhile (sc.hasNextInt()) {\n    sum += sc.nextInt();\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "100",
+      "30",
+      "10",
+      "InputMismatchException"
+    ],
+    "answer": 1,
+    "explain": "`hasNextInt()` evaluates to `true` for 10 and 20 (`sum = 30`). When it encounters \"stop\", `hasNextInt()` returns `false`, terminating the loop immediately without an exception. Prints 30.",
+    "topic": "Non-Int Token Loop Termination",
+    "type": "output",
+    "level": "medium",
+    "strength": "Recognized clean loop termination upon non-numeric token.",
+    "weakness": "Encountering non-int token 'stop' causes `hasNextInt()` to return false cleanly."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nFile f = new File(\"parent/child/test.txt\");\nSystem.out.println(f.getName());\n```",
+    "options": [
+      "test.txt",
+      "child/test.txt",
+      "parent/child/test.txt",
+      "test"
+    ],
+    "answer": 0,
+    "explain": "`f.getName()` extracts only the simple name of the file (the last path component), which is `test.txt`.",
+    "topic": "File.getName Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Extracted simple file name via File.getName().",
+    "weakness": "`f.getName()` returns the terminal file name `test.txt`."
+  },
+  {
+    "q": "What does this snippet print?\n```java\nScanner sc = new Scanner(\"A B C\");\nint count = 0;\nwhile (sc.hasNext()) {\n    count++;\n    if (count == 2) break;\n    sc.next();\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "0"
+    ],
+    "answer": 1,
+    "explain": "`count` increments to 1, consumes 'A'. Loop checks `hasNext()`, `count` increments to 2, hits `break`. Output is 2.",
+    "topic": "Scanner Loop Break Counter",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced early loop break in Scanner token loop.",
+    "weakness": "Loop breaks when `count == 2`, outputting 2."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"100\\n200\");\nint a = sc.nextInt();\nString rem = sc.nextLine();\nSystem.out.println(\"[\" + rem + \"]\");\n```",
+    "options": [
+      "[\\n]",
+      "[200]",
+      "[]",
+      "[100]"
+    ],
+    "answer": 2,
+    "explain": "`sc.nextInt()` consumes `100`, leaving the newline character in the line. `sc.nextLine()` immediately reads the empty remainder of the first line, resulting in an empty string `\"\"`. Prints `[]`.",
+    "topic": "Scanner Leftover Newline Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Mastered Scanner newline buffer consumption output.",
+    "weakness": "`sc.nextLine()` consumes the empty remainder of the line following nextInt(), producing `[]`."
+  },
+  {
+    "q": "What does this code output?\n```java\nScanner sc = new Scanner(\"1 2 3 4 5\");\nint sum = 0;\nwhile (sc.hasNext()) {\n    int n = Integer.parseInt(sc.next());\n    if (n % 2 != 0) sum += n;\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "9",
+      "6",
+      "15",
+      "10"
+    ],
+    "answer": 0,
+    "explain": "Odd numbers are 1, 3, 5. Their sum is `1 + 3 + 5 = 9`.",
+    "topic": "Parsed Token Odd Sum",
+    "type": "output",
+    "level": "easy",
+    "strength": "Summed odd tokens parsed with Integer.parseInt.",
+    "weakness": "Odd numbers 1, 3, 5 sum to 9."
+  },
+  {
+    "q": "What does this snippet print?\n```java\nFile f = new File(\"/home/user/docs\");\nSystem.out.println(f.getParent());\n```",
+    "options": [
+      "/home/user",
+      "/home",
+      "docs",
+      "null"
+    ],
+    "answer": 0,
+    "explain": "`f.getParent()` returns the pathname string of the parent directory: `/home/user`.",
+    "topic": "File.getParent Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Identified parent directory path component.",
+    "weakness": "`f.getParent()` yields `/home/user`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"true false true\");\nint trueCount = 0;\nwhile (sc.hasNextBoolean()) {\n    if (sc.nextBoolean()) trueCount++;\n}\nSystem.out.println(trueCount);\n```",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "0"
+    ],
+    "answer": 1,
+    "explain": "Tokens are booleans: `true`, `false`, `true`. Two are true, so `trueCount` is 2.",
+    "topic": "Boolean Scanner Token Count",
+    "type": "output",
+    "level": "easy",
+    "strength": "Counted true boolean tokens with Scanner.",
+    "weakness": "Two `true` tokens yield trueCount = 2."
+  },
+  {
+    "q": "What is printed by this code?\n```java\nScanner sc = new Scanner(\"Alpha Beta Gamma\");\nString res = \"\";\nwhile (sc.hasNext()) {\n    res = sc.next() + \" \" + res;\n}\nSystem.out.println(res.trim());\n```",
+    "options": [
+      "Gamma Beta Alpha",
+      "Alpha Beta Gamma",
+      "Gamma Alpha",
+      "Beta Alpha Gamma"
+    ],
+    "answer": 0,
+    "explain": "Each token is prepended: \"Alpha \" -> \"Beta Alpha \" -> \"Gamma Beta Alpha \". Result is `Gamma Beta Alpha`.",
+    "topic": "Reversed Token Concatenation",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced reverse prepending of tokens.",
+    "weakness": "Tokens prepended sequentially produce `Gamma Beta Alpha`."
+  },
+  {
+    "q": "What does this code print?\n```java\nFile f = new File(\"a/b/c/file.txt\");\nSystem.out.println(f.getName().endsWith(\".txt\"));\n```",
+    "options": [
+      "true",
+      "false",
+      "NullPointerException",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`f.getName()` is `\"file.txt\"`, which ends with `\".txt\"`, printing `true`.",
+    "topic": "File Extension Verification Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Verified file extension matching.",
+    "weakness": "`file.txt` ends with `.txt` -> true."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"10, 20, 30\");\nsc.useDelimiter(\",\\\\s*\");\nint sum = 0;\nwhile (sc.hasNextInt()) {\n    sum += sc.nextInt();\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "60",
+      "10",
+      "0",
+      "InputMismatchException"
+    ],
+    "answer": 0,
+    "explain": "Delimiter `,\\s*` matches commas followed by optional spaces. Tokens are clean integers 10, 20, 30. Sum is 60.",
+    "topic": "Regex Delimiter Scanner Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Understands regex delimiters in Scanner.",
+    "weakness": "Cleanly delimited integers sum to 60."
+  },
+  {
+    "q": "What does this code print?\n```java\nScanner sc = new Scanner(\"Line1\\nLine2\\nLine3\");\nint count = 0;\nwhile (sc.hasNext()) {\n    sc.next();\n    count++;\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "3",
+      "1",
+      "6",
+      "0"
+    ],
+    "answer": 0,
+    "explain": "`sc.next()` treats newlines as standard whitespace delimiters. It consumes 3 tokens: `Line1`, `Line2`, `Line3`. Count is 3.",
+    "topic": "Whitespace Token Traversal Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized newlines as whitespace delimiters for next().",
+    "weakness": "Newlines act as whitespace delimiters; 3 tokens counted."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nFile f = new File(\"test.dat\");\nboolean isDir = f.isDirectory();\nSystem.out.println(isDir);\n```",
+    "options": [
+      "false",
+      "true",
+      "NullPointerException",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "If `test.dat` does not exist or is a regular file, `f.isDirectory()` returns `false`.",
+    "topic": "File.isDirectory Evaluation",
+    "type": "output",
+    "level": "easy",
+    "strength": "Evaluated isDirectory on non-directory pathname.",
+    "weakness": "`isDirectory()` returns false for files or non-existent paths."
+  },
+  {
+    "q": "What is printed by this code?\n```java\nScanner sc = new Scanner(\"5 10 15\");\nint p = 1;\nwhile (sc.hasNextInt()) {\n    p *= sc.nextInt();\n}\nSystem.out.println(p);\n```",
+    "options": [
+      "750",
+      "30",
+      "150",
+      "50"
+    ],
+    "answer": 0,
+    "explain": "`5 * 10 * 15 = 50 * 15 = 750`.",
+    "topic": "Scanner Token Product Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Calculated cumulative product of scanned tokens.",
+    "weakness": "`5 * 10 * 15 = 750`."
+  },
+  {
+    "q": "What does this code output?\n```java\nScanner sc = new Scanner(\"apple   banana\\tcherry\");\nint count = 0;\nwhile (sc.hasNext()) {\n    sc.next();\n    count++;\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "3",
+      "1",
+      "4",
+      "5"
+    ],
+    "answer": 0,
+    "explain": "Scanner treats any sequence of spaces, multiple spaces, and tabs as a single delimiter. It reads 3 words: count = 3.",
+    "topic": "Variable Whitespace Token Parsing",
+    "type": "output",
+    "level": "easy",
+    "strength": "Handled variable whitespace and tabs cleanly.",
+    "weakness": "Multiple spaces and tabs collapse into delimiters; 3 tokens."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"123 456\");\nint a = sc.nextInt();\nint b = sc.nextInt();\nSystem.out.println(b - a);\n```",
+    "options": [
+      "333",
+      "-333",
+      "0",
+      "123456"
+    ],
+    "answer": 0,
+    "explain": "`a = 123`, `b = 456`. `456 - 123 = 333`.",
+    "topic": "Token Difference Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Computed difference between two consecutive tokens.",
+    "weakness": "`456 - 123 = 333`."
+  },
+  {
+    "q": "What does this code print?\n```java\nScanner sc = new Scanner(\"hello world\");\nSystem.out.println(sc.next().toUpperCase() + \" \" + sc.next().length());\n```",
+    "options": [
+      "HELLO 5",
+      "HELLO 11",
+      "HELLO WORLD",
+      "hello 5"
+    ],
+    "answer": 0,
+    "explain": "First token: `\"hello\"` -> `\"HELLO\"`. Second token: `\"world\"` -> length is 5. Prints `HELLO 5`.",
+    "topic": "Token Method Invocations",
+    "type": "output",
+    "level": "easy",
+    "strength": "Evaluated String methods on consecutive scanned tokens.",
+    "weakness": "Outputs `HELLO 5`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nScanner sc = new Scanner(\"10 20\");\nsc.close();\ntry {\n    sc.next();\n} catch (IllegalStateException e) {\n    System.out.println(\"Caught\");\n}\n```",
+    "options": [
+      "Caught",
+      "10",
+      "Nothing",
+      "NullPointerException"
+    ],
+    "answer": 0,
+    "explain": "Invoking `next()` on a closed Scanner throws `IllegalStateException`, which is caught and prints `Caught`.",
+    "topic": "Closed Scanner Exception Handling",
+    "type": "output",
+    "level": "medium",
+    "strength": "Caught IllegalStateException on closed Scanner invocation.",
+    "weakness": "Reading closed Scanner throws IllegalStateException; caught cleanly."
+  },
+  {
+    "q": "What does this code print?\n```java\nScanner sc = new Scanner(\"3 0 2\");\nint total = 0;\nwhile (sc.hasNextInt()) {\n    int n = sc.nextInt();\n    if (n == 0) continue;\n    total += n;\n}\nSystem.out.println(total);\n```",
+    "options": [
+      "5",
+      "3",
+      "0",
+      "2"
+    ],
+    "answer": 0,
+    "explain": "3 is added (total=3); 0 is skipped by continue; 2 is added (total=5). Outputs 5.",
+    "topic": "Token Sum with Filter Continue",
+    "type": "output",
+    "level": "easy",
+    "strength": "Filtered scanned tokens using continue.",
+    "weakness": "`3 + 2 = 5`."
+  },
+  {
+    "q": "You are building an audit logging service for a banking gateway that records every fund transfer. Multiple transactions must be written over time to `transfers.log`. Why should you use `FileWriter` with `append = true` rather than standard `PrintWriter`?",
+    "options": [
+      "Standard PrintWriter does not support strings",
+      "Standard PrintWriter constructor `new PrintWriter(file)` truncates the log file to 0 bytes on every restart, erasing all prior audit records; `append = true` preserves history",
+      "Append mode encrypts files automatically",
+      "FileWriter uses less disk space"
+    ],
+    "answer": 1,
+    "explain": "Overwriting mode erases existing data. Audit trails require append mode (`new FileWriter(file, true)`) to preserve chronological historical logs.",
+    "topic": "Audit Log Appending Design",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands why append mode is critical for transaction audit logging.",
+    "weakness": "Always use append mode for audit logs to avoid overwriting historical records."
+  },
+  {
+    "q": "A university grading system processes a CSV file `students.csv` containing 5,000 student marks. Some rows have missing or corrupted scores. How should the file reader handle an `InputMismatchException` on a corrupted line without aborting the remaining 4,999 students?",
+    "options": [
+      "Let the program crash and restart",
+      "Wrap the line parsing in a try-catch block inside the loop, log a warning with `e.getMessage()`, skip the invalid row with `sc.nextLine()`, and continue reading",
+      "Delete the file",
+      "Rely on the OS to fix the CSV"
+    ],
+    "answer": 1,
+    "explain": "Resilient ETL pipelines catch parsing exceptions inside the loop, log the bad record, flush to the next line, and continue processing remaining rows.",
+    "topic": "Resilient Batch File Parsing",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Implemented resilient exception recovery inside file processing loops.",
+    "weakness": "Catch parsing exceptions inside the read loop to skip corrupt rows and continue processing."
+  },
+  {
+    "q": "A mobile app downloads a temporary configuration file `config.tmp`. To ensure the file does not remain on user devices if the app crashes, what method of `java.io.File` should be invoked immediately after creation?",
+    "options": [
+      "`file.deleteNow()`",
+      "`file.deleteOnExit()`",
+      "`file.makeTemporary()`",
+      "`file.purge()`"
+    ],
+    "answer": 1,
+    "explain": "`file.deleteOnExit()` registers the file for automatic deletion when the JVM terminates normally.",
+    "topic": "deleteOnExit Cleanup Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Knows deleteOnExit for automatic temporary file cleanup.",
+    "weakness": "Use `file.deleteOnExit()` to automatically clean up temporary files upon JVM exit."
+  },
+  {
+    "q": "A file upload microservice receives high-resolution profile pictures. Why MUST binary streams (`FileInputStream` / `FileOutputStream`) be used instead of character streams (`FileReader` / `FileWriter`)?",
+    "options": [
+      "FileReader cannot open files larger than 1MB",
+      "Character streams interpret bytes as character encodings (e.g. UTF-8), corrupting raw binary bytes (like PNG/JPEG headers and compressed byte sequences) during translation",
+      "FileInputStream uses GPU memory",
+      "Image files cannot have file extensions"
+    ],
+    "answer": 1,
+    "explain": "Character streams translate bytes into characters based on character sets. Arbitrary binary data (like images) contains byte sequences that are invalid characters, causing corruption.",
+    "topic": "Binary Data Integrity with Byte Streams",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands why binary data requires byte streams to avoid encoding corruption.",
+    "weakness": "Never use character streams for binary files (images, audio); use `InputStream`/`OutputStream`."
+  },
+  {
+    "q": "You are developing a cross-platform desktop application running on Windows, macOS, and Linux. How should you construct a path to a configuration file inside the user's home folder `\"app/config.json\"`?",
+    "options": [
+      "Hardcode `\"C:\\\\app\\\\config.json\"`",
+      "Use `System.getProperty(\"user.home\") + File.separator + \"app\" + File.separator + \"config.json\"` (or `java.nio.file.Path.of(...)`)",
+      "Hardcode `\"/home/app/config.json\"`",
+      "Use relative path `\"../config.json\"`"
+    ],
+    "answer": 1,
+    "explain": "Combining `System.getProperty(\"user.home\")` with `File.separator` guarantees correct path resolution across all operating systems without hardcoded path assumptions.",
+    "topic": "Cross-Platform Path Construction",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Constructed portable cross-platform file paths using system properties.",
+    "weakness": "Use `user.home` and `File.separator` for cross-platform file path resolution."
+  },
+  {
+    "q": "A medical device logs patient heartbeat data every millisecond. A developer observes that writing to disk on every reading causes severe CPU latency. What I/O enhancement resolves this bottleneck?",
+    "options": [
+      "Write to console instead",
+      "Wrap the output stream in a `BufferedWriter` or `BufferedOutputStream` to accumulate writes in an in-memory buffer before flushing to disk in bulk",
+      "Delete old readings",
+      "Use Scanner to write data"
+    ],
+    "answer": 1,
+    "explain": "Buffering aggregates many small byte writes into large memory blocks, minimizing costly hardware disk write system calls.",
+    "topic": "Buffered I/O Performance Optimization",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied buffered streams to eliminate disk I/O bottlenecks.",
+    "weakness": "Wrap streams in `BufferedWriter` or `BufferedOutputStream` to minimize hardware disk operations."
+  },
+  {
+    "q": "An e-commerce receipt generator writes PDF receipts. If disk space runs out during writing, a `IOException` occurs. How does try-with-resources guarantee that file handles are not leaked in the operating system?",
+    "options": [
+      "It automatically deletes the corrupted file",
+      "It calls `close()` in an implicit finally block, guaranteeing release of OS file descriptors regardless of whether the try block completes or throws an exception",
+      "It retries the write operation 3 times",
+      "It frees RAM memory"
+    ],
+    "answer": 1,
+    "explain": "Try-with-resources guarantees resource release via an automatic finally block, preventing operating system file handle exhaustion even during disk errors.",
+    "topic": "Resource Leak Prevention Under Failure",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands OS file descriptor lifecycle management via try-with-resources.",
+    "weakness": "Try-with-resources guarantees `close()` execution even during I/O errors."
+  },
+  {
+    "q": "A data migration script processes a 10 GB transaction log. Why will calling `Files.readAllLines(path)` cause an `OutOfMemoryError: Java heap space`, and what should you do instead?",
+    "options": [
+      "Files.readAllLines only works on text under 100 bytes",
+      "`readAllLines` attempts to load the entire 10 GB file into heap memory at once; instead, stream lines lazily using `BufferedReader` or `Files.lines()`",
+      "Log files cannot be read in Java",
+      "Files must be split manually in Windows Explorer"
+    ],
+    "answer": 1,
+    "explain": "`readAllLines` loads all lines into a `List<String>` in RAM, crashing on files larger than heap memory. `BufferedReader.readLine()` or `Files.lines()` streams one line at a time in O(1) memory.",
+    "topic": "Streaming Large Files vs In-Memory Buffering",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Avoided heap exhaustion by streaming large files line-by-line.",
+    "weakness": "Stream large files with `BufferedReader` to process records in O(1) memory."
+  },
+  {
+    "q": "A CLI utility accepts user commands until the user presses Ctrl+D (Unix) or Ctrl+Z (Windows), signaling End of File (EOF). How should the input loop detect this condition cleanly?",
+    "options": [
+      "`while (true) { String s = sc.nextLine(); }`",
+      "`while (sc.hasNextLine()) { String s = sc.nextLine(); process(s); }`",
+      "`if (sc.next() == null)`",
+      "`while (System.in.available() > 0)`"
+    ],
+    "answer": 1,
+    "explain": "`sc.hasNextLine()` returns `false` when EOF (Ctrl+D / Ctrl+Z) is reached on `System.in`, allowing clean termination.",
+    "topic": "Console EOF Detection Pattern",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Used hasNextLine() to detect console EOF cleanly.",
+    "weakness": "`sc.hasNextLine()` returns false when EOF (Ctrl+D/Ctrl+Z) is reached."
+  },
+  {
+    "q": "A backup routine copies a folder structure. Before creating a file in a subfolder `backup/2026/oct/data.txt`, the directory hierarchy does not yet exist. What method call ensures all parent folders are created first?",
+    "options": [
+      "`new File(\"backup/2026/oct\").mkdirs();`",
+      "`new File(\"backup/2026/oct\").mkdir();`",
+      "`new File(\"backup/2026/oct/data.txt\").createNewFile();`",
+      "`System.createDirectory();`"
+    ],
+    "answer": 0,
+    "explain": "`mkdirs()` creates the target directory along with all non-existent ancestor directories in the path, preventing `FileNotFoundException` when creating the nested file.",
+    "topic": "Recursive Parent Directory Creation",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied mkdirs() to ensure parent directory paths exist before file creation.",
+    "weakness": "Call `parentDir.mkdirs()` to create all necessary parent directories before creating nested files."
+  },
+  {
+    "q": "A point-of-sale terminal saves daily receipt totals to `receipts.txt`. If the application crashes unexpectedly mid-day, how can you ensure the latest receipt was actually written to the disk platter immediately after `pw.println(receipt)`?",
+    "options": [
+      "Reboot the POS terminal",
+      "Call `pw.flush();` immediately after writing the receipt to force the buffer to commit to disk",
+      "Close and reopen the file after every character",
+      "Set PrintWriter to read-only"
+    ],
+    "answer": 1,
+    "explain": "`flush()` forces any bytes buffered in memory to be written immediately to the underlying file, guaranteeing durability before a potential crash.",
+    "topic": "Durability via Explicit Buffer Flushing",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands immediate persistence via explicit flush().",
+    "weakness": "Call `pw.flush()` to force immediate disk synchronization for critical records."
+  },
+  {
+    "q": "A student records quiz scores in a text file. Each row contains: `StudentName Score`. For example: `Alice 95`. If student names can contain spaces (e.g. `Mary Jane 88`), why does calling `sc.next()` followed by `sc.nextInt()` fail, and how is it fixed?",
+    "options": [
+      "`sc.next()` only reads 'Mary', treating 'Jane' as the score and throwing `InputMismatchException`; read the entire line with `sc.nextLine()` and parse from the last space",
+      "Scanner cannot read letters",
+      "Change Scanner to BufferedReader without parsing",
+      "Scores must be written first"
+    ],
+    "answer": 0,
+    "explain": "`sc.next()` breaks on whitespace. For multi-word names, reading the whole line with `nextLine()` and splitting at the last space or delimiter correctly isolates the name from the trailing score.",
+    "topic": "Multi-Word Token Parsing Strategy",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Handled multi-word tokens with trailing numbers cleanly.",
+    "weakness": "Read full lines with `nextLine()` and split on the last delimiter when names contain spaces."
+  },
+  {
+    "q": "A cloud service needs to atomic-rename a completed upload from `upload.part` to `upload.final`. Why is `file.renameTo()` preferred over reading and rewriting all bytes?",
+    "options": [
+      "renameTo encrypts the payload",
+      "`renameTo()` performs an O(1) filesystem metadata update without moving or copying raw byte data on disk, completing instantaneously",
+      "renameTo runs on the network",
+      "rewriting bytes is forbidden in Java"
+    ],
+    "answer": 1,
+    "explain": "On the same filesystem volume, `renameTo()` updates only directory pointer metadata in O(1) time, avoiding reading/writing gigabytes of data.",
+    "topic": "Atomic O(1) File Renaming",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands O(1) filesystem metadata renaming vs byte copying.",
+    "weakness": "`renameTo()` updates file metadata in O(1) time without copying bytes."
+  },
+  {
+    "q": "An automated report generator exports a table of sales figures to `report.txt`. Columns must align perfectly: Item (width 20, left-aligned), Quantity (width 8, right-aligned), Price (width 10, right-aligned, 2 decimals). Which statement achieves this?",
+    "options": [
+      "`pw.printf(\"%-20s %8d %10.2f%n\", item, qty, price);`",
+      "`pw.println(item + \" \" + qty + \" \" + price);`",
+      "`pw.printf(\"%20s %-8d %.2f\", item, qty, price);`",
+      "`pw.write(item + qty + price);`"
+    ],
+    "answer": 0,
+    "explain": "`%-20s` left-aligns strings; `%8d` right-aligns integers; `%10.2f` right-aligns decimals; `%n` adds a portable newline.",
+    "topic": "Column-Aligned File Reporting",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Engineered column-aligned formatted file output with printf.",
+    "weakness": "Use `%-20s %8d %10.2f%n` for aligned tabular report generation."
+  },
+  {
+    "q": "A malware scanner checks file extensions. A user renames `virus.exe` to `virus.txt.exe`. How should the scanner isolate the TRUE file extension?",
+    "options": [
+      "Find the first period `indexOf('.')`",
+      "Find the last period `lastIndexOf('.')` and extract the substring following it",
+      "Check if filename contains \"exe\"",
+      "Split by spaces"
+    ],
+    "answer": 1,
+    "explain": "Files can have multiple dots (e.g. `archive.tar.gz`). The true file extension is the substring following the final dot: `name.substring(name.lastIndexOf('.') + 1)`.",
+    "topic": "File Extension Isolation via lastIndexOf",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Isolated terminal file extension via lastIndexOf('.').",
+    "weakness": "Use `lastIndexOf('.')` to identify the final extension in multi-dotted filenames."
+  },
+  {
+    "q": "A web application saves user avatars to disk. To prevent malicious users from uploading filenames like `../../etc/passwd` to overwrite system files (Directory Traversal Attack), what check must be applied?",
+    "options": [
+      "Convert filename to uppercase",
+      "Validate that `file.getCanonicalPath()` starts with the intended base upload directory path and reject paths containing `..`",
+      "Change file extension to .jpg",
+      "Delete the file if it has numbers"
+    ],
+    "answer": 1,
+    "explain": "Directory Traversal occurs when filenames contain `..`. Resolving canonical paths (`file.getCanonicalFile().toPath().startsWith(baseDir)`) prevents escaping the sandbox.",
+    "topic": "Directory Traversal Security Guard",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Applied path canonicalization to defeat Directory Traversal attacks.",
+    "weakness": "Verify that `canonicalPath` starts with the authorized base directory to prevent directory traversal."
+  },
+  {
+    "q": "A logging framework rotates log files when `app.log` exceeds 50 MB. How does it check the file size in Java?",
+    "options": [
+      "`if (logFile.length() > 50 * 1024 * 1024)`",
+      "`if (logFile.size() > 50)`",
+      "`if (logFile.count() > 50000)`",
+      "`if (logFile.length() > 50)`"
+    ],
+    "answer": 0,
+    "explain": "`file.length()` returns the file size in bytes as a `long`. 50 MB is `50 * 1024 * 1024` bytes.",
+    "topic": "File Size Check for Log Rotation",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Calculated byte threshold for file size checks.",
+    "weakness": "`file.length()` returns bytes; 50 MB = `50 * 1024 * 1024` bytes."
+  },
+  {
+    "q": "A dictionary app loads 100,000 words from `words.txt`. Why should you pre-allocate a collection rather than repeatedly re-reading the file from disk on every user keystroke?",
+    "options": [
+      "Files lock the computer",
+      "Disk I/O is thousands of times slower than RAM memory access; loading words once into an in-memory Set/Trie on startup ensures instant search response times",
+      "Java files expire after 5 minutes",
+      "Scanner cannot read dictionaries"
+    ],
+    "answer": 1,
+    "explain": "Disk access latency is orders of magnitude slower than RAM. Caching static reference data in memory upon startup eliminates repeated disk bottlenecks.",
+    "topic": "In-Memory Caching vs Disk I/O",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Recognized the necessity of in-memory caching over repetitive disk I/O.",
+    "weakness": "Cache static file data in memory on startup to avoid high disk latency."
+  },
+  {
+    "q": "A banking data pipeline receives files from external vendors encoded in UTF-8. On Windows, the default system charset might be Windows-1252. How do you guarantee the file is read using UTF-8 regardless of the operating system default?",
+    "options": [
+      "`new Scanner(file, \"UTF-8\")` (or `new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)`)",
+      "`new Scanner(file)` without arguments",
+      "Rename file to .utf8",
+      "Change Windows system locale"
+    ],
+    "answer": 0,
+    "explain": "Explicitly specifying the charset (`\"UTF-8\"` or `StandardCharsets.UTF_8`) ensures portable, consistent character decoding across all host OS platforms.",
+    "topic": "Explicit Charset Specification",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Enforced explicit UTF-8 charset decoding across differing OS environments.",
+    "weakness": "Always specify `StandardCharsets.UTF_8` when creating readers and scanners."
+  },
+  {
+    "q": "A command-line tool counts the total number of words, lines, and characters in a text file (like Unix `wc`). Which Scanner methods can be combined to track all three metrics in a single pass?",
+    "options": [
+      "Read line by line with `nextLine()`, incrementing lines, adding `line.length() + 1` to characters, and splitting the line by whitespace `line.trim().split(\"\\\\s+\")` to count words",
+      "Call `read()` 3 times",
+      "Open 3 separate Scanner instances simultaneously",
+      "Use `sc.nextInt()`"
+    ],
+    "answer": 0,
+    "explain": "Reading line-by-line enables tracking lines, characters, and words concurrently in a single efficient O(N) linear pass.",
+    "topic": "Word Count (wc) Single-Pass Design",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Designed clean single-pass line, word, and character counter.",
+    "weakness": "Process line-by-line to aggregate lines, characters, and words in a single pass."
+  },
+  {
+    "q": "A database exporter dumps records to a CSV file. If a customer's address contains a comma (e.g. `\"123 Main St, Apt 4\"`), what must the exporter do to prevent breaking the CSV column structure?",
+    "options": [
+      "Remove the comma from the address",
+      "Wrap the field in double quotes: `\"\\\"\" + address + \"\\\"\"` (standard RFC 4180 CSV escaping)",
+      "Throw an exception",
+      "Replace the comma with a question mark"
+    ],
+    "answer": 1,
+    "explain": "In CSV formats, fields containing delimiter characters (commas) must be enclosed in double quotes according to RFC 4180.",
+    "topic": "CSV Field Escaping Rules",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied RFC 4180 CSV escaping for comma-containing fields.",
+    "weakness": "Enclose fields containing commas within double quotes in CSV exports."
+  },
+  {
+    "q": "A sensor data collector creates a daily file named `log_YYYY_MM_DD.txt`. How should the file name string be generated dynamically using Java's `LocalDate`?",
+    "options": [
+      "`String name = \"log_\" + LocalDate.now() + \".txt\";`",
+      "`String name = \"log_today.txt\";`",
+      "`String name = new File(LocalDate.now());`",
+      "`String name = LocalDate.toString().replace('-', '_');`"
+    ],
+    "answer": 0,
+    "explain": "`LocalDate.now().toString()` outputs `YYYY-MM-DD` (ISO-8601). String concatenation `\"log_\" + LocalDate.now() + \".txt\"` produces `log_2026-10-06.txt` cleanly.",
+    "topic": "Dynamic Filename Formatting",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Constructed dynamic date-stamped filenames cleanly.",
+    "weakness": "Use `LocalDate.now()` to generate date-stamped dynamic filenames."
+  },
+  {
+    "q": "A distributed system worker checks if a lock file `process.lock` exists before starting. If it exists, another worker is already running. If it does NOT exist, it must create it atomically. What method provides this atomic check-and-create?",
+    "options": [
+      "`if (!file.exists()) file.createNewFile();` (Race condition!)",
+      "`file.createNewFile()` (returns true only if created atomically by this process)",
+      "`file.mkdir()`",
+      "`file.renameTo()`"
+    ],
+    "answer": 1,
+    "explain": "`file.createNewFile()` is an atomic filesystem operation. It returns `true` if and only if the file did not exist and was created by this call, avoiding race conditions.",
+    "topic": "Atomic Lock File Creation",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Used atomic createNewFile to prevent race conditions in process locking.",
+    "weakness": "Use `file.createNewFile()` for atomic lock file creation without race conditions."
+  },
+  {
+    "q": "A desktop application saves user preferences to `prefs.properties`. Which standard Java class is specifically designed to load and store key-value configuration pairs from/to a stream?",
+    "options": [
+      "`java.util.Properties` via `.load(InputStream)` and `.store(OutputStream, comments)`",
+      "`java.util.Scanner`",
+      "`java.io.PrintWriter` only",
+      "`java.util.ArrayList`"
+    ],
+    "answer": 0,
+    "explain": "`java.util.Properties` is the built-in Java class for managing key-value configuration files, with native stream loading and saving support.",
+    "topic": "Properties Configuration Storage",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Recognized java.util.Properties for configuration persistence.",
+    "weakness": "Use `java.util.Properties` to load and save key-value application preferences."
+  },
+  {
+    "q": "A backup script verifies file integrity after copying a 2 GB database file from source to destination. What is the most reliable check to ensure the file was not corrupted during copying?",
+    "options": [
+      "Compare `source.length() == dest.length()` only",
+      "Compute and compare cryptographic hash checksums (e.g. SHA-256 or MD5) of both files",
+      "Compare file creation timestamps",
+      "Check if `dest.exists()` is true"
+    ],
+    "answer": 1,
+    "explain": "While file size equality is a quick initial check, computing and matching a cryptographic checksum (SHA-256) guarantees exact bit-for-bit data integrity.",
+    "topic": "File Integrity Verification via Checksums",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands cryptographic checksum comparison for reliable file transfer verification.",
+    "weakness": "Compute SHA-256 checksums to verify bit-level file copy integrity."
+  }
+]

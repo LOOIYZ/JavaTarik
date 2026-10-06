@@ -1,0 +1,1602 @@
+[
+  {
+    "q": "What is the difference between a class and an object in Java?",
+    "options": [
+      "A class is an instance in memory; an object is source code",
+      "A class is a blueprint/template defining state (fields) and behavior (methods); an object is a concrete instance of that class allocated on the heap",
+      "A class can hold data; an object can only hold methods",
+      "They are identical synonyms in Java"
+    ],
+    "answer": 1,
+    "explain": "A class defines the type, structure, and behavior. An object is a runtime instance created from the class blueprint using `new`.",
+    "topic": "Class vs Object Concept",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands the core relationship between classes and objects.",
+    "weakness": "A class is a blueprint; an object is an instance created in heap memory."
+  },
+  {
+    "q": "When does the Java compiler automatically generate a default no-argument constructor for a class?",
+    "options": [
+      "Always, for every class regardless of user code",
+      "Only if the programmer declares NO constructors of any kind in the class",
+      "Only if the class is declared public",
+      "Only if the class extends another class"
+    ],
+    "answer": 1,
+    "explain": "If a class contains zero constructor definitions, `javac` automatically synthesizes a default no-arg constructor. If the programmer defines ANY constructor (with or without arguments), no default constructor is generated.",
+    "topic": "Default Constructor Generation",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the rule for compiler default constructor generation.",
+    "weakness": "The compiler only provides a default constructor if no constructors are declared by the developer."
+  },
+  {
+    "q": "What is the purpose of the `this` keyword in Java?",
+    "options": [
+      "To refer to the parent superclass",
+      "To refer to the current object instance whose method or constructor is being invoked",
+      "To create a new thread",
+      "To allocate memory on the stack"
+    ],
+    "answer": 1,
+    "explain": "`this` is an implicit reference to the current object instance. It is commonly used to resolve variable shadowing between instance fields and parameters (`this.x = x`) or invoke overloaded constructors (`this(...)`).",
+    "topic": "This Keyword",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands the role of the `this` reference.",
+    "weakness": "`this` refers to the current object instance."
+  },
+  {
+    "q": "What is the difference between a `static` variable and an instance variable?",
+    "options": [
+      "Instance variables are shared across all instances; static variables belong to individual objects",
+      "Static variables belong to the class itself and are shared by all instances (one copy in memory); instance variables belong to specific object instances (each instance has its own copy)",
+      "Static variables cannot be modified; instance variables can",
+      "Static variables are allocated on the stack"
+    ],
+    "answer": 1,
+    "explain": "A `static` field belongs to the class and exists once per classloader, shared by all instances. Instance fields are allocated separately for each object instance on the heap.",
+    "topic": "Static vs Instance Variables",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes class-level static fields from instance fields.",
+    "weakness": "Static fields are shared across all instances; instance fields belong to individual objects."
+  },
+  {
+    "q": "What are the four access modifiers in Java, ordered from most restrictive to least restrictive?",
+    "options": [
+      "`public` -> `protected` -> default (package-private) -> `private`",
+      "`private` -> default (package-private) -> `protected` -> `public`",
+      "`private` -> `protected` -> default -> `public`",
+      "`protected` -> `private` -> default -> `public`"
+    ],
+    "answer": 1,
+    "explain": "`private` (class only) is most restrictive, followed by default/package-private (same package), `protected` (package + subclasses), and `public` (accessible everywhere).",
+    "topic": "Access Modifier Hierarchy",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands the accessibility hierarchy of access modifiers.",
+    "weakness": "Accessibility order: private (most restrictive) < default < protected < public (least restrictive)."
+  },
+  {
+    "q": "What is encapsulation in Object-Oriented Programming?",
+    "options": [
+      "Inheriting behavior from a parent class",
+      "Bundling data (fields) and methods operating on that data within a class, and restricting direct external access to fields using private modifiers and public getters/setters",
+      "Writing all code in a single file",
+      "Converting code to bytecode"
+    ],
+    "answer": 1,
+    "explain": "Encapsulation is data hiding and abstraction: declaring fields private and exposing controlled public accessor (getter) and mutator (setter) methods to enforce validation and state integrity.",
+    "topic": "Encapsulation Principle",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands encapsulation and information hiding.",
+    "weakness": "Encapsulation protects object state by hiding private fields behind public getters and setters."
+  },
+  {
+    "q": "What rule governs constructor chaining using `this(...)` inside a constructor?",
+    "options": [
+      "`this(...)` can be placed anywhere in the constructor body",
+      "`this(...)` MUST be the very first statement in the constructor body",
+      "A constructor can contain multiple `this(...)` calls",
+      "`this(...)` can only call constructors with fewer parameters"
+    ],
+    "answer": 1,
+    "explain": "The invocation of another constructor via `this(...)` must strictly be the first statement in a constructor. Violating this triggers a compilation error.",
+    "topic": "Constructor Chaining with this()",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows that `this(...)` must be the first statement in a constructor.",
+    "weakness": "Constructor calls using `this(...)` must be the very first line of the constructor."
+  },
+  {
+    "q": "Can a `static` method access instance variables or call non-static methods directly without an object reference?",
+    "options": [
+      "Yes, if they are public",
+      "No, because static methods execute at class-level and do not have an active `this` instance context",
+      "Yes, using the `this` keyword",
+      "Only in Java 17 and above"
+    ],
+    "answer": 1,
+    "explain": "Static methods belong to the class and execute without an object context. Accessing instance fields or methods directly without an explicit instance reference is illegal.",
+    "topic": "Static Context Constraints",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands why static methods cannot access instance fields directly.",
+    "weakness": "Static methods have no `this` context and cannot access instance fields without an object reference."
+  },
+  {
+    "q": "What is a static initialization block (`static { ... }`) in a Java class?",
+    "options": [
+      "A block executed every time a new object is instantiated",
+      "A block executed once when the class is first loaded into memory by the JVM, before any constructors or main method calls",
+      "A block that runs right before garbage collection",
+      "A block for handling checked exceptions"
+    ],
+    "answer": 1,
+    "explain": "A `static` initialization block runs exactly once when the class is loaded by the JVM ClassLoader, commonly used to initialize complex static fields.",
+    "topic": "Static Initialization Block",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands when static initializer blocks execute.",
+    "weakness": "Static initialization blocks execute once when the class is loaded into memory."
+  },
+  {
+    "q": "What is an instance initialization block (`{ ... }` without static) in a Java class?",
+    "options": [
+      "A block executed once per class load",
+      "A block executed every time a new object instance is created, running immediately before the constructor body executes",
+      "A block executed only when an object is cloned",
+      "A block executed when a method returns"
+    ],
+    "answer": 1,
+    "explain": "An instance initializer block runs every time an object is instantiated, executed before the constructor's body (after `super()` completes).",
+    "topic": "Instance Initialization Block",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands instance initializer execution timing.",
+    "weakness": "Instance initializers run before the constructor body whenever a new instance is created."
+  },
+  {
+    "q": "What is a copy constructor in Java?",
+    "options": [
+      "A constructor generated automatically by the compiler",
+      "A constructor that creates a new object by copying the fields of an existing object of the same class: `public Person(Person other)`",
+      "A constructor that clones arrays only",
+      "A constructor marked with the `copy` keyword"
+    ],
+    "answer": 1,
+    "explain": "A copy constructor takes another instance of the same class as a parameter and initializes the new object's fields to match, providing a clean alternative to `.clone()`.",
+    "topic": "Copy Constructor Pattern",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Identifies copy constructor design pattern in Java.",
+    "weakness": "A copy constructor creates a new instance initialized with values from an existing instance."
+  },
+  {
+    "q": "What is the difference between shallow copy and deep copy when copying an object?",
+    "options": [
+      "Shallow copy is for primitives; deep copy is for Strings only",
+      "Shallow copy duplicates primitive fields and copies reference addresses (both objects point to the same nested objects); deep copy creates copies of the nested objects as well",
+      "Shallow copy allocates on stack; deep copy allocates on heap",
+      "They are identical in Java"
+    ],
+    "answer": 1,
+    "explain": "In a shallow copy, nested object references are shared. In a deep copy, all nested objects are cloned recursively, ensuring complete independence.",
+    "topic": "Shallow vs Deep Copy",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands shallow vs deep object cloning semantics.",
+    "weakness": "Shallow copies share nested object references; deep copies duplicate nested objects independently."
+  },
+  {
+    "q": "What does the `final` keyword mean when applied to a class field?",
+    "options": [
+      "The field can only be accessed once",
+      "The field is a constant that must be initialized upon declaration or in every constructor, and cannot be reassigned thereafter",
+      "The field is garbage collected first",
+      "The field is stored in CPU registers"
+    ],
+    "answer": 1,
+    "explain": "A `final` instance field must be definitively assigned by the end of every constructor and cannot be reassigned once initialized.",
+    "topic": "Final Instance Fields",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands immutability enforced by final instance fields.",
+    "weakness": "A `final` field cannot be reassigned after initialization."
+  },
+  {
+    "q": "Can a constructor be declared `final`, `static`, or `abstract`?",
+    "options": [
+      "Yes, constructors can have any modifier",
+      "No, constructors cannot be final, static, or abstract because they are not inherited, belong to instances being created, and must have a body",
+      "Yes, constructors can be static",
+      "Only abstract is permitted"
+    ],
+    "answer": 1,
+    "explain": "Constructors cannot be inherited (so `final` is meaningless), require an instance being constructed (so `static` is invalid), and must construct objects (so `abstract` is invalid).",
+    "topic": "Constructor Modifier Restrictions",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows that constructors cannot be marked static, final, or abstract.",
+    "weakness": "Constructors cannot be `static`, `final`, or `abstract`."
+  },
+  {
+    "q": "What is a 'plain old Java object' (POJO) or JavaBean convention?",
+    "options": [
+      "A class with no methods",
+      "A class with private fields, a public no-argument constructor, and public getter and setter methods following standard naming conventions",
+      "An interface with no fields",
+      "A class extending java.lang.Applet"
+    ],
+    "answer": 1,
+    "explain": "JavaBeans follow a standard convention: private fields, public no-arg constructor, and standard getters (`getX()`) / setters (`setX(...)`).",
+    "topic": "JavaBean & POJO Conventions",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands JavaBean structural conventions.",
+    "weakness": "JavaBeans feature private fields, a public no-arg constructor, and getters/setters."
+  },
+  {
+    "q": "What happens when you create an object: `Person p = new Person();`?",
+    "options": [
+      "Memory is allocated on the heap, fields are initialized to defaults, initializers run, the constructor executes, and the memory address is assigned to `p`",
+      "The class is recompiled by javac",
+      "The object is placed directly on the thread call stack",
+      "p is initialized to null"
+    ],
+    "answer": 0,
+    "explain": "`new` allocates heap space, zeroes fields to defaults, executes instance initializers, runs constructor code, and yields the heap reference address to `p`.",
+    "topic": "Object Instantiation Lifecycle",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands heap allocation and object construction lifecycle.",
+    "weakness": "`new` allocates heap space, zeroes fields, runs initializers/constructors, and returns reference."
+  },
+  {
+    "q": "Can a class have multiple constructors in Java?",
+    "options": [
+      "No, Java permits only one constructor per class",
+      "Yes, this is constructor overloading, provided each constructor has a distinct parameter list (types, number, or order)",
+      "Yes, but they must all have identical parameter lists",
+      "Only if the class implements Cloneable"
+    ],
+    "answer": 1,
+    "explain": "Constructor overloading allows multiple constructors with different parameter signatures to initialize objects in various initial states.",
+    "topic": "Constructor Overloading",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands constructor overloading mechanics.",
+    "weakness": "A class can have multiple constructors as long as their parameter lists differ."
+  },
+  {
+    "q": "What is package-private (default) access in Java?",
+    "options": [
+      "Accessible from any class in any package",
+      "Accessible only by classes located within the exact same package",
+      "Accessible only within the declaring class",
+      "Accessible by subclasses in different packages"
+    ],
+    "answer": 1,
+    "explain": "When no access modifier is specified (default access), the member is accessible to any class in the same package, but inaccessible to classes outside that package.",
+    "topic": "Package-Private (Default) Access",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows scope of package-private access modifier.",
+    "weakness": "Default (no modifier) access restricts visibility to classes within the same package."
+  },
+  {
+    "q": "Can a top-level class be declared `private` or `protected`?",
+    "options": [
+      "Yes, any top-level class can be private",
+      "No, a top-level (outer) class can only be declared `public` or package-private (default); only nested/inner classes can be private or protected",
+      "Yes, top-level classes are private by default",
+      "Only protected is permitted"
+    ],
+    "answer": 1,
+    "explain": "Top-level classes can only have `public` or package-private access. Declaring an outer class `private` or `protected` causes a compilation error.",
+    "topic": "Top-Level Class Modifier Restrictions",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows that top-level classes can only be public or default access.",
+    "weakness": "Top-level classes cannot be `private` or `protected`; only `public` or package-private."
+  },
+  {
+    "q": "What is an immutable class in Java (such as `java.lang.String` or `java.lang.Integer`)?",
+    "options": [
+      "A class that cannot be compiled",
+      "A class whose instances cannot have their state modified after creation (all fields are private final, no setters, class is final)",
+      "A class with no constructors",
+      "A class that cannot be instantiated"
+    ],
+    "answer": 1,
+    "explain": "An immutable class ensures that once an object is constructed, its state can never change. This is achieved via `final` class, `private final` fields, and no mutator methods.",
+    "topic": "Immutable Class Design",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands immutable object design requirements.",
+    "weakness": "Immutable classes have final classes, private final fields, and no setter methods."
+  },
+  {
+    "q": "What is garbage collection in Java?",
+    "options": [
+      "Deleting source code files after compilation",
+      "An automatic JVM memory management process that identifies and reclaims heap memory occupied by objects that are no longer reachable by any active reference",
+      "Clearing local variables from the stack",
+      "Shutting down the operating system"
+    ],
+    "answer": 1,
+    "explain": "The JVM's Garbage Collector automatically frees heap memory occupied by unreachable objects, eliminating manual memory deallocation (`free`/`delete`).",
+    "topic": "Garbage Collection Architecture",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands automatic JVM heap garbage collection.",
+    "weakness": "Garbage collection automatically reclaims heap memory of unreachable objects."
+  },
+  {
+    "q": "What method is called when you print an object directly: `System.out.println(myObject);`?",
+    "options": [
+      "`myObject.print()`",
+      "`myObject.toString()`",
+      "`myObject.display()`",
+      "`myObject.dump()`"
+    ],
+    "answer": 1,
+    "explain": "`PrintStream.println(Object)` internally calls `String.valueOf(obj)`, which invokes `obj.toString()` (or prints `\"null\"` if the object reference is null).",
+    "topic": "toString Method Invocation",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows that println invokes toString() on object arguments.",
+    "weakness": "`println(obj)` invokes `obj.toString()` to obtain a string representation."
+  },
+  {
+    "q": "Can two different objects of the same class have different values for a `static` field?",
+    "options": [
+      "Yes, each object has its own copy of static fields",
+      "No, static fields belong to the class; all instances share the exact same single variable and value in memory",
+      "Yes, if one is serialized",
+      "Only if the field is volatile"
+    ],
+    "answer": 1,
+    "explain": "Static fields are class-level variables. Modifying a static field via one object affects the value seen by all other instances.",
+    "topic": "Shared Static State",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands that static fields are shared across all instances.",
+    "weakness": "All instances share a single copy of a static field."
+  },
+  {
+    "q": "What is a singleton pattern in Java?",
+    "options": [
+      "A class that can only have a single method",
+      "A design pattern that restricts class instantiation to a single unique instance across the entire application lifecycle",
+      "A class with a single constructor",
+      "An array with length 1"
+    ],
+    "answer": 1,
+    "explain": "The Singleton pattern ensures a class has only one instance, typically using a `private` constructor and a public `static` factory method `getInstance()`.",
+    "topic": "Singleton Pattern",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Recognized the Singleton design pattern.",
+    "weakness": "Singleton pattern guarantees only one instance exists, using a private constructor."
+  },
+  {
+    "q": "What happens when an object reference variable is assigned `null`: `Person p = null;`?",
+    "options": [
+      "The object on the heap is instantly erased from RAM",
+      "The reference variable `p` no longer points to any object; the object previously referenced becomes eligible for garbage collection if no other references point to it",
+      "Throws a NullPointerException immediately",
+      "The Person class is unloaded"
+    ],
+    "answer": 1,
+    "explain": "Assigning `null` detaches the reference. If no other active references point to the heap object, it becomes eligible for garbage collection.",
+    "topic": "Null Reference & GC Eligibility",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands null assignment and garbage collection eligibility.",
+    "weakness": "Assigning `null` makes the object eligible for GC if no other references point to it."
+  },
+  {
+    "q": "Why does the following code fail to compile?\n```java\npublic class Student {\n    private int age;\n}\n// in another class:\nStudent s = new Student();\ns.age = 20;\n```",
+    "options": [
+      "Student has no constructor",
+      "Field `age` has private access in `Student` and cannot be directly accessed from outside the class",
+      "20 must be a String",
+      "s is not instantiated"
+    ],
+    "answer": 1,
+    "explain": "`private` members are accessible strictly within the declaring class. Accessing `s.age` from an outside class violates encapsulation, causing a compile error.",
+    "topic": "Private Field Access Violation",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught illegal access to private field from external class.",
+    "weakness": "`private` fields cannot be accessed directly from external classes; use public getters/setters."
+  },
+  {
+    "q": "Why does this code cause a compilation error?\n```java\npublic class Book {\n    public Book(String title) {}\n}\n// in main:\nBook b = new Book();\n```",
+    "options": [
+      "Book cannot be public",
+      "Cannot find symbol: constructor `Book()` without arguments does not exist because declaring `Book(String)` suppresses default constructor generation",
+      "b must be capitalized",
+      "new keyword is missing parameter"
+    ],
+    "answer": 1,
+    "explain": "Because the programmer declared a parameterized constructor `Book(String)`, the compiler does NOT generate the default no-arg constructor. Calling `new Book()` fails.",
+    "topic": "Suppressed Default Constructor Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized that user-defined constructors suppress default constructor generation.",
+    "weakness": "Declaring a parameterized constructor suppresses the automatic no-arg constructor."
+  },
+  {
+    "q": "Identify the compilation error in this constructor chaining code:\n```java\npublic class Point {\n    private int x, y;\n    public Point(int x, int y) {\n        this.x = x;\n        this.y = y;\n    }\n    public Point() {\n        System.out.println(\"Default\");\n        this(0, 0);\n    }\n}\n```",
+    "options": [
+      "Point cannot have two constructors",
+      "Constructor call `this(0, 0)` must be the first statement in the constructor body",
+      "x and y cannot be private",
+      "println cannot be in constructors"
+    ],
+    "answer": 1,
+    "explain": "`this(...)` must strictly appear as the first statement in a constructor. Placing `System.out.println` before `this(0, 0)` causes: 'call to this must be first statement in constructor'.",
+    "topic": "Misplaced this() Constructor Call",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted misplaced `this(...)` constructor call.",
+    "weakness": "`this(...)` must be the very first statement inside a constructor."
+  },
+  {
+    "q": "What is the compilation issue in this static method?\n```java\npublic class Counter {\n    private int count = 0;\n    public static void increment() {\n        count++;\n    }\n}\n```",
+    "options": [
+      "count cannot be initialized to 0",
+      "Non-static field `count` cannot be referenced from a static context (`increment()`)",
+      "increment must return int",
+      "static methods cannot be public"
+    ],
+    "answer": 1,
+    "explain": "`increment()` is static (class-level), while `count` is an instance field. A static method cannot access instance fields directly because no object instance exists.",
+    "topic": "Static Accessing Instance Field Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught static method attempting to access non-static instance field.",
+    "weakness": "Static methods cannot directly access non-static instance fields."
+  },
+  {
+    "q": "Why does this constructor fail to initialize the instance variable?\n```java\npublic class Car {\n    private String model;\n    public Car(String model) {\n        model = model;\n    }\n    public String getModel() { return model; }\n}\n```",
+    "options": [
+      "Compilation error: cannot name parameter model",
+      "Shadowing bug: `model = model;` assigns the parameter to itself; the instance field remains null (must use `this.model = model;`)",
+      "getModel must be static",
+      "Car cannot return model"
+    ],
+    "answer": 1,
+    "explain": "The parameter `model` shadows the field `model`. `model = model;` assigns the parameter to itself. To assign to the instance field, `this.model = model;` is required.",
+    "topic": "Parameter Shadowing Assignment Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Identified parameter self-assignment due to missing `this.` qualifier.",
+    "weakness": "Use `this.field = param;` to resolve variable shadowing in constructors."
+  },
+  {
+    "q": "What error occurs in this constructor header?\n```java\npublic class Account {\n    public void Account() {\n        System.out.println(\"Created\");\n    }\n}\n```",
+    "options": [
+      "Account cannot be public",
+      "Because it has return type `void`, Java treats it as a regular method, NOT a constructor; calling `new Account()` will invoke the default constructor, not this method",
+      "Compilation error: constructors cannot print",
+      "Account must take parameters"
+    ],
+    "answer": 1,
+    "explain": "Constructors have NO return type. Adding `void` turns it into a standard method that happens to match the class name. It is not executed during `new Account()`.",
+    "topic": "Constructor with Void Return Type Trap",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized that adding void to constructor name creates a normal method.",
+    "weakness": "Constructors must not have a return type; adding `void` makes it a regular method."
+  },
+  {
+    "q": "Why does this code cause a compilation error?\n```java\npublic class Test {\n    public static void main(String[] args) {\n        System.out.println(this);\n    }\n}\n```",
+    "options": [
+      "println cannot print objects",
+      "Cannot use 'this' in a static context (`main` is static)",
+      "args is not used",
+      "Test must have a constructor"
+    ],
+    "answer": 1,
+    "explain": "`this` represents the current instance. Static methods belong to the class and have no instance, so `this` is illegal in static methods.",
+    "topic": "This in Static Context Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized that 'this' is illegal in static methods.",
+    "weakness": "The keyword `this` cannot be referenced from a static method."
+  },
+  {
+    "q": "Identify the compilation error in this top-level class definition:\n```java\nprivate class Database {\n    public void connect() {}\n}\n```",
+    "options": [
+      "Database cannot have methods",
+      "Modifier `private` not allowed here: top-level classes cannot be declared private",
+      "connect must return int",
+      "Missing main method"
+    ],
+    "answer": 1,
+    "explain": "Top-level classes can only be `public` or package-private (no modifier). Marking a top-level class `private` causes: 'modifier private not allowed here'.",
+    "topic": "Private Top-Level Class Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught illegal private access modifier on top-level class.",
+    "weakness": "Top-level classes cannot be declared `private`; only `public` or default package access."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\npublic class MathUtils {\n    public final int MAX = 100;\n}\n// in another class:\nMathUtils.MAX = 200;\n```",
+    "options": [
+      "MAX is not static, and it is marked final so it cannot be reassigned",
+      "MathUtils has no constructor",
+      "MAX must be lowercase",
+      "200 is too large"
+    ],
+    "answer": 0,
+    "explain": "`MAX` is not `static` (so `MathUtils.MAX` is invalid), and it is `final` (so it cannot be reassigned). Both issues violate Java syntax.",
+    "topic": "Final and Static Misconception",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted non-static access and final reassignment violation.",
+    "weakness": "`final` fields cannot be reassigned, and non-static fields require an instance."
+  },
+  {
+    "q": "What is the issue with this recursive constructor call?\n```java\npublic class Node {\n    public Node() {\n        this();\n    }\n}\n```",
+    "options": [
+      "Node cannot have no-arg constructor",
+      "Compilation error: recursive constructor invocation",
+      "Node must extend Object",
+      "Throws StackOverflowError at compile-time"
+    ],
+    "answer": 1,
+    "explain": "A constructor cannot call itself directly or indirectly. The compiler detects cyclic constructor chaining and reports: 'recursive constructor invocation'.",
+    "topic": "Recursive Constructor Invocation Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized compile-time rejection of cyclic constructor calls.",
+    "weakness": "Constructors cannot call themselves; cyclic constructor chaining is a compile-time error."
+  },
+  {
+    "q": "Why does the following snippet produce a compilation error?\n```java\npublic class A {\n    public int x;\n}\npublic class B {\n    public int y;\n}\n```",
+    "options": [
+      "A and B must have constructors",
+      "Only one public class is allowed per `.java` source file, and its name must match the filename",
+      "x and y must be private",
+      "Classes cannot be in the same file"
+    ],
+    "answer": 1,
+    "explain": "A single `.java` compilation unit can contain at most ONE `public` top-level class, whose name must match the file name.",
+    "topic": "Multiple Public Classes in Single File Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Understands the one-public-class-per-file rule in Java.",
+    "weakness": "A Java source file can contain at most one `public` top-level class matching the file name."
+  },
+  {
+    "q": "Identify the bug in this setter method:\n```java\npublic class BankAccount {\n    private double balance;\n    public void setBalance(double balance) {\n        if (balance >= 0) {\n            balance = balance;\n        }\n    }\n}\n```",
+    "options": [
+      "balance >= 0 is invalid condition",
+      "Parameter `balance` shadows field `balance`, so `balance = balance;` assigns to the parameter; the field is never updated (use `this.balance = balance;`)",
+      "setBalance must return double",
+      "balance cannot be private"
+    ],
+    "answer": 1,
+    "explain": "Without `this.balance = balance;`, the assignment modifies only the local parameter. The instance field remains unchanged.",
+    "topic": "Setter Missing this Bug",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught missing `this.` qualification in setter method.",
+    "weakness": "Use `this.balance = balance;` in setters to assign parameter values to instance fields."
+  },
+  {
+    "q": "Why does this code cause a compilation error?\n```java\npublic class User {\n    private final String id;\n    public User() {}\n}\n```",
+    "options": [
+      "User must be public",
+      "Variable 'id' might not have been initialized: final instance fields must be initialized at declaration or in every constructor",
+      "String cannot be final",
+      "id must be static"
+    ],
+    "answer": 1,
+    "explain": "A blank `final` instance variable must be definitively assigned in every constructor. Since `User()` leaves `id` uninitialized, the compiler rejects it.",
+    "topic": "Uninitialized Blank Final Field Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught unassigned blank final field in constructor.",
+    "weakness": "`final` instance fields must be initialized in every constructor if not initialized at declaration."
+  },
+  {
+    "q": "What error occurs in this constructor definition?\n```java\npublic class Employee {\n    public static Employee() {}\n}\n```",
+    "options": [
+      "Employee must return void",
+      "Modifier `static` not allowed here: constructors cannot be static",
+      "Employee must be private",
+      "Constructors cannot be public"
+    ],
+    "answer": 1,
+    "explain": "Constructors are responsible for creating object instances. Declaring a constructor `static` is illegal syntax.",
+    "topic": "Static Constructor Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized that constructors cannot be static.",
+    "weakness": "Constructors cannot be declared `static`."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\npublic class Box {\n    private int volume;\n    public Box(int v) { volume = v; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Box b = new Box();\n    }\n}\n```",
+    "options": [
+      "Box cannot be instantiated in Main",
+      "Constructor `Box()` in class `Box` cannot be applied to given types; required: `int`, found: no arguments",
+      "volume must be double",
+      "Main must extend Box"
+    ],
+    "answer": 1,
+    "explain": "Defining `Box(int v)` suppresses default no-argument constructor generation. Calling `new Box()` fails to find a matching constructor.",
+    "topic": "Mismatched Constructor Arguments Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught missing constructor matching zero arguments.",
+    "weakness": "Provide a no-arg constructor if you want callers to instantiate `new Box()` without arguments."
+  },
+  {
+    "q": "What is the compilation issue in this snippet?\n```java\npublic class Item {\n    int price;\n    public Item(int price) {\n        this(price, 0);\n        this.price = price;\n    }\n    public Item(int price, int discount) {}\n}\n```",
+    "options": [
+      "Item cannot have 2 constructors",
+      "The code compiles cleanly! Calling `this(...)` as the first statement followed by other assignments is completely valid",
+      "price cannot be 0",
+      "this cannot take 2 parameters"
+    ],
+    "answer": 1,
+    "explain": "`this(price, 0)` is the first statement, which satisfies Java syntax. Subsequent lines like `this.price = price;` are completely valid statements after constructor chaining.",
+    "topic": "Valid Constructor Chaining Sequence",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that additional statements are permitted after `this(...)` in a constructor.",
+    "weakness": "`this(...)` must be the FIRST statement, but statements can follow it in the constructor body."
+  },
+  {
+    "q": "Why does this code throw a `NullPointerException`?\n```java\npublic class Classroom {\n    Student leader;\n    public void printLeader() {\n        System.out.println(leader.getName());\n    }\n}\n```",
+    "options": [
+      "leader is not a Student",
+      "Instance field `leader` is uninitialized and defaults to `null`; dereferencing `leader.getName()` throws `NullPointerException`",
+      "Classroom cannot print",
+      "getName() must be static"
+    ],
+    "answer": 1,
+    "explain": "Object instance fields initialize to `null` by default. Attempting to invoke `.getName()` on an uninitialized reference throws `NullPointerException`.",
+    "topic": "Default Null Field Dereference",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified NullPointerException on uninitialized object field.",
+    "weakness": "Object instance fields default to `null`; initialize them before calling methods."
+  },
+  {
+    "q": "Identify the error in this singleton implementation:\n```java\npublic class Config {\n    private static Config instance = new Config();\n    public Config() {}\n    public static Config getInstance() { return instance; }\n}\n```",
+    "options": [
+      "getInstance must be private",
+      "The constructor `Config()` is declared `public`, allowing external classes to create multiple instances and breaking the Singleton pattern",
+      "instance must be non-static",
+      "Config must be final"
+    ],
+    "answer": 1,
+    "explain": "A true Singleton MUST declare its constructor `private` to prevent external instantiation via `new Config()`.",
+    "topic": "Public Constructor Singleton Flaw",
+    "type": "error",
+    "level": "medium",
+    "strength": "Spotted architectural flaw: public constructor breaking Singleton pattern.",
+    "weakness": "The Singleton pattern requires a `private` constructor to prevent external instantiation."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\npublic class Widget {\n    private static int totalWidgets;\n    public void add() {\n        this.totalWidgets++;\n    }\n}\n```",
+    "options": [
+      "static variables cannot be incremented",
+      "It compiles! Accessing a static field using `this.` or an instance reference is valid syntax (though discouraged)",
+      "totalWidgets must be final",
+      "add must be static"
+    ],
+    "answer": 1,
+    "explain": "Accessing static fields via an instance reference (`this.totalWidgets`) is valid in Java (though triggers a compiler warning recommending `Widget.totalWidgets`). It does NOT fail compilation.",
+    "topic": "Static Access via Instance Syntax Validity",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that accessing static members via instance references compiles with a warning.",
+    "weakness": "Accessing static members through instance references compiles but is discouraged; use class qualification."
+  },
+  {
+    "q": "What is the compilation error in this code?\n```java\npublic class Test {\n    static {\n        int x = 10;\n    }\n    public static void main(String[] args) {\n        System.out.println(x);\n    }\n}\n```",
+    "options": [
+      "static blocks cannot be declared",
+      "Cannot find symbol: variable 'x' is local to the static block and not accessible inside `main`",
+      "main cannot print x",
+      "x must be final"
+    ],
+    "answer": 1,
+    "explain": "Variables declared inside a static initialization block are local to that block. To make `x` accessible across methods, declare it as a static field outside the block.",
+    "topic": "Static Block Scope Leak Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized that variables declared inside static blocks are block-scoped.",
+    "weakness": "Variables declared inside a static block are local to that block and cannot be accessed elsewhere."
+  },
+  {
+    "q": "Why does this code cause a compiler error?\n```java\npublic class A {\n    public A(int x) {}\n}\npublic class B extends A {}\n```",
+    "options": [
+      "B cannot extend A",
+      "Implicit super constructor `A()` is undefined for default constructor in B (A has only `A(int)`)",
+      "A must be an interface",
+      "B must declare fields"
+    ],
+    "answer": 1,
+    "explain": "The default constructor of B attempts to invoke `super()`. Because class A has no no-arg constructor, B fails to compile unless an explicit constructor calling `super(x)` is provided.",
+    "topic": "Inherited Missing No-Arg Constructor Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands default super() constructor dependency.",
+    "weakness": "If superclass lacks a no-arg constructor, subclasses must explicitly invoke `super(args)`."
+  },
+  {
+    "q": "What error occurs in this method?\n```java\npublic class MathService {\n    public double sqrt(double n) {\n        if (n < 0) return;\n        return Math.sqrt(n);\n    }\n}\n```",
+    "options": [
+      "Math.sqrt is invalid",
+      "Cannot return without a value from a method with non-void result type `double`",
+      "n < 0 cannot be tested",
+      "sqrt must be static"
+    ],
+    "answer": 1,
+    "explain": "`return;` without an expression is only permitted in `void` methods. In a method returning `double`, an explicit value (or exception) must be returned.",
+    "topic": "Empty Return in Non-Void Method",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught empty return statement in non-void method.",
+    "weakness": "Non-void methods must return a value; `return;` is only legal in `void` methods."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\npublic class Counter {\n    private static int count;\n    public static void reset() {\n        this.count = 0;\n    }\n}\n```",
+    "options": [
+      "count cannot be 0",
+      "Cannot use 'this' in a static method (`reset()` is static)",
+      "reset must be private",
+      "count must be public"
+    ],
+    "answer": 1,
+    "explain": "`reset()` is a static method. `this` cannot be referenced from static methods. It should be written as `count = 0;` or `Counter.count = 0;`.",
+    "topic": "This Reference in Static Method Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted 'this' used inside static method.",
+    "weakness": "Static methods cannot reference `this`; use the class name to qualify static members."
+  },
+  {
+    "q": "Identify the issue in this code:\n```java\npublic class Data {\n    public int x;\n    public void copy(Data other) {\n        other.x = this.x;\n    }\n}\n```",
+    "options": [
+      "x must be private",
+      "It compiles cleanly! Private and public fields of any instance of the same class are accessible within that class's methods",
+      "this cannot be used with other",
+      "copy must be static"
+    ],
+    "answer": 1,
+    "explain": "In Java, access modifiers are class-based, not instance-based. Any method in class `Data` can access members of any `Data` instance. The code compiles cleanly.",
+    "topic": "Class-Based Access Modifier Scope",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that private/public access is class-based, allowing peer instance access.",
+    "weakness": "In Java, encapsulation is class-based: methods of a class can access members of any instance of that same class."
+  },
+  {
+    "q": "Why does the following snippet produce a compile error?\n```java\npublic class Person {\n    private String name;\n}\nPerson p = new Person();\nSystem.out.println(p.name);\n```",
+    "options": [
+      "Person has no toString()",
+      "Field `name` has private access in `Person` and cannot be accessed directly from outside",
+      "p must be final",
+      "name is null"
+    ],
+    "answer": 1,
+    "explain": "Accessing a `private` field from external calling code violates Java encapsulation and causes a compile error.",
+    "topic": "Direct Private Field Access",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught illegal access to private field from calling code.",
+    "weakness": "Private fields cannot be accessed directly outside their class."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class Counter {\n    public static int count = 0;\n    public Counter() { count++; }\n}\n// in main:\nnew Counter();\nnew Counter();\nnew Counter();\nSystem.out.println(Counter.count);\n```",
+    "options": [
+      "0",
+      "1",
+      "3",
+      "NullPointerException"
+    ],
+    "answer": 2,
+    "explain": "Because `count` is static, it is shared across all instances. Each constructor invocation increments the single shared class variable. Count is 3.",
+    "topic": "Static Counter Accumulation Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked static counter accumulation across multiple instantiations.",
+    "weakness": "Static fields are shared across instances; 3 instantiations increment `count` to 3."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Box {\n    int w, h;\n    public Box(int w, int h) {\n        this.w = w;\n        this.h = h;\n    }\n}\n// in main:\nBox b1 = new Box(10, 20);\nBox b2 = b1;\nb2.w = 50;\nSystem.out.println(b1.w);\n```",
+    "options": [
+      "10",
+      "50",
+      "20",
+      "NullPointerException"
+    ],
+    "answer": 1,
+    "explain": "`b2 = b1` copies the reference address. Both `b1` and `b2` point to the exact same object on the heap. Mutating `b2.w` changes `b1.w` to 50.",
+    "topic": "Object Reference Aliasing Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized that modifying an aliased reference mutates the shared heap object.",
+    "weakness": "`b2 = b1` creates an alias; mutating `b2.w` modifies `b1.w` directly."
+  },
+  {
+    "q": "What is the output of this constructor chaining code?\n```java\npublic class Test {\n    public Test() {\n        this(5);\n        System.out.print(\"A \");\n    }\n    public Test(int x) {\n        System.out.print(\"B \");\n    }\n    public static void main(String[] args) {\n        new Test();\n    }\n}\n```",
+    "options": [
+      "A B ",
+      "B A ",
+      "A ",
+      "B "
+    ],
+    "answer": 1,
+    "explain": "`new Test()` calls `this(5)`. `Test(int)` executes first, printing `\"B \"`. Then control returns to `Test()`, which prints `\"A \"`. Output: `B A `.",
+    "topic": "Constructor Chaining Execution Order",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced execution order in constructor chaining.",
+    "weakness": "`this(...)` executes the target constructor first, then returns to complete the caller constructor."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\npublic class Demo {\n    static int x = 10;\n    public static void main(String[] args) {\n        Demo d1 = new Demo();\n        Demo d2 = new Demo();\n        d1.x = 50;\n        System.out.println(d2.x);\n    }\n}\n```",
+    "options": [
+      "10",
+      "50",
+      "0",
+      "Compilation error"
+    ],
+    "answer": 1,
+    "explain": "`x` is a static field shared by all instances. Changing `d1.x` updates the single class variable, so `d2.x` is 50.",
+    "topic": "Static Field Modification via Instance Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Understands that static field mutation via one instance affects all instances.",
+    "weakness": "Static fields share one memory location; mutating via `d1.x` updates `d2.x` to 50."
+  },
+  {
+    "q": "What is printed by this code?\n```java\npublic class InitDemo {\n    static { System.out.print(\"S \"); }\n    { System.out.print(\"I \"); }\n    public InitDemo() { System.out.print(\"C \"); }\n    public static void main(String[] args) {\n        new InitDemo();\n        new InitDemo();\n    }\n}\n```",
+    "options": [
+      "S I C I C ",
+      "I C I C S ",
+      "S C I C I ",
+      "S I C "
+    ],
+    "answer": 0,
+    "explain": "Static block `S ` runs once on class load. For each instantiation, instance block `I ` runs before constructor `C `. Order: `S I C I C `.",
+    "topic": "Static and Instance Initializer Order",
+    "type": "output",
+    "level": "hard",
+    "strength": "Mastered initialization block execution sequence.",
+    "weakness": "Static blocks run once on class load; instance initializers run before each constructor call."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class Person {\n    String name;\n    public Person(String name) {\n        name = name;\n    }\n    public static void main(String[] args) {\n        Person p = new Person(\"Alice\");\n        System.out.println(p.name);\n    }\n}\n```",
+    "options": [
+      "Alice",
+      "null",
+      "Person",
+      "Compilation error"
+    ],
+    "answer": 1,
+    "explain": "Because `this.` was omitted, `name = name` assigns the parameter to itself. The instance field `this.name` remains uninitialized and retains its default value `null`.",
+    "topic": "Missing this Null Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Recognized uninitialized field resulting from missing `this.` qualification.",
+    "weakness": "Without `this.`, the instance field is never assigned, retaining its default `null` value."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Point {\n    int x, y;\n    public Point(int x, int y) {\n        this.x = x;\n        this.y = y;\n    }\n    public String toString() {\n        return \"(\" + x + \",\" + y + \")\";\n    }\n    public static void main(String[] args) {\n        Point p = new Point(3, 4);\n        System.out.println(p);\n    }\n}\n```",
+    "options": [
+      "(3,4)",
+      "Point@15db9742",
+      "3 4",
+      "Point"
+    ],
+    "answer": 0,
+    "explain": "Passing `p` to `println` invokes its overridden `toString()` method, which outputs `(3,4)`.",
+    "topic": "Overridden toString Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Identified output of custom overridden toString() method.",
+    "weakness": "`println(p)` invokes the overridden `toString()` method, producing `(3,4)`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class A {\n    int val = 10;\n    public static void main(String[] args) {\n        A a1 = new A();\n        A a2 = new A();\n        a1.val = 20;\n        System.out.println(a1.val + \" \" + a2.val);\n    }\n}\n```",
+    "options": [
+      "20 20",
+      "20 10",
+      "10 10",
+      "10 20"
+    ],
+    "answer": 1,
+    "explain": "`val` is an instance field. Each object maintains its own independent copy. Mutating `a1.val` has no effect on `a2.val`. Output: `20 10`.",
+    "topic": "Instance Variable Independence Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Distinguished separate instance variable state across multiple instances.",
+    "weakness": "Instance variables are unique per object; changing `a1.val` leaves `a2.val` at 10."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\npublic class Test {\n    static int a;\n    int b;\n    public static void main(String[] args) {\n        Test t = new Test();\n        System.out.println(Test.a + \" \" + t.b);\n    }\n}\n```",
+    "options": [
+      "0 0",
+      "null null",
+      "1 1",
+      "Error: uninitialized variables"
+    ],
+    "answer": 0,
+    "explain": "Both static fields and instance fields are automatically initialized to their default values (0 for numeric primitives) upon class loading and instantiation.",
+    "topic": "Default Field Values Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Knows default initialization values for static and instance primitive fields.",
+    "weakness": "Primitive numeric fields default to 0 automatically."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class MathHelper {\n    public static int square(int x) { return x * x; }\n    public static void main(String[] args) {\n        System.out.println(MathHelper.square(4));\n    }\n}\n```",
+    "options": [
+      "16",
+      "4",
+      "8",
+      "0"
+    ],
+    "answer": 0,
+    "explain": "The static method `square` is invoked via the class name: `4 * 4 = 16`.",
+    "topic": "Static Method Execution Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced static method invocation via class name.",
+    "weakness": "`MathHelper.square(4)` returns 16."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Counter {\n    static int count = 0;\n    int id;\n    public Counter() {\n        count++;\n        id = count;\n    }\n    public static void main(String[] args) {\n        Counter c1 = new Counter();\n        Counter c2 = new Counter();\n        System.out.println(c1.id + \" \" + c2.id + \" \" + Counter.count);\n    }\n}\n```",
+    "options": [
+      "1 2 2",
+      "2 2 2",
+      "1 1 2",
+      "1 2 1"
+    ],
+    "answer": 0,
+    "explain": "First instantiation: `count` becomes 1, `c1.id = 1`. Second instantiation: `count` becomes 2, `c2.id = 2`. Final `Counter.count` is 2. Output: `1 2 2`.",
+    "topic": "ID Assignment via Static Counter",
+    "type": "output",
+    "level": "medium",
+    "strength": "Tracked sequential instance ID generation using static class counter.",
+    "weakness": "Static counter increments on each instance, assigning `c1.id=1`, `c2.id=2`, and `count=2`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class Book {\n    String title;\n    public Book(String title) { this.title = title; }\n    public Book() { this(\"Untitled\"); }\n    public static void main(String[] args) {\n        Book b = new Book();\n        System.out.println(b.title);\n    }\n}\n```",
+    "options": [
+      "Untitled",
+      "null",
+      "title",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "`new Book()` chains to `this(\"Untitled\")`, initializing `this.title` to `\"Untitled\"`.",
+    "topic": "Default Constructor Chaining Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced default constructor delegation to parameterized constructor.",
+    "weakness": "`new Book()` delegates to `this(\"Untitled\")`, setting title to 'Untitled'."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Node {\n    int val;\n    Node next;\n    public Node(int val) { this.val = val; }\n    public static void main(String[] args) {\n        Node n1 = new Node(1);\n        n1.next = new Node(2);\n        System.out.println(n1.val + \" \" + n1.next.val);\n    }\n}\n```",
+    "options": [
+      "1 2",
+      "1 1",
+      "2 2",
+      "NullPointerException"
+    ],
+    "answer": 0,
+    "explain": "`n1.val` is 1. `n1.next` references the second node with `val` 2. Outputs `1 2`.",
+    "topic": "Linked Node Reference Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced object reference linking in self-referential Node class.",
+    "weakness": "`n1.val` is 1 and `n1.next.val` is 2."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class Test {\n    int x = 5;\n    public void modify(Test t) {\n        t.x = 20;\n    }\n    public static void main(String[] args) {\n        Test obj = new Test();\n        obj.modify(obj);\n        System.out.println(obj.x);\n    }\n}\n```",
+    "options": [
+      "5",
+      "20",
+      "0",
+      "NullPointerException"
+    ],
+    "answer": 1,
+    "explain": "`obj.modify(obj)` passes the object reference to itself. `t.x = 20` mutates the instance field `x` on the heap to 20.",
+    "topic": "Self-Reference Mutation Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked object state mutation through self-referential method parameter.",
+    "weakness": "Passing an object to its own method mutates its field to 20."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class A {\n    static int x = 1;\n    static {\n        x += 5;\n    }\n    public static void main(String[] args) {\n        System.out.println(x);\n    }\n}\n```",
+    "options": [
+      "1",
+      "6",
+      "5",
+      "0"
+    ],
+    "answer": 1,
+    "explain": "`x` is initialized to 1. The static initialization block executes immediately upon class load, adding 5: `1 + 5 = 6`. Outputs 6.",
+    "topic": "Static Initializer Modification Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Computed state update within static initialization block.",
+    "weakness": "Field initialized to 1, then static block adds 5 -> 6."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class Student {\n    String name;\n    public Student(String name) { this.name = name; }\n    public static void main(String[] args) {\n        Student s1 = new Student(\"Alice\");\n        Student s2 = new Student(\"Alice\");\n        System.out.println((s1 == s2) + \" \" + s1.name.equals(s2.name));\n    }\n}\n```",
+    "options": [
+      "true true",
+      "false true",
+      "false false",
+      "true false"
+    ],
+    "answer": 1,
+    "explain": "`s1 == s2` compares references (distinct objects on heap -> false). `s1.name.equals(s2.name)` compares String content (\"Alice\" equals \"Alice\" -> true). Output: `false true`.",
+    "topic": "Object Identity vs Field Content Equality",
+    "type": "output",
+    "level": "medium",
+    "strength": "Distinguished object reference identity from field value equality.",
+    "weakness": "`s1 == s2` is false for distinct instances; `s1.name.equals(s2.name)` is true."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Wrapper {\n    int val;\n    public Wrapper(int val) { this.val = val; }\n    public static void swap(Wrapper a, Wrapper b) {\n        int temp = a.val;\n        a.val = b.val;\n        b.val = temp;\n    }\n    public static void main(String[] args) {\n        Wrapper w1 = new Wrapper(10);\n        Wrapper w2 = new Wrapper(20);\n        swap(w1, w2);\n        System.out.println(w1.val + \" \" + w2.val);\n    }\n}\n```",
+    "options": [
+      "10 20",
+      "20 10",
+      "20 20",
+      "10 10"
+    ],
+    "answer": 1,
+    "explain": "Unlike primitive swaps, swapping fields inside mutable wrapper objects (`a.val = b.val`) persists because the objects on the heap are mutated. Outputs `20 10`.",
+    "topic": "Object Field Swap Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Recognized effective swap through mutable wrapper object fields.",
+    "weakness": "Mutating fields inside passed object instances persists after the method returns."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class Person {\n    private int age;\n    public void setAge(int age) {\n        if (age > 0) this.age = age;\n    }\n    public int getAge() { return age; }\n    public static void main(String[] args) {\n        Person p = new Person();\n        p.setAge(-5);\n        System.out.println(p.getAge());\n    }\n}\n```",
+    "options": [
+      "-5",
+      "0",
+      "IllegalArgumentException",
+      "null"
+    ],
+    "answer": 1,
+    "explain": "`p.setAge(-5)` fails the `age > 0` validation guard, so `this.age` is not updated. It retains its default initial value of `0`.",
+    "topic": "Encapsulated Validation Guard Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced encapsulation setter validation guard rejection.",
+    "weakness": "Negative value rejected by setter; field remains at default value 0."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Test {\n    int a = 1;\n    int b = a + 2;\n    public static void main(String[] args) {\n        Test t = new Test();\n        System.out.println(t.a + \" \" + t.b);\n    }\n}\n```",
+    "options": [
+      "1 3",
+      "1 2",
+      "0 0",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "Instance field declarations are initialized in text order. `a` is set to 1, then `b` is set to `1 + 2 = 3`. Output: `1 3`.",
+    "topic": "Field Declaration Order Initialization",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked sequential in-line field initialization order.",
+    "weakness": "`a` initialized to 1, then `b = 1 + 2 = 3`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class Item {\n    static int count = 0;\n    public Item() { count += 2; }\n    public static void main(String[] args) {\n        Item[] items = new Item[3];\n        System.out.println(Item.count);\n    }\n}\n```",
+    "options": [
+      "6",
+      "0",
+      "2",
+      "NullPointerException"
+    ],
+    "answer": 1,
+    "explain": "`new Item[3]` allocates an array of 3 object references (all initialized to `null`). It does NOT instantiate any `Item` objects, so the constructor never runs! `Item.count` remains 0.",
+    "topic": "Array Allocation Does Not Call Constructor",
+    "type": "output",
+    "level": "hard",
+    "strength": "Mastered the classic trap: allocating an object array does not instantiate elements.",
+    "weakness": "`new Item[3]` creates an array of null references without running constructors; count remains 0."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Self {\n    int val;\n    public Self setVal(int val) {\n        this.val = val;\n        return this;\n    }\n    public static void main(String[] args) {\n        Self s = new Self();\n        s.setVal(10).setVal(20);\n        System.out.println(s.val);\n    }\n}\n```",
+    "options": [
+      "10",
+      "20",
+      "30",
+      "NullPointerException"
+    ],
+    "answer": 1,
+    "explain": "Returning `this` implements method chaining (fluent builder pattern). First `s.val` becomes 10, then it is overwritten to 20. Outputs 20.",
+    "topic": "Fluent Method Chaining via this",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced fluent API method chaining returning `this`.",
+    "weakness": "Method chaining sets value to 10 then overwrites to 20."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class MathConst {\n    public static final double PI = 3.14;\n    public static void main(String[] args) {\n        System.out.println(MathConst.PI);\n    }\n}\n```",
+    "options": [
+      "3.14",
+      "0.0",
+      "PI",
+      "NullPointerException"
+    ],
+    "answer": 0,
+    "explain": "Static final constants are accessed via class name qualification. Outputs 3.14.",
+    "topic": "Static Final Constant Access",
+    "type": "output",
+    "level": "easy",
+    "strength": "Accessed static final constant via class name.",
+    "weakness": "`MathConst.PI` outputs 3.14."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class A {\n    public A() { System.out.print(\"1 \"); }\n}\npublic class B {\n    A a = new A();\n    public B() { System.out.print(\"2 \"); }\n    public static void main(String[] args) {\n        new B();\n    }\n}\n```",
+    "options": [
+      "1 2 ",
+      "2 1 ",
+      "1 ",
+      "2 "
+    ],
+    "answer": 0,
+    "explain": "Instance fields are initialized before the constructor body executes. `new A()` runs first, printing `\"1 \"`. Then `B()` constructor body runs, printing `\"2 \"`. Output: `1 2 `.",
+    "topic": "Field Initialization Precedes Constructor Body",
+    "type": "output",
+    "level": "medium",
+    "strength": "Understands that field initializers execute before the constructor body.",
+    "weakness": "Instance field initializers run before constructor bodies: outputs `1 2 `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class Counter {\n    int n = 0;\n    public void add(Counter other) {\n        this.n += other.n;\n    }\n    public static void main(String[] args) {\n        Counter c1 = new Counter();\n        Counter c2 = new Counter();\n        c1.n = 5;\n        c2.n = 10;\n        c1.add(c2);\n        System.out.println(c1.n + \" \" + c2.n);\n    }\n}\n```",
+    "options": [
+      "15 10",
+      "15 15",
+      "5 10",
+      "10 10"
+    ],
+    "answer": 0,
+    "explain": "`c1.add(c2)` adds `c2.n` (10) to `c1.n` (5), making `c1.n = 15`. `c2.n` is unchanged (10). Output: `15 10`.",
+    "topic": "Instance Accumulation via Peer Reference",
+    "type": "output",
+    "level": "easy",
+    "strength": "Accurately tracked state change on target object while argument remains unchanged.",
+    "weakness": "`c1.n` accumulates to 15 while `c2.n` remains 10."
+  },
+  {
+    "q": "What does this code print?\n```java\npublic class Test {\n    static int x;\n    public static void main(String[] args) {\n        System.out.println(x == 0);\n    }\n}\n```",
+    "options": [
+      "true",
+      "false",
+      "NullPointerException",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "Static primitive numeric fields default to 0. `0 == 0` evaluates to `true`.",
+    "topic": "Static Field Primitive Zero Default",
+    "type": "output",
+    "level": "easy",
+    "strength": "Verified default zero initialization of primitive static fields.",
+    "weakness": "Static int fields default to 0; `x == 0` is true."
+  },
+  {
+    "q": "You are designing a banking application module in Java. The `Account` class has a `balance` field. Why MUST `balance` be declared `private` and accessed only via `deposit()` and `withdraw()` methods?",
+    "options": [
+      "Private fields take up less memory",
+      "Encapsulation: to prevent external code from setting negative balances, bypassing fraud checks, or corrupting state without validation",
+      "Banking regulations require variables to use the `byte` primitive",
+      "Public fields cannot be saved to databases"
+    ],
+    "answer": 1,
+    "explain": "Encapsulation ensures that financial balances can only be mutated through validated business methods (`deposit`, `withdraw`), protecting the object's invariants.",
+    "topic": "Banking Encapsulation Integrity",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands encapsulation invariants for financial entities.",
+    "weakness": "Make fields private and enforce business rules through validated methods."
+  },
+  {
+    "q": "A game developer creates an online multiplayer game where all connected players share the same server IP address and maximum player limit. How should these two configuration settings be declared inside the `Player` class?",
+    "options": [
+      "As instance variables `public String serverIp;`",
+      "As static variables: `public static final String SERVER_IP = \"10.0.0.1\"; public static final int MAX_PLAYERS = 100;`",
+      "In a local variable inside the constructor",
+      "As private parameters in every method"
+    ],
+    "answer": 1,
+    "explain": "Values shared by all instances should be `static` (one copy in memory). Constants should be marked `final`.",
+    "topic": "Shared Configuration via Static Final",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Identified static final constants for shared system configuration.",
+    "weakness": "Use `static final` for shared, immutable configuration constants."
+  },
+  {
+    "q": "A database connection manager must maintain exactly ONE active connection instance across the entire application lifecycle to prevent connection pooling exhaustion. Which design pattern should be implemented?",
+    "options": [
+      "Factory pattern",
+      "Singleton pattern (private constructor, private static instance, public static `getInstance()`)",
+      "Observer pattern",
+      "Prototype pattern"
+    ],
+    "answer": 1,
+    "explain": "The Singleton pattern restricts class instantiation to a single shared instance, ideal for global managers (database pools, loggers).",
+    "topic": "Database Manager Singleton Pattern",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied Singleton pattern for singular resource managers.",
+    "weakness": "Implement the Singleton pattern with a private constructor to enforce a single global instance."
+  },
+  {
+    "q": "A university student record has mandatory fields (`id`, `name`) and optional fields (`email`, `phone`, `scholarshipStatus`). Rather than writing 8 different overloaded constructors, what design pattern solves this cleanly in Java?",
+    "options": [
+      "Builder pattern",
+      "Singleton pattern",
+      "Observer pattern",
+      "Infinite recursive constructor"
+    ],
+    "answer": 1,
+    "explain": "The Builder pattern provides a flexible, fluent API for constructing complex objects with many optional parameters, avoiding telescoping constructor anti-patterns.",
+    "topic": "Builder Pattern for Complex Instantiation",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Recognized the Builder pattern as the solution to telescoping constructors.",
+    "weakness": "Use the Builder pattern to construct objects with numerous optional parameters."
+  },
+  {
+    "q": "An e-commerce system generates unique sequential order tracking numbers: `ORD-0001`, `ORD-0002`, etc. How can the `Order` class automatically assign the next sequential ID upon every `new Order()` without passing an external counter?",
+    "options": [
+      "Using a private static integer counter inside `Order` that increments on each constructor call: `private static int nextId = 1;`",
+      "Reading a random number",
+      "Re-reading the source code file",
+      "Using a while loop in main"
+    ],
+    "answer": 0,
+    "explain": "A private `static` counter is shared across all instances. Incrementing it in the constructor guarantees each newly created `Order` receives a unique sequential ID.",
+    "topic": "Auto-Incrementing ID via Static Field",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Implemented auto-incrementing instance identifiers via static fields.",
+    "weakness": "Increment a private static counter in the constructor to auto-generate unique sequential IDs."
+  },
+  {
+    "q": "A flight reservation system represents an airplane seat with a `Seat` class containing `row`, `col`, and `isBooked`. A method `bookSeat(Seat s)` is called. Why does mutating `s.setBooked(true)` inside the method update the seat in the caller's seating chart?",
+    "options": [
+      "Java is pass-by-reference",
+      "Java passes the reference by value; both the method parameter `s` and the caller's seating chart reference point to the exact same `Seat` object on the heap",
+      "The JVM restarts",
+      "Seat implements Cloneable"
+    ],
+    "answer": 1,
+    "explain": "Java passes object references by value. Both references point to the identical heap object, so state modifications via setter methods mutate the shared object.",
+    "topic": "Shared Heap Object Mutation",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands heap object mutation via passed reference copies.",
+    "weakness": "Object references are copied by value; mutating object state alters the shared heap instance."
+  },
+  {
+    "q": "A cryptography library creates an immutable `SecretKey` class holding a byte array: `public SecretKey(byte[] rawKey)`. Why is `this.rawKey = rawKey;` a severe security bug, and what is the fix?",
+    "options": [
+      "Byte arrays cannot be assigned",
+      "Vulnerability: the caller retains a reference to `rawKey` and can mutate bytes externally after creation; fix by creating a defensive clone `this.rawKey = rawKey.clone();`",
+      "rawKey must be a String",
+      "SecretKey must extend Thread"
+    ],
+    "answer": 1,
+    "explain": "Directly storing an external mutable array breaks immutability because the caller can modify the array afterwards. The constructor must make a defensive copy (`rawKey.clone()`).",
+    "topic": "Defensive Copying in Immutable Classes",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Applied defensive cloning to protect immutable class integrity.",
+    "weakness": "Clone mutable parameters in constructors to prevent callers from tampering with internal state."
+  },
+  {
+    "q": "A graphics application has a `Color` class with `red`, `green`, `blue` fields (0-255). A junior developer makes fields public. A user sets `color.red = 999;`, crashing the GPU driver. How should the class be refactored to prevent invalid RGB values?",
+    "options": [
+      "Make fields private and provide `setRed(int r)` that validates `0 <= r && r <= 255`, throwing `IllegalArgumentException` on invalid values",
+      "Make fields protected",
+      "Make fields static",
+      "Remove the red field"
+    ],
+    "answer": 0,
+    "explain": "Encapsulating fields behind validated setters guarantees that internal object state remains valid at all times.",
+    "topic": "RGB Validation via Encapsulation",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Protected object invariants using validated setters.",
+    "weakness": "Encapsulate fields with private access and validate ranges in setter methods."
+  },
+  {
+    "q": "You are building a high-traffic microservice. Why should you avoid creating millions of short-lived objects inside a tight loop if they can be reused?",
+    "options": [
+      "Java crashes after 1,000 objects",
+      "Frequent object allocations rapidly fill the young generation heap, triggering frequent Garbage Collection (GC) pauses (Stop-the-World) that degrade application throughput",
+      "Objects consume hard drive space",
+      "Constructors are limited to 10 calls per second"
+    ],
+    "answer": 1,
+    "explain": "High object churn puts severe pressure on the Garbage Collector, causing latency spikes and GC pauses. Object pooling or reusing instances mitigates this.",
+    "topic": "Garbage Collection Pressure Mitigation",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands the impact of object allocation churn on JVM GC pauses.",
+    "weakness": "Avoid high object allocation churn in hot loops to reduce Garbage Collection pauses."
+  },
+  {
+    "q": "A geometric simulation models circles. The `Circle` class has `double radius`. How should the `area()` method be implemented?",
+    "options": [
+      "`public double area() { return Math.PI * radius * radius; }` (computed dynamically from state)",
+      "Store area as an instance field and update it manually in 20 different places",
+      "Make area static",
+      "area must be calculated in main only"
+    ],
+    "answer": 0,
+    "explain": "Derived properties (like area or age from birthdate) should be calculated dynamically via methods rather than stored as redundant fields that risk becoming desynchronized.",
+    "topic": "Derived Property Calculation vs Redundant State",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Preferred dynamic method calculation for derived attributes over redundant state fields.",
+    "weakness": "Compute derived attributes on-the-fly via methods to prevent data desynchronization."
+  },
+  {
+    "q": "A ride-hailing app represents driver coordinates using a `Location` class (`double lat, double lon`). Once created, a location point should never be altered. How do you design this class to be fully immutable?",
+    "options": [
+      "Declare the class `public final class Location`, mark fields `private final`, initialize via constructor, and provide no setter methods",
+      "Make all fields public",
+      "Declare fields as static",
+      "Provide public setters"
+    ],
+    "answer": 0,
+    "explain": "Immutability requires: `final` class (no subclassing), `private final` fields, assignment solely via constructor, and zero mutator methods.",
+    "topic": "Immutable Location Entity Design",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Designed fully immutable value object.",
+    "weakness": "Enforce immutability with a final class, private final fields, and no setters."
+  },
+  {
+    "q": "A logging service formats timestamps. A developer notices that multiple helper methods in `DateUtils` do not access any instance fields. How should these utility methods be declared?",
+    "options": [
+      "As `public static` methods: they operate purely on input arguments and require no instance allocation",
+      "As private instance methods requiring `new DateUtils()`",
+      "As abstract methods",
+      "In a text file"
+    ],
+    "answer": 0,
+    "explain": "Stateless utility methods should be `public static`, allowing callers to invoke `DateUtils.format(date)` directly without allocating useless objects.",
+    "topic": "Stateless Utility Class Design",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Identified static methods for stateless utility operations.",
+    "weakness": "Declare stateless helper methods as `public static` to avoid unnecessary object allocation."
+  },
+  {
+    "q": "A software company has a package `com.bank.internal` containing classes `Ledger` and `Auditor`. The `Ledger` class has methods that should be accessible by `Auditor`, but NOT by any classes outside the `com.bank.internal` package. What access modifier should be used?",
+    "options": [
+      "`public`",
+      "Package-private (default access: no modifier)",
+      "`private`",
+      "`protected`"
+    ],
+    "answer": 1,
+    "explain": "Package-private (default) access allows all classes within the same package to collaborate freely while shielding members from outside packages.",
+    "topic": "Package-Private Package Encapsulation",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Selected package-private access for inter-class collaboration within a package.",
+    "weakness": "Use package-private (no modifier) to permit access within the same package while blocking external access."
+  },
+  {
+    "q": "A game developer creates an RPG game with characters having HP, MP, and Attack. When creating a new player, the default constructor should set `hp = 100`, `mp = 50`, `attack = 10`. What is the cleanest implementation using constructor chaining?",
+    "options": [
+      "`public Player() { this(100, 50, 10); }` delegating to `public Player(int hp, int mp, int atk) { ... }`",
+      "Duplicate all assignment logic in both constructors",
+      "Call `new Player(100, 50, 10);` inside the no-arg constructor",
+      "Make fields static"
+    ],
+    "answer": 0,
+    "explain": "Chaining the default constructor to the master parameterized constructor via `this(100, 50, 10)` follows the DRY principle, eliminating duplicate field assignment code.",
+    "topic": "DRY Constructor Chaining Pattern",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied constructor chaining to eliminate duplicate initialization logic.",
+    "weakness": "Delegate from default constructors to master constructors using `this(...)` to keep code DRY."
+  },
+  {
+    "q": "A student writes a class `Student` with fields `id` and `name`. When comparing two students in a list, `s1.equals(s2)` returns `false` even though both have the identical `id = 101`. Why does this happen, and how is it fixed?",
+    "options": [
+      "Java cannot compare objects",
+      "The class did not override `equals(Object o)` from `java.lang.Object`, so it inherited default reference equality (`==`); it must override `equals()` to compare `id` values",
+      "id must be a double",
+      "Students must be sorted"
+    ],
+    "answer": 1,
+    "explain": "By default, `Object.equals()` checks reference identity (`this == obj`). To define logical equality based on fields (like student ID), `equals()` (and `hashCode()`) must be overridden.",
+    "topic": "Overriding equals for Logical Identity",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands the necessity of overriding equals() for value-based object comparison.",
+    "weakness": "Override `equals()` (and `hashCode()`) to define logical equality based on fields rather than memory address."
+  },
+  {
+    "q": "A hospital records management system stores patient records. A class `Patient` has a constructor taking 15 medical attributes. Why should a developer consider a private constructor with a `PatientBuilder` rather than a 15-parameter constructor?",
+    "options": [
+      "Java limits constructors to 5 parameters",
+      "A 15-parameter constructor is error-prone (arguments of identical types like int or String can be swapped unnoticed); a Builder provides readable, named parameter assignment",
+      "Builders are required by HIPAA laws",
+      "Private constructors run faster"
+    ],
+    "answer": 1,
+    "explain": "Telescoping constructors with many same-typed parameters invite subtle parameter-swapping bugs. The Builder pattern makes instantiation readable, self-documenting, and safe.",
+    "topic": "Builder Pattern Readability & Safety",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands why the Builder pattern prevents parameter ordering bugs in large objects.",
+    "weakness": "Use Builder patterns to avoid parameter-ordering mistakes in objects with many attributes."
+  },
+  {
+    "q": "An inventory tracking system needs to count how many `Product` objects currently reside in memory. A junior developer increments a field in the constructor. How should that field be declared?",
+    "options": [
+      "`public int count;`",
+      "`private static int productCount = 0;` with a public static getter `public static int getProductCount()`",
+      "`final int count;`",
+      "`private double count;`"
+    ],
+    "answer": 1,
+    "explain": "A class-wide tally shared across all instances must be `static` and encapsulated behind a public static getter.",
+    "topic": "Encapsulated Static Instance Counter",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Engineered encapsulated static instance counter.",
+    "weakness": "Use a private static counter with a public static getter to track total object instances."
+  },
+  {
+    "q": "A memory leak occurs in a Java desktop application because discarded `Listener` objects are still referenced by a static event bus: `EventBus.listeners.add(listener);`. Why does the Garbage Collector fail to reclaim these listeners?",
+    "options": [
+      "Garbage collection only runs on program exit",
+      "A static collection lives for the entire JVM lifetime; because it holds strong references to the listeners, they remain reachable in the GC root graph and cannot be freed",
+      "Listeners cannot be garbage collected",
+      "The JVM ran out of stack memory"
+    ],
+    "answer": 1,
+    "explain": "Static collections act as persistent GC roots. Retaining references to objects in static collections prevents them from ever being garbage collected, causing memory leaks.",
+    "topic": "Static Reference GC Root Memory Leak",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Identified static collection reference retention as a primary cause of Java memory leaks.",
+    "weakness": "Static collections never die; remove references when objects are no longer needed to prevent memory leaks."
+  },
+  {
+    "q": "An IoT weather device measures atmospheric humidity. The `HumiditySensor` class has `int humidity`. When instantiated, the sensor immediately calibrates hardware via `calibrateHardware()`. Where should hardware calibration be triggered?",
+    "options": [
+      "In the class constructor `public HumiditySensor()`",
+      "In a finalized method",
+      "In the toString method",
+      "Outside the class in an unrelated utility"
+    ],
+    "answer": 0,
+    "explain": "Constructors are responsible for putting an object into a fully initialized, valid, operational initial state upon completion of instantiation.",
+    "topic": "Hardware Initialization in Constructors",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands constructor responsibility for complete object lifecycle readiness.",
+    "weakness": "Use constructors to establish complete, operational initial object state."
+  },
+  {
+    "q": "A banking app models a `CurrencyExchange` class. The exchange rates are loaded from a remote central bank API once when the application starts up. Which language construct should load these rates?",
+    "options": [
+      "A static initialization block: `static { loadRatesFromApi(); }`",
+      "Inside every instance constructor",
+      "Inside a finalize method",
+      "In a while loop in an interface"
+    ],
+    "answer": 0,
+    "explain": "Static initialization blocks run once when the class is loaded, making them the standard location for one-time expensive static resource initialization.",
+    "topic": "Static Initializer for Resource Loading",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied static initialization blocks for one-time external data bootstrapping.",
+    "weakness": "Use static initialization blocks for one-time class loading configurations."
+  },
+  {
+    "q": "A developer creates a `Fraction` class with `numerator` and `denominator`. In the constructor `public Fraction(int num, int den)`, what check must be executed before assigning fields?",
+    "options": [
+      "`if (den == 0) throw new IllegalArgumentException(\"Denominator cannot be zero\");`",
+      "`if (num == 0) den = 1;`",
+      "`if (den < 0) den = -den;`",
+      "`Math.sqrt(den);`"
+    ],
+    "answer": 0,
+    "explain": "A mathematical fraction cannot have a zero denominator. Validating this invariant in the constructor prevents creating invalid fraction objects in memory.",
+    "topic": "Constructor Invariant Defense",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Protected domain invariants in constructor validation.",
+    "weakness": "Enforce domain invariants (e.g. non-zero denominator) inside constructors before assignment."
+  },
+  {
+    "q": "A customer service portal creates tickets. The `Ticket` class has a field `createdAt`. The requirement states that `createdAt` can only be set once during ticket creation and never modified thereafter. How should this field be declared?",
+    "options": [
+      "`private final Instant createdAt;` initialized in the constructor without a setter",
+      "`public Instant createdAt;`",
+      "`private static Instant createdAt;`",
+      "`protected Instant createdAt;`"
+    ],
+    "answer": 0,
+    "explain": "`private final` guarantees that the field is assigned during construction and can never be reassigned, ensuring immutability of creation timestamps.",
+    "topic": "Write-Once Audit Timestamp",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Used private final modifier to enforce write-once immutability.",
+    "weakness": "Use `private final` fields without setters for write-once timestamp auditing."
+  },
+  {
+    "q": "A team of developers shares a library. A class `OldDatabase` is being replaced by `NewDatabase`. How should the author indicate that `OldDatabase` should no longer be used while preserving backward compatibility?",
+    "options": [
+      "Delete the class immediately",
+      "Annotate the class with `@Deprecated` and document the replacement in Javadoc with `@deprecated Use NewDatabase instead.`",
+      "Make all methods private",
+      "Throw an exception in the constructor"
+    ],
+    "answer": 1,
+    "explain": "The `@Deprecated` annotation signals to compilers and IDEs that an element is obsolete, generating compiler warnings while maintaining backward compatibility.",
+    "topic": "Deprecation Lifecycle Convention",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied @Deprecated annotation for library lifecycle maintenance.",
+    "weakness": "Annotate obsolete classes with `@Deprecated` to signal deprecation without breaking existing callers."
+  },
+  {
+    "q": "A student creates a `Rectangle` class: `int width, height;`. In `main`: `Rectangle r1 = new Rectangle(4, 5); Rectangle r2 = new Rectangle(4, 5); System.out.println(r1 == r2);`. Why does this output `false`?",
+    "options": [
+      "Because 4 is not equal to 5",
+      "`==` compares object references (memory addresses). Since `r1` and `r2` are two distinct objects created on the heap, their addresses differ",
+      "The JVM corrupted r2",
+      "Width and height must be floats"
+    ],
+    "answer": 1,
+    "explain": "`==` on object references checks identity (whether both refer to the exact same heap memory address), not value equality.",
+    "topic": "Object Reference Identity vs Value Equality",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands that `==` evaluates heap reference identity, not field contents.",
+    "weakness": "`==` compares memory addresses; two separate objects created with `new` are never `==`."
+  },
+  {
+    "q": "A software architect designs an immutable `Money` value object (`BigDecimal amount, Currency currency`). If a method `add(Money other)` is called, how must it return the result?",
+    "options": [
+      "Modify the existing object's `amount` field in-place",
+      "Return a brand new `Money` object containing the summed amount: `return new Money(this.amount.add(other.amount), this.currency);`",
+      "Set `other.amount = 0;`",
+      "Return a String"
+    ],
+    "answer": 1,
+    "explain": "Immutable value objects never mutate internal state; operations on them always compute and return a fresh new instance representing the modified value.",
+    "topic": "Immutable Value Object Mutation Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands immutable value object pattern: return new instances on state changes.",
+    "weakness": "Methods on immutable objects return a new instance containing the result rather than mutating in-place."
+  }
+]

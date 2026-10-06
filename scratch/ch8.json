@@ -1,0 +1,1602 @@
+[
+  {
+    "q": "What is polymorphism in Java?",
+    "options": [
+      "The ability of a single variable to store multiple primitive values",
+      "The ability of an object reference of a supertype to refer to objects of different subtypes and execute their specialized behavior at runtime",
+      "Converting source code to bytecode",
+      "Running code on multiple threads simultaneously"
+    ],
+    "answer": 1,
+    "explain": "Polymorphism ('many forms') allows reference variables of a superclass or interface type to reference instances of any subclass, executing overridden methods dynamically.",
+    "topic": "Polymorphism Core Definition",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands the core definition of polymorphism in Java.",
+    "weakness": "Polymorphism enables supertype references to invoke subtype behaviors dynamically."
+  },
+  {
+    "q": "What is dynamic method binding (late binding) in Java?",
+    "options": [
+      "Resolving method calls at compile time based on declared reference types",
+      "Determining which implementation of an overridden method to execute at runtime based on the actual object's type on the heap",
+      "Binding methods using native C code",
+      "Executing static methods"
+    ],
+    "answer": 1,
+    "explain": "Dynamic binding defers method resolution to runtime: the JVM inspects the actual object on the heap to invoke its specific overridden method implementation.",
+    "topic": "Dynamic Method Binding",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes dynamic late binding from static compile-time binding.",
+    "weakness": "Dynamic binding resolves overridden method invocations based on the actual object on the heap."
+  },
+  {
+    "q": "What is the difference between compile-time (declared) type and runtime (actual) type?",
+    "options": [
+      "Declared type is on the heap; runtime type is in source code",
+      "Declared type is the type used to declare the reference variable (governing which methods are callable at compile time); runtime type is the concrete class instantiated on the heap (governing which implementation executes)",
+      "They must always be identical",
+      "Declared type is for interfaces only"
+    ],
+    "answer": 1,
+    "explain": "In `Animal a = new Dog();`, `Animal` is the declared (compile-time) type determining method visibility; `Dog` is the actual runtime object determining execution behavior.",
+    "topic": "Declared vs Actual Type",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands declared compile-time type vs actual runtime object type.",
+    "weakness": "Compile-time type determines visible methods; runtime type determines which implementation executes."
+  },
+  {
+    "q": "What is upcasting versus downcasting in Java?",
+    "options": [
+      "Upcasting converts primitive to object; downcasting converts object to primitive",
+      "Upcasting assigns a subtype instance to a supertype reference (implicit and safe); downcasting casts a supertype reference back to a subtype reference (explicit and potentially unsafe)",
+      "Upcasting is done by the garbage collector",
+      "They are identical operations"
+    ],
+    "answer": 1,
+    "explain": "Upcasting (`Animal a = new Dog();`) is safe and automatic because a Dog is an Animal. Downcasting (`Dog d = (Dog) a;`) narrows the type and requires an explicit cast.",
+    "topic": "Upcasting vs Downcasting",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes safe automatic upcasting from explicit narrowing downcasting.",
+    "weakness": "Upcasting is implicit and safe; downcasting is explicit and requires verification."
+  },
+  {
+    "q": "What runtime exception occurs if an invalid downcast is attempted: `Animal a = new Cat(); Dog d = (Dog) a;`?",
+    "options": [
+      "`NullPointerException`",
+      "`java.lang.ClassCastException`",
+      "`IllegalArgumentException`",
+      "`ArrayStoreException`"
+    ],
+    "answer": 1,
+    "explain": "Attempting to cast an object to a type it does not instantiate or inherit throws `ClassCastException` at runtime.",
+    "topic": "ClassCastException",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Recognized ClassCastException on illegal downcasting.",
+    "weakness": "Casting an incompatible runtime object to an unrelated subtype throws `ClassCastException`."
+  },
+  {
+    "q": "What is the purpose of the `instanceof` operator in Java?",
+    "options": [
+      "To instantiate a new object",
+      "To test whether an object reference is an instance of a specified class, subclass, or interface at runtime",
+      "To compare primitive integers",
+      "To determine memory size of an object"
+    ],
+    "answer": 1,
+    "explain": "The `instanceof` operator evaluates to `true` if the object on the left can be safely cast to the type on the right, returning `false` if incompatible or null.",
+    "topic": "instanceof Operator",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands runtime type testing with instanceof.",
+    "weakness": "Use `instanceof` to safely verify an object's type before downcasting."
+  },
+  {
+    "q": "What is an `abstract` class in Java?",
+    "options": [
+      "A class that cannot have any methods",
+      "A class declared with the `abstract` keyword that CANNOT be directly instantiated using `new`, designed to serve as a base class for subclasses",
+      "A class with no fields",
+      "A class that can only be used in packages"
+    ],
+    "answer": 1,
+    "explain": "An abstract class cannot be instantiated directly. It serves as an incomplete conceptual template that subclasses must extend and complete.",
+    "topic": "Abstract Class Concept",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands that abstract classes cannot be directly instantiated.",
+    "weakness": "Abstract classes cannot be instantiated with `new`; they serve as base templates."
+  },
+  {
+    "q": "Can an abstract class contain concrete (fully implemented) methods as well as instance variables and constructors?",
+    "options": [
+      "No, abstract classes can only contain abstract methods",
+      "Yes, abstract classes can have constructors, instance fields, static members, and fully implemented concrete methods alongside abstract methods",
+      "Only static fields are allowed",
+      "Only in Java 8 and above"
+    ],
+    "answer": 1,
+    "explain": "Unlike pure interfaces (pre-Java 8), abstract classes can maintain state (instance fields), declare constructors for subclasses, and provide concrete method implementations.",
+    "topic": "Abstract Class Rich Capabilities",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands that abstract classes can have constructors, fields, and concrete methods.",
+    "weakness": "Abstract classes can have fields, constructors, and concrete methods."
+  },
+  {
+    "q": "What is an `abstract` method?",
+    "options": [
+      "A method with an empty body `{}`",
+      "A method declared without an implementation (no body, ending with a semicolon `;`), requiring non-abstract subclasses to provide the implementation",
+      "A private method",
+      "A method that cannot be called"
+    ],
+    "answer": 1,
+    "explain": "An abstract method (`public abstract void draw();`) has no body. It defines a mandatory behavioral contract that concrete subclasses must implement.",
+    "topic": "Abstract Method Definition",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows that abstract methods declare signatures without method bodies.",
+    "weakness": "Abstract methods have no body and must be implemented by concrete subclasses."
+  },
+  {
+    "q": "Can a non-abstract (concrete) class contain an abstract method in Java?",
+    "options": [
+      "Yes, if the method is protected",
+      "No, if a class contains ANY abstract method, the class ITSELF must be declared `abstract`",
+      "Yes, if the method is void",
+      "Only in interfaces"
+    ],
+    "answer": 1,
+    "explain": "A class containing one or more abstract methods MUST be declared `abstract`, otherwise the compiler rejects it.",
+    "topic": "Abstract Method Enforces Abstract Class",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows that any class with an abstract method must be declared abstract.",
+    "weakness": "If a class contains an abstract method, the class itself must be marked `abstract`."
+  },
+  {
+    "q": "What is an `interface` in Java?",
+    "options": [
+      "A concrete class with private methods",
+      "A reference type that defines a formal contract of abstract behaviors (and default/static methods) that implementing classes must fulfill using the `implements` keyword",
+      "A visual GUI window",
+      "A thread scheduler"
+    ],
+    "answer": 1,
+    "explain": "An interface establishes a contract. Classes implement interfaces (`implements`) to guarantee they provide the specified behaviors, enabling multiple interface inheritance.",
+    "topic": "Interface Concept",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands the contractual role of Java interfaces.",
+    "weakness": "Interfaces specify behavioral contracts that classes implement using `implements`."
+  },
+  {
+    "q": "Can a Java class implement multiple interfaces?",
+    "options": [
+      "No, Java only allows implementing a single interface",
+      "Yes, a class can implement any number of interfaces separated by commas: `class C implements A, B, D`",
+      "Only if one is Serializable",
+      "Only up to 3 interfaces"
+    ],
+    "answer": 1,
+    "explain": "While Java restricts classes to single inheritance of implementation, it fully supports multiple inheritance of type via interfaces.",
+    "topic": "Multiple Interface Implementation",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands multiple interface implementation.",
+    "weakness": "A class can implement multiple interfaces separated by commas."
+  },
+  {
+    "q": "What are the implicit modifiers for fields declared inside an interface in Java?",
+    "options": [
+      "`private final`",
+      "`public static final` (constants)",
+      "`protected volatile`",
+      "package-private mutable"
+    ],
+    "answer": 1,
+    "explain": "All fields declared in an interface are implicitly `public static final` constants, even if those keywords are omitted.",
+    "topic": "Interface Field Modifiers",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows that interface fields are implicitly public static final constants.",
+    "weakness": "All variables in an interface are implicitly `public static final` constants."
+  },
+  {
+    "q": "What were the implicit modifiers for all methods declared in an interface prior to Java 8?",
+    "options": [
+      "`protected abstract`",
+      "`public abstract`",
+      "`private static`",
+      "package-private"
+    ],
+    "answer": 1,
+    "explain": "Traditionally, all interface methods were implicitly `public abstract`.",
+    "topic": "Interface Method Implicit Modifiers",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows traditional interface methods are implicitly public abstract.",
+    "weakness": "Interface methods are implicitly `public abstract` by default."
+  },
+  {
+    "q": "What is a `default` method in an interface (introduced in Java 8)?",
+    "options": [
+      "A method with package-private access",
+      "A method declared with the `default` keyword that provides a concrete default implementation in the interface, allowing interfaces to evolve without breaking existing implementing classes",
+      "A method called by the JVM upon startup",
+      "A method that cannot be overridden"
+    ],
+    "answer": 1,
+    "explain": "`default` methods allow adding new methods to interfaces with a default implementation, preserving backward compatibility with legacy implementing classes.",
+    "topic": "Interface Default Methods",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands default methods in interfaces introduced in Java 8.",
+    "weakness": "`default` methods provide concrete implementations in interfaces for backward compatibility."
+  },
+  {
+    "q": "What is a `static` method in an interface (introduced in Java 8)?",
+    "options": [
+      "A method that belongs to the implementing class",
+      "A utility method defined inside an interface that belongs to the interface itself and must be invoked via the interface name: `InterfaceName.methodName()`",
+      "An abstract method that runs once",
+      "A method that can be overridden by subclasses"
+    ],
+    "answer": 1,
+    "explain": "Interface static methods are helper utilities belonging to the interface. They are not inherited by implementing classes and are called via `InterfaceName.methodName()`.",
+    "topic": "Interface Static Methods",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows that interface static methods are invoked via the interface name.",
+    "weakness": "Interface static methods belong to the interface and are called via `InterfaceName.method()`."
+  },
+  {
+    "q": "What is a functional interface (SAM - Single Abstract Method) in Java?",
+    "options": [
+      "An interface with zero methods",
+      "An interface that declares exactly ONE abstract method (can be annotated with `@FunctionalInterface`), eligible to be instantiated via Lambda expressions or method references",
+      "An interface with only static methods",
+      "An interface that extends Runnable"
+    ],
+    "answer": 1,
+    "explain": "A Functional Interface has exactly one abstract method (SAM), serving as the foundational contract for Java 8+ Lambda expressions (`(x) -> x * 2`).",
+    "topic": "Functional Interface Concept",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands Single Abstract Method (SAM) functional interfaces.",
+    "weakness": "Functional interfaces have exactly one abstract method and support lambda expressions."
+  },
+  {
+    "q": "What is the primary difference between an abstract class and an interface in modern Java?",
+    "options": [
+      "Abstract classes cannot have methods; interfaces can",
+      "An abstract class can maintain instance state (non-static instance fields) and constructors; an interface cannot have instance state or constructors (a class can only extend one abstract class but implement multiple interfaces)",
+      "Interfaces cannot have code bodies",
+      "Abstract classes are slower"
+    ],
+    "answer": 1,
+    "explain": "Abstract classes can hold state (`int x;`) and define constructors; interfaces only hold constants (`static final`) and define behaviors across unrelated class hierarchies.",
+    "topic": "Abstract Class vs Interface Differences",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Distinguishes abstract classes (state + single inheritance) from interfaces (stateless contracts + multiple implementation).",
+    "weakness": "Abstract classes maintain instance state and constructors; interfaces define stateless behavioral contracts."
+  },
+  {
+    "q": "Can an interface extend another interface in Java?",
+    "options": [
+      "No, interfaces cannot use extends",
+      "Yes, an interface can extend one or even MULTIPLE other interfaces using the `extends` keyword",
+      "Only if both interfaces are functional",
+      "Only using implements"
+    ],
+    "answer": 1,
+    "explain": "An interface can extend multiple parent interfaces: `interface C extends A, B { ... }`.",
+    "topic": "Interface Extending Multiple Interfaces",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows that interfaces can extend multiple other interfaces.",
+    "weakness": "An interface can extend multiple interfaces using `extends`."
+  },
+  {
+    "q": "Can a class extend an abstract class and implement interfaces simultaneously?",
+    "options": [
+      "No, it must choose one",
+      "Yes: `class MyClass extends BaseAbstractClass implements InterfaceA, InterfaceB`",
+      "Only if the abstract class comes after implements",
+      "Only in Java 11+"
+    ],
+    "answer": 1,
+    "explain": "A class can extend one superclass (abstract or concrete) and simultaneously implement multiple interfaces.",
+    "topic": "Extends and Implements Coexistence",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the combined extends and implements syntax.",
+    "weakness": "`class Sub extends Super implements InterA, InterB` is standard Java syntax."
+  },
+  {
+    "q": "What happens if a class implements an interface but fails to implement one of its abstract methods?",
+    "options": [
+      "The method defaults to returning null",
+      "The class must be declared `abstract`, or the compiler issues a compilation error",
+      "The JVM synthesizes an empty method",
+      "A runtime NotImplementedException is thrown"
+    ],
+    "answer": 1,
+    "explain": "A class that does not provide implementations for all inherited abstract methods remains incomplete and MUST be declared `abstract`.",
+    "topic": "Incomplete Interface Implementation",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands that classes with unimplemented interface methods must be abstract.",
+    "weakness": "A class that does not implement all abstract interface methods must be declared `abstract`."
+  },
+  {
+    "q": "How does Java resolve conflicts when a class implements two interfaces that declare the exact same `default` method signature?",
+    "options": [
+      "The compiler picks the first one listed in implements",
+      "The compiler issues a conflict error; the implementing class MUST override the method explicitly to resolve the ambiguity (e.g. using `InterfaceA.super.method()`)",
+      "Both methods execute sequentially",
+      "Throws a NoSuchMethodError at runtime"
+    ],
+    "answer": 1,
+    "explain": "When two default methods collide, Java requires the implementing class to explicitly override the conflicting method and resolve which default to invoke.",
+    "topic": "Default Method Diamond Conflict Resolution",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Mastered default method conflict resolution in multiple interfaces.",
+    "weakness": "Conflicting default methods must be explicitly overridden by the implementing class."
+  },
+  {
+    "q": "What is pattern matching for `instanceof` (introduced in Java 16)?",
+    "options": [
+      "A regular expression engine for classes",
+      "Syntactic shorthand that tests the type AND automatically casts and binds it to a local variable in a single step: `if (obj instanceof String s) { s.length(); }`",
+      "A way to check multiple classes in a switch",
+      "A compiler optimization for arrays"
+    ],
+    "answer": 1,
+    "explain": "Pattern matching for `instanceof` eliminates redundant explicit downcasts: `if (obj instanceof String s)` binds `s` directly as a `String`.",
+    "topic": "Pattern Matching for instanceof",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands modern Java pattern matching for instanceof.",
+    "weakness": "`if (obj instanceof String s)` checks the type and binds variable `s` in one step."
+  },
+  {
+    "q": "Can an abstract class be declared `final`?",
+    "options": [
+      "Yes, to make it immutable",
+      "No, `abstract` requires subclasses to extend it, while `final` strictly prohibits subclassing; they are mutually contradictory modifiers and cause a compile error",
+      "Yes, if it has no abstract methods",
+      "Only if private"
+    ],
+    "answer": 1,
+    "explain": "`abstract` and `final` are polar opposites. A class cannot be both abstract and final.",
+    "topic": "Abstract and Final Contradiction",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Recognized contradictory combination of abstract and final.",
+    "weakness": "A class or method cannot be both `abstract` and `final`."
+  },
+  {
+    "q": "What is marker (tagging) interface in Java (e.g. `java.io.Serializable`, `java.lang.Cloneable`)?",
+    "options": [
+      "An interface with only static methods",
+      "An interface with NO fields and NO methods, used purely to tag or mark a class as possessing a specific capability or runtime property for the JVM or frameworks",
+      "An interface marked with @Deprecated",
+      "An interface that logs messages"
+    ],
+    "answer": 1,
+    "explain": "Marker interfaces contain zero members. They act as type tags inspected via `instanceof` (e.g. `obj instanceof Serializable`).",
+    "topic": "Marker Interface Concept",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Identifies marker interfaces like Serializable and Cloneable.",
+    "weakness": "Marker interfaces have no members and serve as type tags for the JVM or frameworks."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nabstract class Shape {\n    public abstract void draw();\n}\nShape s = new Shape();\n```",
+    "options": [
+      "draw cannot be public",
+      "Cannot instantiate abstract class `Shape` with `new`",
+      "s must be final",
+      "Shape has no constructor"
+    ],
+    "answer": 1,
+    "explain": "Abstract classes cannot be directly instantiated. Attempting `new Shape()` causes: 'Shape is abstract; cannot be instantiated'.",
+    "topic": "Instantiating Abstract Class Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted illegal direct instantiation of abstract class.",
+    "weakness": "Abstract classes cannot be instantiated with `new`."
+  },
+  {
+    "q": "What is the compilation error in this interface declaration?\n```java\ninterface Calculable {\n    int factor = 10;\n    void reset() {\n        factor = 20;\n    }\n}\n```",
+    "options": [
+      "reset must be public",
+      "Cannot assign a value to final variable `factor`: interface fields are implicitly `public static final` constants and cannot be reassigned; also `reset()` needs `default` modifier",
+      "factor cannot be 10",
+      "Calculable cannot have methods"
+    ],
+    "answer": 1,
+    "explain": "Interface fields are implicitly `public static final`. Reassigning `factor = 20;` fails compilation.",
+    "topic": "Reassigning Interface Final Field Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted reassignment of implicitly final interface field.",
+    "weakness": "Interface fields are implicitly constants (`final`) and cannot be reassigned."
+  },
+  {
+    "q": "Why does this class fail to compile?\n```java\nabstract class Animal {\n    public abstract void makeSound();\n}\nclass Dog extends Animal {}\n```",
+    "options": [
+      "Animal has no fields",
+      "Class `Dog` is not abstract and does not override abstract method `makeSound()` in `Animal`",
+      "Dog must be public",
+      "Animal cannot be extended"
+    ],
+    "answer": 1,
+    "explain": "A concrete subclass must implement all inherited abstract methods or be declared `abstract` itself.",
+    "topic": "Unimplemented Abstract Method in Concrete Subclass",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught missing implementation of abstract method in concrete subclass.",
+    "weakness": "Concrete subclasses must implement all inherited abstract methods."
+  },
+  {
+    "q": "What is wrong with this interface method definition in Java 7?\n```java\ninterface Runner {\n    public void run() {\n        System.out.println(\"Running\");\n    }\n}\n```",
+    "options": [
+      "Runner must be a class",
+      "Interface abstract methods cannot have a body; in Java 8+, it must be marked with the `default` keyword to have a body",
+      "println is illegal in interfaces",
+      "run cannot be public"
+    ],
+    "answer": 1,
+    "explain": "Standard interface methods cannot have bodies. To provide a body, the method must be marked `default` or `static` (Java 8+).",
+    "topic": "Missing Default Modifier on Interface Body",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted method body in interface missing default modifier.",
+    "weakness": "Interface methods with bodies must be declared `default` or `static`."
+  },
+  {
+    "q": "Why does the following downcast throw a runtime exception?\n```java\nObject text = \"Hello\";\nInteger num = (Integer) text;\n```",
+    "options": [
+      "Throws NullPointerException",
+      "Throws `ClassCastException`: `java.lang.String` cannot be cast to `java.lang.Integer`",
+      "Throws IllegalArgumentException",
+      "Compilation error: Object cannot be cast"
+    ],
+    "answer": 1,
+    "explain": "The runtime object is a `String`. Casting a `String` instance to `Integer` throws `ClassCastException`.",
+    "topic": "ClassCastException on Incompatible Downcast",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified runtime ClassCastException on illegal object cast.",
+    "weakness": "Casting an object to an incompatible type throws `ClassCastException`."
+  },
+  {
+    "q": "Identify the compilation error in this abstract class:\n```java\nfinal abstract class Service {\n    public abstract void execute();\n}\n```",
+    "options": [
+      "execute cannot be public",
+      "Illegal combination of modifiers: `abstract` and `final` cannot be combined on a class",
+      "Service must have constructors",
+      "execute must have body"
+    ],
+    "answer": 1,
+    "explain": "`final` prevents subclassing, while `abstract` requires subclassing. They are mutually contradictory.",
+    "topic": "Contradictory abstract and final Modifiers",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught illegal combination of abstract and final on class.",
+    "weakness": "A class cannot be both `abstract` and `final`."
+  },
+  {
+    "q": "Why does this abstract method declaration cause a compile-time error?\n```java\nabstract class Worker {\n    private abstract void work();\n}\n```",
+    "options": [
+      "Worker must be public",
+      "Illegal combination of modifiers: `abstract` and `private` (private methods cannot be inherited or overridden by subclasses)",
+      "work must return int",
+      "abstract methods must have bodies"
+    ],
+    "answer": 1,
+    "explain": "An abstract method must be overridden by a subclass, but `private` prevents subclass visibility. Combining `private` and `abstract` is illegal.",
+    "topic": "Private Abstract Method Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught illegal combination of private and abstract modifiers.",
+    "weakness": "Abstract methods cannot be `private` because subclasses must override them."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\ninterface Playable {\n    void play();\n}\nclass Game implements Playable {\n    void play() {}\n}\n```",
+    "options": [
+      "Game must be abstract",
+      "Cannot reduce visibility: `play()` in `Game` has package-private access, but interface methods are implicitly `public`",
+      "Game cannot implement Playable",
+      "play cannot be empty"
+    ],
+    "answer": 1,
+    "explain": "Interface methods are implicitly `public`. Implementing methods must explicitly declare `public` access; omitting it defaults to package-private, causing: 'attempting to assign weaker access privileges; was public'.",
+    "topic": "Package-Private Interface Implementation Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught missing public modifier on implemented interface method.",
+    "weakness": "Methods implementing interface contracts must be explicitly declared `public`."
+  },
+  {
+    "q": "What is the issue with this code?\n```java\ninterface A {\n    default void hello() { System.out.println(\"A\"); }\n}\ninterface B {\n    default void hello() { System.out.println(\"B\"); }\n}\nclass C implements A, B {}\n```",
+    "options": [
+      "Interfaces cannot have default methods",
+      "Class `C` inherits unrelated defaults for `hello()` from types `A` and `B`, causing a compilation conflict (must override `hello()` in `C` to resolve ambiguity)",
+      "C must be abstract",
+      "hello cannot be void"
+    ],
+    "answer": 1,
+    "explain": "When two implemented interfaces provide conflicting default implementations for the same signature, class `C` must explicitly override the method to resolve the conflict.",
+    "topic": "Unresolved Default Method Conflict",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught ambiguous default method collision across multiple interfaces.",
+    "weakness": "Classes implementing interfaces with conflicting default methods must override the method explicitly."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nabstract class Vehicle {\n    public abstract void drive() {}\n}\n```",
+    "options": [
+      "Vehicle cannot be abstract",
+      "Abstract methods cannot specify a body: `public abstract void drive();` must end with a semicolon, not `{}`",
+      "drive must return void",
+      "drive cannot be public"
+    ],
+    "answer": 1,
+    "explain": "Abstract methods must not have a body. They end with a semicolon `;`.",
+    "topic": "Abstract Method with Body Syntax Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted body braces on abstract method declaration.",
+    "weakness": "Abstract methods cannot have a body; terminate them with a semicolon `;`."
+  },
+  {
+    "q": "Identify the error in this code:\n```java\ninterface Printable {\n    void print();\n}\nPrintable p = new Printable();\n```",
+    "options": [
+      "Printable must have fields",
+      "Printable is an interface; cannot be instantiated directly with `new` (requires an implementing class or anonymous class)",
+      "print must be static",
+      "p must be null"
+    ],
+    "answer": 1,
+    "explain": "Interfaces cannot be directly instantiated with `new`. A concrete class must implement the interface.",
+    "topic": "Direct Interface Instantiation Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught direct instantiation of interface with new.",
+    "weakness": "Interfaces cannot be instantiated directly with `new`."
+  },
+  {
+    "q": "Why does this code cause a compiler error?\n```java\ninterface MathOp {\n    static int add(int a, int b) { return a + b; }\n}\nclass Calc implements MathOp {}\n// in main:\nCalc.add(2, 3);\n```",
+    "options": [
+      "add must be default",
+      "Interface static methods are NOT inherited by implementing classes; they must be invoked using the interface name: `MathOp.add(2, 3)`",
+      "add cannot return int",
+      "Calc must be abstract"
+    ],
+    "answer": 1,
+    "explain": "Static methods in an interface do not belong to implementing classes and are not inherited. They must be called on the interface: `MathOp.add(2, 3)`.",
+    "topic": "Invoking Interface Static Method on Implementing Class Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands that interface static methods are not inherited by implementing classes.",
+    "weakness": "Interface static methods must be qualified by the interface name: `InterfaceName.method()`."
+  },
+  {
+    "q": "What compilation error occurs here?\n```java\nabstract class Shape {\n    public static abstract void draw();\n}\n```",
+    "options": [
+      "draw cannot be public",
+      "Illegal combination of modifiers: `static` and `abstract`",
+      "Shape must be final",
+      "draw must have body"
+    ],
+    "answer": 1,
+    "explain": "`static` methods belong to the class and cannot be overridden dynamically, while `abstract` methods require dynamic subclass overriding. They cannot be combined.",
+    "topic": "Static Abstract Method Contradiction",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted illegal combination of static and abstract modifiers.",
+    "weakness": "Methods cannot be both `static` and `abstract`."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nclass Animal {}\nclass Dog extends Animal {\n    public void bark() {}\n}\nAnimal a = new Animal();\na.bark();\n```",
+    "options": [
+      "bark must be static",
+      "Cannot find symbol: method bark() does not exist in declared compile-time type `Animal`",
+      "a must be cast to Object",
+      "bark is private"
+    ],
+    "answer": 1,
+    "explain": "The compiler checks method validity against the declared reference type (`Animal`). Because `bark()` is declared in `Dog`, not `Animal`, `a.bark()` fails compile-time type checking.",
+    "topic": "Method Call on Supertype Reference Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized that supertype references cannot call subclass-specific methods without casting.",
+    "weakness": "Supertype references cannot call subclass-specific methods without an explicit downcast."
+  },
+  {
+    "q": "Identify the bug in this downcast snippet:\n```java\nAnimal a = getAnimal(); // returns Cat or Dog\nDog d = (Dog) a;\nd.bark();\n```",
+    "options": [
+      "Dog cannot bark",
+      "If `getAnimal()` returns a `Cat`, the unconditional cast throws `ClassCastException` at runtime (should guard with `if (a instanceof Dog)`)",
+      "getAnimal must return Dog",
+      "d is null"
+    ],
+    "answer": 1,
+    "explain": "Unconditional downcasting without an `instanceof` guard risks throwing `ClassCastException` whenever the runtime object is of an incompatible subtype.",
+    "topic": "Unchecked Downcasting Vulnerability",
+    "type": "error",
+    "level": "medium",
+    "strength": "Identified unsafe downcasting without instanceof guard.",
+    "weakness": "Guard downcasts with `if (obj instanceof Subtype)` to avoid ClassCastException."
+  },
+  {
+    "q": "Why does this code cause a compilation error?\n```java\ninterface A {}\ninterface B {}\nclass C extends A, B {}\n```",
+    "options": [
+      "C must be public",
+      "Classes cannot `extend` interfaces (classes `implement` interfaces, using `implements A, B`)",
+      "A and B must be classes",
+      "C must be abstract"
+    ],
+    "answer": 1,
+    "explain": "A class must use `implements` to inherit from interfaces, not `extends`.",
+    "topic": "Class Extending Interfaces Syntax Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted class using extends instead of implements for interfaces.",
+    "weakness": "Classes `implement` interfaces; they do not `extend` them."
+  },
+  {
+    "q": "What error occurs in this interface definition?\n```java\ninterface Service {\n    protected void run();\n}\n```",
+    "options": [
+      "run cannot be void",
+      "Modifier `protected` not allowed here: interface members must be public (or private helper methods in Java 9+)",
+      "Service must be abstract class",
+      "run must have body"
+    ],
+    "answer": 1,
+    "explain": "Interface methods cannot be `protected`. They are public by contract.",
+    "topic": "Protected Interface Method Error",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized that interface methods cannot be protected.",
+    "weakness": "Interface methods cannot be declared `protected`; they must be `public` (or `private` in Java 9+)."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\ninterface Device {\n    void start();\n}\nabstract class Phone implements Device {}\nPhone p = new Phone();\n```",
+    "options": [
+      "Phone cannot implement Device",
+      "Cannot instantiate abstract class `Phone`",
+      "Device has no constructor",
+      "p must be Device"
+    ],
+    "answer": 1,
+    "explain": "`Phone` is declared `abstract` (which is valid since it leaves `start()` unimplemented), but abstract classes cannot be instantiated with `new`.",
+    "topic": "Instantiating Abstract Implementing Class",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught instantiation of abstract class.",
+    "weakness": "Abstract classes cannot be instantiated with `new` even if they implement interfaces."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\ninterface Greeter {\n    default void greet();\n}\n```",
+    "options": [
+      "Greeter must be a class",
+      "Default methods in interfaces MUST specify a method body `{ ... }`",
+      "greet cannot be void",
+      "default is a keyword for switch only"
+    ],
+    "answer": 1,
+    "explain": "A `default` method in an interface exists specifically to provide a method body. Omitting the body causes a compile error: 'missing method body, or declare abstract'.",
+    "topic": "Default Method Missing Body Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted default interface method missing implementation body.",
+    "weakness": "Default methods in interfaces must provide a method body `{ ... }`."
+  },
+  {
+    "q": "What compilation issue exists in this code?\n```java\nclass Box {\n    public int size = 10;\n}\nclass BigBox extends Box {\n    public int size = 20;\n}\nBox b = new BigBox();\nBigBox bb = (BigBox) b;\n```",
+    "options": [
+      "BigBox cannot extend Box",
+      "The code compiles cleanly! It performs a valid upcast and subsequent downcast without errors",
+      "b cannot be cast to BigBox",
+      "size cannot be 20"
+    ],
+    "answer": 1,
+    "explain": "The runtime object of `b` is `BigBox`. Casting `(BigBox) b` is completely type-safe and valid, compiling and executing with no errors.",
+    "topic": "Valid Safe Downcasting",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized valid safe downcast of matching runtime type.",
+    "weakness": "Downcasting a reference to its actual runtime object type succeeds cleanly."
+  },
+  {
+    "q": "Why does this code cause a compiler error?\n```java\ninterface Walker {\n    void walk();\n}\nclass Human implements Walker {\n    private void walk() {}\n}\n```",
+    "options": [
+      "walk must return int",
+      "Cannot reduce the visibility of the inherited method from Walker: interface methods are public, cannot assign private access",
+      "Human must be abstract",
+      "walk is already defined"
+    ],
+    "answer": 1,
+    "explain": "Implementing an interface method with `private` access violates the rule that visibility cannot be reduced from `public`.",
+    "topic": "Private Implementation of Interface Method",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught illegal private implementation of public interface method.",
+    "weakness": "Methods implementing interface contracts must be declared `public`."
+  },
+  {
+    "q": "What error occurs in this code snippet?\n```java\nObject obj = \"Java\";\nif (obj instanceof String) {\n    int len = obj.length();\n}\n```",
+    "options": [
+      "instanceof cannot check String",
+      "Cannot find symbol: method length() in class Object (`obj` is still statically typed as `Object`; must cast `((String) obj).length()` or use pattern matching)",
+      "length() is for arrays",
+      "obj is null"
+    ],
+    "answer": 1,
+    "explain": "Even though `instanceof` confirms the runtime type is `String`, `obj`'s declared type remains `Object`. You must cast `((String) obj).length()` or use pattern matching `if (obj instanceof String s)`.",
+    "topic": "Uncast Supertype Invocations Post-instanceof",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized that traditional instanceof check does not automatically cast the variable.",
+    "weakness": "Cast the reference explicitly after `instanceof` (or use pattern matching `instanceof String s`)."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\ninterface A {\n    int X = 100;\n}\nclass Test implements A {\n    public static void main(String[] args) {\n        X = 200;\n    }\n}\n```",
+    "options": [
+      "X is private",
+      "Cannot assign a value to final variable X (inherited interface fields are constants)",
+      "A has no X",
+      "Test must be abstract"
+    ],
+    "answer": 1,
+    "explain": "Inherited interface fields like `X` are constants (`public static final`) and cannot be reassigned.",
+    "topic": "Inherited Interface Constant Reassignment Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught attempt to reassign inherited interface constant.",
+    "weakness": "Fields inherited from interfaces are constants and cannot be reassigned."
+  },
+  {
+    "q": "What compilation error occurs here?\n```java\nabstract class Base {\n    abstract void m1();\n    abstract void m2();\n}\nabstract class Sub extends Base {\n    void m1() {}\n}\nSub s = new Sub();\n```",
+    "options": [
+      "Sub cannot extend Base",
+      "Cannot instantiate abstract class `Sub` (Sub is still abstract because it has not implemented `m2()`)",
+      "m1 is already implemented",
+      "Base has no constructors"
+    ],
+    "answer": 1,
+    "explain": "`Sub` implements `m1()` but not `m2()`, so `Sub` remains abstract. Attempting `new Sub()` fails.",
+    "topic": "Instantiating Partially Implemented Abstract Subclass",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught instantiation of partially implemented abstract class.",
+    "weakness": "Subclasses that only implement some abstract methods remain abstract and cannot be instantiated."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nclass StringTest {\n    public static void main(String[] args) {\n        Integer n = 10;\n        if (n instanceof String) {}\n    }\n}\n```",
+    "options": [
+      "n is not an object",
+      "Inconvertible types: cannot cast `java.lang.Integer` to `java.lang.String` (compiler rejects instanceof when the types are completely unrelated classes)",
+      "instanceof only works on Object",
+      "String cannot be used with instanceof"
+    ],
+    "answer": 1,
+    "explain": "When the compiler can prove that two class types share no inheritance relationship, the `instanceof` expression is rejected at compile time: 'inconvertible types'.",
+    "topic": "Inconvertible Types in instanceof Error",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that instanceof fails compilation between unrelated concrete classes.",
+    "weakness": "The compiler rejects `instanceof` between two unrelated classes that cannot possibly match."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\ninterface Speaker {\n    void speak();\n}\nclass Dog implements Speaker {\n    public void speak() { System.out.print(\"Woof \"); }\n}\nclass Person implements Speaker {\n    public void speak() { System.out.print(\"Hello \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Speaker[] list = { new Dog(), new Person() };\n        for (Speaker s : list) s.speak();\n    }\n}\n```",
+    "options": [
+      "Woof Hello ",
+      "Hello Woof ",
+      "Woof Woof ",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "Polymorphism iterates across interface references, dispatching dynamically to `Dog.speak()` then `Person.speak()`. Output: `Woof Hello `.",
+    "topic": "Interface Polymorphism Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced polymorphic method dispatch through interface array.",
+    "weakness": "Dynamic binding executes each object's respective implementation: `Woof Hello `."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface A {\n    default void show() { System.out.print(\"A \"); }\n}\nclass B implements A {\n    @Override\n    public void show() { System.out.print(\"B \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A obj = new B();\n        obj.show();\n    }\n}\n```",
+    "options": [
+      "A ",
+      "B ",
+      "A B ",
+      "Error"
+    ],
+    "answer": 1,
+    "explain": "Class `B` overrides the default method `show()`. Dynamic binding invokes the overriding implementation in `B`. Outputs `B `.",
+    "topic": "Overridden Default Method Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized that class override takes precedence over interface default method.",
+    "weakness": "Class implementations always override interface default methods: outputs `B `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ninterface MathConst {\n    int VAL = 42;\n}\npublic class Main implements MathConst {\n    public static void main(String[] args) {\n        System.out.println(VAL + \" \" + MathConst.VAL);\n    }\n}\n```",
+    "options": [
+      "42 42",
+      "0 42",
+      "42 0",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`VAL` is accessible directly as an inherited interface constant and via `MathConst.VAL`. Both yield 42.",
+    "topic": "Interface Constant Access Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Accessed interface constant directly and via interface name.",
+    "weakness": "Interface constants are accessible directly and via interface qualification: `42 42`."
+  },
+  {
+    "q": "What does this snippet print?\n```java\nabstract class Base {\n    public Base() { System.out.print(\"B \"); }\n}\nclass Sub extends Base {\n    public Sub() { System.out.print(\"S \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Sub();\n    }\n}\n```",
+    "options": [
+      "S B ",
+      "B S ",
+      "S ",
+      "B "
+    ],
+    "answer": 1,
+    "explain": "The abstract superclass constructor `Base()` runs first, printing `\"B \"`. Then `Sub()` runs, printing `\"S \"`. Output: `B S `.",
+    "topic": "Abstract Superclass Constructor Execution Order",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced abstract superclass constructor execution.",
+    "weakness": "Abstract superclass constructors execute before subclass constructors: `B S `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ninterface I {\n    static void print() { System.out.print(\"Interface \"); }\n}\nclass C implements I {\n    public void print() { System.out.print(\"Class \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        I.print();\n        new C().print();\n    }\n}\n```",
+    "options": [
+      "Interface Class ",
+      "Class Interface ",
+      "Interface Interface ",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`I.print()` calls the static method on the interface (`\"Interface \"`). `new C().print()` calls the instance method on `C` (`\"Class \"`). Output: `Interface Class `.",
+    "topic": "Interface Static vs Instance Method Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Distinguished interface static method call from class instance method.",
+    "weakness": "Interface static methods are distinct from class instance methods: `Interface Class `."
+  },
+  {
+    "q": "What does this code print?\n```java\nclass Animal {}\nclass Dog extends Animal {}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        System.out.println((a instanceof Dog) + \" \" + (a instanceof Animal) + \" \" + (a instanceof Object));\n    }\n}\n```",
+    "options": [
+      "true true true",
+      "true false false",
+      "false true true",
+      "true true false"
+    ],
+    "answer": 0,
+    "explain": "The runtime object is `Dog`. It is an instance of `Dog`, `Animal` (superclass), and `Object` (root). All evaluate to `true`.",
+    "topic": "Multi-Tier instanceof Evaluation Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Evaluated instanceof across inheritance chain.",
+    "weakness": "A subclass instance evaluates to true for its own class and all ancestor types."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nAnimal a = null;\nSystem.out.println(a instanceof Object);\n```",
+    "options": [
+      "true",
+      "false",
+      "NullPointerException",
+      "Error"
+    ],
+    "answer": 1,
+    "explain": "In Java, evaluating `null instanceof AnyType` always returns `false` safely without throwing `NullPointerException`.",
+    "topic": "Null instanceof Evaluation Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized that null instanceof anything evaluates to false.",
+    "weakness": "`null instanceof Type` always evaluates to `false` without throwing an exception."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface A {\n    default void m() { System.out.print(\"A \"); }\n}\ninterface B extends A {\n    default void m() { System.out.print(\"B \"); }\n}\nclass C implements B {}\npublic class Main {\n    public static void main(String[] args) {\n        new C().m();\n    }\n}\n```",
+    "options": [
+      "A ",
+      "B ",
+      "A B ",
+      "Error"
+    ],
+    "answer": 1,
+    "explain": "Interface `B` overrides `m()`. In the inheritance hierarchy, the sub-interface's more specific default implementation takes precedence. Outputs `B `.",
+    "topic": "Sub-Interface Default Override Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Understands that more specific sub-interface defaults override ancestor defaults.",
+    "weakness": "More specific sub-interface default methods take precedence: outputs `B `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nabstract class Calculator {\n    public int compute(int a, int b) {\n        return op(a, b);\n    }\n    public abstract int op(int a, int b);\n}\nclass Adder extends Calculator {\n    public int op(int a, int b) { return a + b; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Calculator c = new Adder();\n        System.out.println(c.compute(5, 7));\n    }\n}\n```",
+    "options": [
+      "12",
+      "0",
+      "57",
+      "NullPointerException"
+    ],
+    "answer": 0,
+    "explain": "`c.compute(5, 7)` calls `op(5, 7)`. Since the runtime object is `Adder`, `Adder.op` executes: `5 + 7 = 12`.",
+    "topic": "Template Method Pattern Invocation Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced template method invocation delegating to abstract method.",
+    "weakness": "Concrete method delegates to overridden abstract operation: `5 + 7 = 12`."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface I {}\nclass A implements I {}\nclass B extends A {}\npublic class Main {\n    public static void main(String[] args) {\n        I ref = new B();\n        System.out.println((ref instanceof A) + \" \" + (ref instanceof B));\n    }\n}\n```",
+    "options": [
+      "true true",
+      "true false",
+      "false true",
+      "false false"
+    ],
+    "answer": 0,
+    "explain": "Because `B` extends `A` which implements `I`, an instance of `B` is an instance of both `A` and `B`. Output: `true true`.",
+    "topic": "Inherited Interface Type Conformance Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Verified that subclasses inherit interface implementation conformance.",
+    "weakness": "Subclass `B` inherits interface `I` implementation from `A`; both evaluate to true."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ninterface X {\n    default void run() { System.out.print(\"X \"); }\n}\nclass Y implements X {\n    public void run() {\n        X.super.run();\n        System.out.print(\"Y \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Y().run();\n    }\n}\n```",
+    "options": [
+      "X Y ",
+      "Y X ",
+      "X ",
+      "Y "
+    ],
+    "answer": 0,
+    "explain": "`X.super.run()` explicitly invokes the default implementation of `X`, printing `\"X \"`. Then `Y` prints `\"Y \"`. Output: `X Y `.",
+    "topic": "Interface Default Call via X.super.run() Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced explicit interface default method invocation using `Interface.super.method()`.",
+    "weakness": "`X.super.run()` invokes interface default logic, followed by local code: `X Y `."
+  },
+  {
+    "q": "What does this code print?\n```java\nclass Top {}\nclass Middle extends Top {}\nclass Bottom extends Middle {}\npublic class Main {\n    public static void main(String[] args) {\n        Top t = new Middle();\n        System.out.println((t instanceof Bottom) + \" \" + (t instanceof Middle));\n    }\n}\n```",
+    "options": [
+      "false true",
+      "true true",
+      "false false",
+      "true false"
+    ],
+    "answer": 0,
+    "explain": "The actual runtime object is `Middle`. It is not an instance of `Bottom` (false), but is an instance of `Middle` (true). Output: `false true`.",
+    "topic": "instanceof Middle Tier Evaluation Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Accurately tested intermediate inheritance hierarchy in instanceof.",
+    "weakness": "Actual object is `Middle`: false for subclass `Bottom`, true for `Middle`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nabstract class Vehicle {\n    String name;\n    public Vehicle(String name) { this.name = name; }\n}\nclass Car extends Vehicle {\n    public Car() { super(\"Sedan\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Car c = new Car();\n        System.out.println(c.name);\n    }\n}\n```",
+    "options": [
+      "Sedan",
+      "null",
+      "Vehicle",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`Car()` invokes `super(\"Sedan\")`, setting `name` in the abstract superclass. Outputs `Sedan`.",
+    "topic": "Abstract Constructor Field Initialization Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced field initialization through abstract superclass constructor.",
+    "weakness": "`super(\"Sedan\")` initializes abstract class field `name` to 'Sedan'."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface Fun {\n    int apply(int x);\n}\npublic class Main {\n    public static void main(String[] args) {\n        Fun square = x -> x * x;\n        System.out.println(square.apply(5));\n    }\n}\n```",
+    "options": [
+      "25",
+      "5",
+      "10",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`Fun` is a functional interface. The lambda `x -> x * x` implements `apply`. `square.apply(5) = 5 * 5 = 25`.",
+    "topic": "Lambda Expression Invocation Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Evaluated lambda expression implementing functional interface.",
+    "weakness": "Lambda expression computes 5 * 5 = 25."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nclass Base {\n    public void test() { System.out.print(\"Base \"); }\n}\nclass Sub extends Base {\n    public void test() { System.out.print(\"Sub \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Sub();\n        Sub s = (Sub) b;\n        s.test();\n    }\n}\n```",
+    "options": [
+      "Sub ",
+      "Base ",
+      "Base Sub ",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "Both `b.test()` and `s.test()` invoke the runtime object's method on `Sub`. Outputs `Sub `.",
+    "topic": "Downcast Reference Execution Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced execution through downcast reference.",
+    "weakness": "Downcast reference executes `Sub.test()`, outputting `Sub `."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface A {\n    int X = 10;\n}\ninterface B {\n    int X = 20;\n}\npublic class Main implements A, B {\n    public static void main(String[] args) {\n        System.out.println(A.X + \" \" + B.X);\n    }\n}\n```",
+    "options": [
+      "10 20",
+      "20 10",
+      "Compilation error: X is ambiguous",
+      "0 0"
+    ],
+    "answer": 0,
+    "explain": "Accessing `X` unqualified inside `Main` would be ambiguous, but qualifying with `A.X` and `B.X` resolves ambiguity cleanly. Outputs `10 20`.",
+    "topic": "Qualified Interface Constant Disambiguation Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Disambiguated colliding interface constants via interface name qualification.",
+    "weakness": "Qualifying with `A.X` and `B.X` cleanly accesses each constant: `10 20`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nabstract class Animal {\n    abstract void eat();\n}\nclass Bird extends Animal {\n    void eat() { System.out.print(\"Seeds \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Bird();\n        a.eat();\n    }\n}\n```",
+    "options": [
+      "Seeds ",
+      "Animal ",
+      "Eat ",
+      "NullPointerException"
+    ],
+    "answer": 0,
+    "explain": "`a.eat()` invokes the overridden method in `Bird`, outputting `Seeds `.",
+    "topic": "Abstract Method Dynamic Dispatch Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced dynamic dispatch of abstract method.",
+    "weakness": "Dispatches dynamically to `Bird.eat()`, printing `Seeds `."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface Printer {\n    default void print() { System.out.print(\"Print \"); }\n}\nclass LaserPrinter implements Printer {}\npublic class Main {\n    public static void main(String[] args) {\n        new LaserPrinter().print();\n    }\n}\n```",
+    "options": [
+      "Print ",
+      "LaserPrinter ",
+      "Nothing",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`LaserPrinter` does not override `print()`, so it inherits the default method from `Printer`. Outputs `Print `.",
+    "topic": "Inherited Default Method Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced inherited interface default method execution.",
+    "weakness": "Inherited default method executes, outputting `Print `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nclass Alpha {}\nclass Beta extends Alpha {}\npublic class Main {\n    public static void main(String[] args) {\n        Alpha a = new Alpha();\n        System.out.println(a instanceof Beta);\n    }\n}\n```",
+    "options": [
+      "false",
+      "true",
+      "NullPointerException",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "The runtime object is `Alpha` (a superclass instance). It is NOT an instance of subclass `Beta`. Outputs `false`.",
+    "topic": "Superclass Instance of Subclass Check Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized that superclass instances are not instances of subclasses.",
+    "weakness": "A superclass object is not an instance of its subclass: evaluates to `false`."
+  },
+  {
+    "q": "What does this code print?\n```java\nabstract class Plant {\n    public Plant() { grow(); }\n    abstract void grow();\n}\nclass Tree extends Plant {\n    void grow() { System.out.print(\"Tree \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Tree();\n    }\n}\n```",
+    "options": [
+      "Tree ",
+      "Plant ",
+      "Nothing",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "When `new Tree()` executes, `Plant()` constructor calls `grow()`, which dynamically dispatches to `Tree.grow()`. Outputs `Tree `.",
+    "topic": "Abstract Constructor Method Dispatch Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced dynamic dispatch from abstract superclass constructor.",
+    "weakness": "Constructor calls `grow()`, which dynamically invokes `Tree.grow()`: `Tree `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nObject obj = \"Polymorphism\";\nif (obj instanceof String s) {\n    System.out.println(s.substring(0, 4));\n}\n```",
+    "options": [
+      "Poly",
+      "Polymorphism",
+      "Error",
+      "NullPointerException"
+    ],
+    "answer": 0,
+    "explain": "Pattern matching binds `s` to the string `\"Polymorphism\"`. `s.substring(0, 4)` extracts \"Poly\". Outputs `Poly`.",
+    "topic": "Pattern Matching String Extraction Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Evaluated pattern matching for instanceof and method call.",
+    "weakness": "Pattern matching binds `s` to String, extracting `\"Poly\"`."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface Greeter {\n    void greet();\n}\npublic class Main {\n    public static void main(String[] args) {\n        Greeter g = new Greeter() {\n            public void greet() { System.out.print(\"Anonymous \"); }\n        };\n        g.greet();\n    }\n}\n```",
+    "options": [
+      "Anonymous ",
+      "Greeter ",
+      "Nothing",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "An anonymous inner class implements `Greeter` and provides `greet()`. Calling `g.greet()` outputs `Anonymous `.",
+    "topic": "Anonymous Class Interface Instantiation Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced anonymous inner class implementing an interface.",
+    "weakness": "Anonymous class implements interface and executes `greet()`: `Anonymous `."
+  },
+  {
+    "q": "What is the output of this code?\n```java\ninterface Calc {\n    int operate(int a, int b);\n}\npublic class Main {\n    public static void main(String[] args) {\n        Calc add = (a, b) -> a + b;\n        Calc mult = (a, b) -> a * b;\n        System.out.println(add.operate(3, 4) + \" \" + mult.operate(3, 4));\n    }\n}\n```",
+    "options": [
+      "7 12",
+      "12 7",
+      "7 7",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`add` sums `3 + 4 = 7`. `mult` multiplies `3 * 4 = 12`. Outputs `7 12`.",
+    "topic": "Multiple Functional Interface Lambdas Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Evaluated multiple lambda implementations of a functional interface.",
+    "weakness": "Lambdas compute 3 + 4 = 7 and 3 * 4 = 12: `7 12`."
+  },
+  {
+    "q": "What does this code print?\n```java\ninterface Item {\n    default int getPrice() { return 100; }\n}\nclass DiscountItem implements Item {\n    public int getPrice() { return Item.super.getPrice() - 20; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new DiscountItem().getPrice());\n    }\n}\n```",
+    "options": [
+      "80",
+      "100",
+      "20",
+      "Error"
+    ],
+    "answer": 0,
+    "explain": "`Item.super.getPrice()` returns 100. Subtracting 20 yields 80. Outputs 80.",
+    "topic": "Interface super.getPrice() Modification Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Computed price adjustment invoking interface default method via super.",
+    "weakness": "`100 - 20 = 80`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nabstract class A {\n    abstract void f();\n}\nabstract class B extends A {\n    abstract void g();\n}\nclass C extends B {\n    void f() { System.out.print(\"F \"); }\n    void g() { System.out.print(\"G \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        C obj = new C();\n        obj.f();\n        obj.g();\n    }\n}\n```",
+    "options": [
+      "F G ",
+      "G F ",
+      "F ",
+      "G "
+    ],
+    "answer": 0,
+    "explain": "Concrete class `C` implements both `f()` and `g()`. Invoking both prints `F G `.",
+    "topic": "Multi-Level Abstract Class Implementation Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced implementation of all abstract methods in concrete subclass.",
+    "weakness": "`obj.f()` and `obj.g()` output `F G `."
+  },
+  {
+    "q": "You are building a payment gateway for an e-commerce platform supporting PayPal, Stripe, and Touch 'n Go eWallet. How should the payment system be designed to allow adding new payment providers in the future without modifying existing checkout code (Open/Closed Principle)?",
+    "options": [
+      "Write a massive 500-line switch statement in CheckoutController checking provider names",
+      "Define a `PaymentProcessor` interface with `processPayment(double amount)` and have each provider (`StripeProcessor`, `PayPalProcessor`) implement it, allowing `CheckoutController` to depend on the interface",
+      "Make all payment providers static classes",
+      "Duplicate checkout logic for each provider"
+    ],
+    "answer": 1,
+    "explain": "Depending on the `PaymentProcessor` interface allows new payment providers to be plugged in seamlessly without altering existing checkout orchestrations, upholding the Open/Closed Principle.",
+    "topic": "Payment Gateway Interface Design",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied interface abstraction to satisfy the Open/Closed Principle.",
+    "weakness": "Define a common interface so new implementations can be introduced without modifying calling code."
+  },
+  {
+    "q": "A graphics rendering software supports vector shapes: Circles, Rectangles, and Triangles. Why is defining an abstract class `Shape` with `public abstract void draw(Graphics g)` superior to a procedural design using `if (shape.type == CIRCLE)`?",
+    "options": [
+      "Abstract classes run on GPUs",
+      "Polymorphism eliminates fragile type checking ladders; adding a new `Polygon` shape requires only extending `Shape` and implementing `draw()`, requiring zero changes to the rendering loop",
+      "Procedural code is not supported in Java",
+      "Shapes cannot be drawn without interfaces"
+    ],
+    "answer": 1,
+    "explain": "Polymorphic dispatch delegates rendering to the shape itself, eliminating brittle switch/if-else ladders and enabling infinite extensibility.",
+    "topic": "Polymorphism Replaces Conditional Ladders",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands how polymorphism eliminates fragile type checking in graphics engines.",
+    "weakness": "Use polymorphism to eliminate fragile conditional branching ladders."
+  },
+  {
+    "q": "A logging framework supports exporting logs to Console, File, and remote Cloud Storage. What is the appropriate interface definition?",
+    "options": [
+      "`public interface LogDestination { void writeLog(String message); }`",
+      "A class with 3 static methods",
+      "A final class with private fields",
+      "An abstract class with 50 fields"
+    ],
+    "answer": 0,
+    "explain": "A clean, single-method interface `LogDestination` defines a cohesive contract that Console, File, and Cloud loggers implement.",
+    "topic": "Logging Contract Interface",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Designed cohesive interface for pluggable output destinations.",
+    "weakness": "Define focused, cohesive interfaces for pluggable output destinations."
+  },
+  {
+    "q": "In an autonomous vehicle simulation, objects in the world can be Obstacles (rocks, trees) or MovingVehicles (cars, bikes). Only vehicles can accelerate: `public interface Accelerable { void accelerate(); }`. How should objects be processed in the physics loop?",
+    "options": [
+      "Downcast every object to Car without checking",
+      "Loop through all world entities; for each entity, check `if (entity instanceof Accelerable a)` and call `a.accelerate();`",
+      "Create separate worlds for each object type",
+      "Use reflection on every frame"
+    ],
+    "answer": 1,
+    "explain": "Using pattern matching for `instanceof Accelerable a` cleanly filters and accelerates only entities that implement the capability contract.",
+    "topic": "Capability Interface Filtering Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied capability interfaces with pattern matching instanceof for selective processing.",
+    "weakness": "Use capability interfaces and `instanceof` to process only entities with specific capabilities."
+  },
+  {
+    "q": "A software library maintainer releases Version 2.0 of a widely used interface `DataSource`. The maintainer wants to add a new method `boolean isHealthy()` without breaking millions of existing client classes that implemented Version 1.0. How is this achieved?",
+    "options": [
+      "Add an abstract method `boolean isHealthy();`",
+      "Add a `default` method `default boolean isHealthy() { return true; }` in the interface: existing classes inherit the default implementation without compile errors",
+      "Create a brand new class",
+      "Delete the interface"
+    ],
+    "answer": 1,
+    "explain": "Java 8 default methods were created precisely to enable interface evolution and backward compatibility without breaking existing implementers.",
+    "topic": "Interface Evolution via Default Methods",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied interface default methods for backward-compatible API evolution.",
+    "weakness": "Use `default` methods to add new capabilities to interfaces without breaking existing implementers."
+  },
+  {
+    "q": "A database abstraction layer models `DatabaseConnection`. All databases share connection pooling, credentials, and logging logic, but MySQL and Oracle use completely different network socket handshakes. How should this be designed?",
+    "options": [
+      "Use a pure interface with zero implementation",
+      "Use an `abstract class DatabaseConnection` implementing shared pooling and credential state, with an `abstract void connectSocket()` method overridden by `MySqlConnection` and `OracleConnection`",
+      "Create two unrelated classes with duplicated code",
+      "Write all logic in a single static method"
+    ],
+    "answer": 1,
+    "explain": "An abstract class is ideal when subclasses share substantial state and common implementation code while differing on specific low-level operations (Template Method pattern).",
+    "topic": "Abstract Class for Shared State & Implementation",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Selected abstract class over interface to share common state and algorithms.",
+    "weakness": "Use abstract classes when subclasses must share state and common implementation logic."
+  },
+  {
+    "q": "A notification service sends SMS, Email, and Push notifications. The client code is written as: `NotificationSender sender = NotificationFactory.getSender(userPreference); sender.send(message);`. What design principle is demonstrated?",
+    "options": [
+      "Program to an interface, not an implementation (Dependency Inversion Principle)",
+      "Tight coupling",
+      "Multiple inheritance",
+      "Circular dependency"
+    ],
+    "answer": 0,
+    "explain": "Programming to an interface (`NotificationSender`) decouples the caller from concrete implementation classes, allowing senders to be swapped dynamically.",
+    "topic": "Program to an Interface Principle",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied the core principle: Program to an interface, not an implementation.",
+    "weakness": "Depend on interface abstractions rather than concrete implementation classes."
+  },
+  {
+    "q": "A data processing pipeline filters a stream of events. It needs a lightweight predicate to test if an event is valid: `boolean test(Event e)`. Why should `java.util.function.Predicate<Event>` be used rather than inventing a custom interface?",
+    "options": [
+      "Custom interfaces are illegal in Java",
+      "Reusing Java's built-in standard functional interfaces (`Predicate`, `Function`, `Consumer`) promotes interoperability with the Stream API, standard libraries, and lambda expressions",
+      "Predicate runs in C++",
+      "Custom interfaces use more RAM"
+    ],
+    "answer": 1,
+    "explain": "Standard functional interfaces promote code reuse and integrate seamlessly with Java Streams, Optional, and third-party libraries.",
+    "topic": "Standard Functional Interface Reuse",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Employed standard Java functional interfaces for ecosystem compatibility.",
+    "weakness": "Leverage standard functional interfaces (`Predicate`, `Consumer`, `Function`) for seamless ecosystem interoperability."
+  },
+  {
+    "q": "A desktop application manages plugins. Third-party developers write plugin JARs. How does the application guarantee that any third-party plugin can be loaded, started, and stopped safely?",
+    "options": [
+      "By inspecting the author's name",
+      "By providing a public `Plugin` interface with lifecycle methods (`init()`, `start()`, `stop()`) that all third-party plugins must implement",
+      "By decompiling the plugin code at runtime",
+      "By requiring all plugins to be written in a single file"
+    ],
+    "answer": 1,
+    "explain": "Interfaces define pluggable architectural boundaries. Any external plugin implementing `Plugin` can be loaded and executed through uniform interface contracts.",
+    "topic": "Pluggable Architecture via Interfaces",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Engineered pluggable system architecture using interface contracts.",
+    "weakness": "Use interfaces to define clean extension contracts for third-party plugins."
+  },
+  {
+    "q": "An image editor applies filters (Grayscale, Blur, Sharpen). A user can chain multiple filters together. How can filters be structured polymorphically so a composite filter can apply an arbitrary list of filters?",
+    "options": [
+      "Composite pattern: an `ImageFilter` interface implemented by `BlurFilter`, `GrayscaleFilter`, and a `CompositeFilter` that holds a list of `ImageFilter` objects and executes each sequentially",
+      "A 20-parameter method",
+      "Static methods in main",
+      "Multiple inheritance of classes"
+    ],
+    "answer": 0,
+    "explain": "The Composite design pattern uses polymorphism so individual and composite objects are treated uniformly through the same interface.",
+    "topic": "Composite Pattern via Polymorphism",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Applied Composite design pattern using polymorphic interfaces.",
+    "weakness": "Use the Composite pattern to treat individual and combined filters uniformly through an interface."
+  },
+  {
+    "q": "A developer designs an immutable `ComplexNumber` class. The developer wants users to be able to sort an array of complex numbers using `Arrays.sort(numbers)`. What interface must `ComplexNumber` implement?",
+    "options": [
+      "`java.lang.Cloneable`",
+      "`java.lang.Comparable<ComplexNumber>` and implement `compareTo(ComplexNumber other)`",
+      "`java.io.Serializable`",
+      "`java.lang.Runnable`"
+    ],
+    "answer": 1,
+    "explain": "`Comparable<T>` defines the natural ordering of objects, enabling `Arrays.sort()` and `Collections.sort()` to sort collections automatically.",
+    "topic": "Comparable Interface Contract",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied Comparable interface to establish natural sort ordering.",
+    "weakness": "Implement `Comparable<T>` and override `compareTo()` to enable automatic sorting."
+  },
+  {
+    "q": "A file compression utility supports ZIP, TAR, and GZIP formats. The method `compress(File source, Compressor compressor)` is called. Why does passing different compressor objects demonstrate polymorphism?",
+    "options": [
+      "Compressor is a primitive type",
+      "The method invokes `compressor.compress(source)` without knowing the concrete format; the actual object on the heap dynamically executes its specific compression algorithm",
+      "Files are compressed on the GPU",
+      "ZIP and TAR share the same code"
+    ],
+    "answer": 1,
+    "explain": "The Strategy pattern leverages polymorphism: behavior is injected via an interface, and dynamic binding executes the chosen strategy at runtime.",
+    "topic": "Strategy Pattern via Polymorphism",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Recognized Strategy design pattern powered by runtime polymorphism.",
+    "weakness": "Use the Strategy pattern with polymorphic interfaces to decouple algorithms from callers."
+  },
+  {
+    "q": "A banking application processes different types of financial instruments: Bonds, Stocks, Derivatives. All implement `Valuable` (`double getValue()`). How do you compute the total portfolio net worth?",
+    "options": [
+      "Cast everything to Stock",
+      "`double total = 0; for (Valuable item : portfolio) total += item.getValue();`",
+      "Use 3 separate loops for each instrument",
+      "Check instance types with 10 if-statements"
+    ],
+    "answer": 1,
+    "explain": "Polymorphism allows treating all instruments uniformly through the `Valuable` interface, calculating the total value in a single clean loop without type checks.",
+    "topic": "Polymorphic Portfolio Aggregation",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Aggregated heterogeneous financial instruments using interface polymorphism.",
+    "weakness": "Iterate heterogeneous collections via a common interface to aggregate metrics cleanly."
+  },
+  {
+    "q": "A video game has an `AudioClip` class. When sound plays, it must be cloned so multiple audio instances can overlap without interrupting each other. What standard interface does Java provide to indicate support for field-by-field copying?",
+    "options": [
+      "`java.lang.Cloneable`",
+      "`java.lang.Copyable`",
+      "`java.io.Serializable`",
+      "`java.lang.Duplicable`"
+    ],
+    "answer": 0,
+    "explain": "`Cloneable` is a marker interface that authorizes `Object.clone()` to perform a field-for-field shallow copy without throwing `CloneNotSupportedException`.",
+    "topic": "Cloneable Marker Interface",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Identified Cloneable marker interface for object duplication.",
+    "weakness": "Implement `Cloneable` to enable `Object.clone()` field copying."
+  },
+  {
+    "q": "A web server framework routes HTTP requests. It provides a `Filter` interface: `void doFilter(Request req, Response res, FilterChain chain)`. Why are filters implemented as an interface rather than concrete classes?",
+    "options": [
+      "Classes cannot handle HTTP",
+      "To allow authentication filters, compression filters, and logging filters to be developed independently and plugged into the request processing pipeline interchangeably",
+      "Interfaces are faster than classes",
+      "To force filters to be static"
+    ],
+    "answer": 1,
+    "explain": "Interfaces define pluggable pipeline contracts, allowing arbitrary filters (auth, rate-limiting, logging) to be chained interchangeably.",
+    "topic": "Interchangeable Pipeline Filter Architecture",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands decoupled pipeline middleware design using interfaces.",
+    "weakness": "Use interfaces for middleware pipeline stages to support interchangeable processing components."
+  },
+  {
+    "q": "An AI robotics controller controls drone motors. The interface is `MotorController`. In unit tests, physical hardware is unavailable. How does polymorphism solve this testing problem?",
+    "options": [
+      "Cancel unit testing",
+      "Create a `MockMotorController` implementing `MotorController` that records motor commands in memory, allowing tests to run in milliseconds without physical drones",
+      "Buy real drones for every unit test run",
+      "Make motor methods private"
+    ],
+    "answer": 1,
+    "explain": "Polymorphism enables Dependency Injection and Mocking: passing mock implementations of interfaces during tests decouples software from physical hardware dependencies.",
+    "topic": "Dependency Injection & Mocking via Interfaces",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Leveraged interface polymorphism for test mocking and dependency injection.",
+    "weakness": "Use interfaces to inject mock implementations during unit testing without real hardware."
+  },
+  {
+    "q": "A distributed cache system caches objects in Redis. Objects must be converted into byte streams. What marker interface signals that an object's fields can be automatically serialized by the JVM?",
+    "options": [
+      "`java.io.Serializable`",
+      "`java.lang.AutoCloseable`",
+      "`java.lang.Cloneable`",
+      "`java.lang.Readable`"
+    ],
+    "answer": 0,
+    "explain": "`java.io.Serializable` is the standard marker interface that enables JVM object serialization into byte streams for network transmission or disk storage.",
+    "topic": "Serializable Marker Interface",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Recognized Serializable marker interface for object streaming.",
+    "weakness": "Implement `Serializable` to permit object serialization across networks and caches."
+  },
+  {
+    "q": "A weather simulation models `TemperatureSensor` implementing `Comparable<TemperatureSensor>`. When two sensors have equal temperatures, what must `compareTo()` return according to the Comparable specification?",
+    "options": [
+      "`0`",
+      "`1`",
+      "`-1`",
+      "Throws an exception"
+    ],
+    "answer": 0,
+    "explain": "The `Comparable` contract mandates returning a negative integer if `this < other`, zero if `this.equals(other)`, and a positive integer if `this > other`.",
+    "topic": "Comparable compareTo Tri-State Return Contract",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Knows the tri-state return value contract of compareTo.",
+    "weakness": "`compareTo()` returns negative for less than, 0 for equal, and positive for greater than."
+  },
+  {
+    "q": "A social media feed mixes different post types: TextPost, ImagePost, and VideoPost. All extend an abstract class `Post`. When rendering a feed, how does polymorphism simplify the view adapter?",
+    "options": [
+      "The view adapter iterates `List<Post>` and calls `post.render()`, allowing each post subclass to render its own specific media layout without conditional casting",
+      "The adapter splits posts into 3 separate lists",
+      "The adapter converts all images to text",
+      "All posts must be text"
+    ],
+    "answer": 0,
+    "explain": "A unified `List<Post>` holding diverse polymorphic subtypes eliminates type-checking logic, dispatching directly to each subtype's specialized `render()` implementation.",
+    "topic": "Heterogeneous Feed Rendering",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Handled heterogeneous collection rendering via polymorphic dispatch.",
+    "weakness": "Store heterogeneous domain models in a common supertype collection to simplify rendering."
+  },
+  {
+    "q": "An enterprise document converter converts files to PDF. A developer writes `public void convert(Document doc)`. If `doc` can be a `WordDoc`, `ExcelDoc`, or `PowerPointDoc`, why should the method accept `Document` rather than `WordDoc`?",
+    "options": [
+      "To accept any document type polymorphically, making the conversion pipeline reusable across all document formats",
+      "WordDoc cannot be converted",
+      "Java does not allow WordDoc parameters",
+      "Document uses less memory"
+    ],
+    "answer": 0,
+    "explain": "Accepting the general supertype `Document` makes the API generic, reusable, and decoupled from specific file formats.",
+    "topic": "Generalized Supertype Parameter Typing",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied generalized supertype parameter typing for maximum API flexibility.",
+    "weakness": "Design methods to accept the most general supertype necessary to maximize reuse."
+  },
+  {
+    "q": "A smart home controller manages appliances (Lights, Fans, AirConditioners). Each has completely different hardware commands, but all have on/off capabilities. Should they inherit from a common `Appliance` class or implement an `Operable` interface?",
+    "options": [
+      "Inherit from Appliance only",
+      "Implement an `Operable` (or `Switchable`) interface: appliances share no common state or hardware logic, only a common behavioral capability contract (`turnOn()`, `turnOff()`)",
+      "Use multiple inheritance of classes",
+      "Declare appliances as static"
+    ],
+    "answer": 1,
+    "explain": "When entities share behavior but zero common implementation state, interfaces are the preferred design to avoid artificial class hierarchies.",
+    "topic": "Behavioral Capability Contract Choice",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Chose interface over abstract class when entities share behavior without state.",
+    "weakness": "Use interfaces when modeling shared behavioral capabilities across disparate entities."
+  },
+  {
+    "q": "A financial calculation engine has a class `TaxCalculator`. A developer wants to ensure that no client code can instantiate `TaxCalculator` because all its methods are static utilities. What is the standard design?",
+    "options": [
+      "Make the class abstract",
+      "Declare a private no-argument constructor: `private TaxCalculator() {}` (and optionally make the class final)",
+      "Delete the class",
+      "Make all fields protected"
+    ],
+    "answer": 1,
+    "explain": "Providing a private constructor prevents both external instantiation (`new TaxCalculator()`) and subclassing, which is the standard idiom for static utility classes (like `java.lang.Math`).",
+    "topic": "Suppressing Instantiation via Private Constructor",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied private constructor idiom to prevent utility class instantiation.",
+    "weakness": "Suppress instantiation of static utility classes by declaring a private constructor."
+  },
+  {
+    "q": "A robotics platform controls joints. `ArmJoint` implements `Actuator`. In safety mode, an engineer needs to inspect `ArmJoint`-specific temperature sensors that are NOT part of the general `Actuator` interface. What is the safest way to access this sensor?",
+    "options": [
+      "Unconditionally cast `((ArmJoint) actuator).getTemperature()`",
+      "Use pattern matching for instanceof: `if (actuator instanceof ArmJoint arm) { checkTemp(arm.getTemperature()); }`",
+      "Delete the sensor",
+      "Cast to Object"
+    ],
+    "answer": 1,
+    "explain": "Pattern matching `instanceof` safely validates the concrete type before exposing subclass-specific telemetry without risking `ClassCastException`.",
+    "topic": "Safe Subclass Telemetry Inspection",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Used pattern matching instanceof to safely access subclass-specific sensors.",
+    "weakness": "Use pattern matching `instanceof` to access subclass-specific methods safely."
+  },
+  {
+    "q": "A sorting algorithm needs to sort a list of `Employee` objects by salary in ascending order. If the `Employee` class does not implement `Comparable` (or sorting by salary is an alternate sort order), what Java interface allows defining an external comparator?",
+    "options": [
+      "`java.util.Comparator<Employee>` with `compare(Employee a, Employee b)`",
+      "`java.lang.Comparable` only",
+      "`java.lang.Runnable`",
+      "`java.util.Scanner`"
+    ],
+    "answer": 0,
+    "explain": "`Comparator<T>` allows defining flexible, pluggable custom sorting strategies externally without modifying the underlying class definition.",
+    "topic": "Comparator Interface for Custom Sorting",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied Comparator interface for external custom sorting strategies.",
+    "weakness": "Use `Comparator<T>` to provide alternate or external sorting logic without altering the class."
+  },
+  {
+    "q": "A game developer builds a collision detection system. All collidable game objects implement `Collidable` with `BoundingBox getBounds()`. How does this interface simplify spatial partitioning trees (like Quadtrees)?",
+    "options": [
+      "It forces all objects to be 2D circles",
+      "The Quadtree can store and query any game entity (bullets, players, asteroids) uniformly through the `Collidable` interface without knowing their concrete game logic",
+      "It speeds up sound rendering",
+      "It prevents garbage collection"
+    ],
+    "answer": 0,
+    "explain": "The Quadtree interacts solely with the `Collidable` abstraction, decoupling spatial partitioning algorithms from specific game entity mechanics.",
+    "topic": "Spatial Partitioning Interface Decoupling",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Decoupled engine algorithms from domain entities using interface abstractions.",
+    "weakness": "Interfaces decouple low-level engine algorithms from game entity domain logic."
+  }
+]

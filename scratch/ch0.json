@@ -1,0 +1,1602 @@
+[
+  {
+    "q": "What is the primary role of the Java Virtual Machine (JVM)?",
+    "options": [
+      "To compile Java source code (.java) directly into assembly code",
+      "To execute compiled Java bytecode (.class) on a specific operating system",
+      "To format source code according to style conventions",
+      "To act as a physical microprocessor inside Java-certified computers"
+    ],
+    "answer": 1,
+    "explain": "The JVM acts as an abstract computing machine that interprets and compiles Java bytecode into machine instructions suitable for the host operating system.",
+    "topic": "JVM Architecture",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Solid understanding of the JVM's core runtime execution role.",
+    "weakness": "Review how the JVM abstracts underlying hardware to provide platform independence."
+  },
+  {
+    "q": "Which component is responsible for compiling `.java` source code into `.class` bytecode?",
+    "options": [
+      "The JVM (Java Virtual Machine)",
+      "The JRE (Java Runtime Environment)",
+      "The Java Compiler (`javac`)",
+      "The JIT (Just-In-Time) compiler"
+    ],
+    "answer": 2,
+    "explain": "`javac` is the command-line compiler included in the JDK that translates human-readable `.java` source code into platform-neutral bytecode.",
+    "topic": "JDK & Compilation Tools",
+    "type": "theory",
+    "level": "easy",
+    "strength": "You accurately identified the role of the `javac` compiler.",
+    "weakness": "Remember that `javac` compiles source code, while `java` launches the JVM to run bytecode."
+  },
+  {
+    "q": "What does the famous Java slogan 'WORA' stand for?",
+    "options": [
+      "Write Once, Run Anywhere",
+      "Windows Only, Reliable Always",
+      "Web Oriented, Runtime Accessible",
+      "Work Online, Render Anywhere"
+    ],
+    "answer": 0,
+    "explain": "'Write Once, Run Anywhere' illustrates Java's cross-platform portability through bytecode executed on platform-specific JVMs.",
+    "topic": "Java Portability Philosophy",
+    "type": "theory",
+    "level": "easy",
+    "strength": "You understand Java's platform-independent design philosophy.",
+    "weakness": "Review how intermediate bytecode enables 'Write Once, Run Anywhere'."
+  },
+  {
+    "q": "Which package is automatically imported into every Java program without an explicit `import` statement?",
+    "options": [
+      "java.util",
+      "java.io",
+      "java.lang",
+      "java.net"
+    ],
+    "answer": 2,
+    "explain": "`java.lang` contains foundational classes such as `System`, `String`, `Math`, and `Object`, and is imported by default by the compiler.",
+    "topic": "Java Standard Library",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Good grasp of default library imports in Java.",
+    "weakness": "Remember that `java.lang` is the only package imported implicitly."
+  },
+  {
+    "q": "What is the relationship between JDK, JRE, and JVM?",
+    "options": [
+      "JVM contains JRE, and JRE contains JDK",
+      "JRE contains JDK, and JDK contains JVM",
+      "JDK contains JRE and development tools; JRE contains JVM and runtime libraries",
+      "JDK, JRE, and JVM are completely independent programs with no overlapping libraries"
+    ],
+    "answer": 2,
+    "explain": "JDK = JRE + Development Tools (javac, javadoc). JRE = JVM + Standard Class Libraries.",
+    "topic": "JDK vs JRE vs JVM",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Clear understanding of the software hierarchy in the Java ecosystem.",
+    "weakness": "Review the nesting structure: JDK encompasses JRE, which encompasses JVM."
+  },
+  {
+    "q": "What is the function of the Just-In-Time (JIT) compiler in the JVM?",
+    "options": [
+      "It translates source code into bytecode before deployment",
+      "It compiles frequently executed bytecode sequences into native machine code at runtime",
+      "It validates that code contains no syntax errors during typing",
+      "It packages multiple `.class` files into an executable `.jar` file"
+    ],
+    "answer": 1,
+    "explain": "The JIT compiler analyzes running bytecode ('hot spots') and compiles frequently executed sections directly into native CPU code to optimize execution speed.",
+    "topic": "JIT Optimization",
+    "type": "theory",
+    "level": "medium",
+    "strength": "You understand how the JIT compiler boosts Java runtime performance.",
+    "weakness": "Study how the JVM combines bytecode interpretation with JIT native compilation."
+  },
+  {
+    "q": "Why must the `main` method in standard Java applications be declared as `static`?",
+    "options": [
+      "So that its return value cannot be modified by subclasses",
+      "Because the JVM needs to invoke it without instantiating an object of the enclosing class",
+      "To ensure that only one thread can execute it simultaneously",
+      "To force all variables declared inside it to be stored in global memory"
+    ],
+    "answer": 1,
+    "explain": "The JVM launches the application before any objects exist, so `main` must be `static` so it can be called directly via the class name.",
+    "topic": "Main Method Contract",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Strong grasp of why static methods exist and how the JVM bootstraps execution.",
+    "weakness": "Recall that static members belong to the class, not to any individual instance."
+  },
+  {
+    "q": "Which of the following is a VALID Java identifier?",
+    "options": [
+      "2ndCounter",
+      "_user$score_99",
+      "final-score",
+      "default"
+    ],
+    "answer": 1,
+    "explain": "Java identifiers can start with a letter, an underscore (`_`), or a dollar sign (`$`), followed by letters, digits, underscores, or dollar signs. They cannot start with a digit, contain hyphens, or match reserved keywords.",
+    "topic": "Identifier Rules",
+    "type": "theory",
+    "level": "easy",
+    "strength": "You accurately recognized the character rules for valid identifiers.",
+    "weakness": "Remember: no digits at the start, no hyphens, and no reserved keywords like `default`."
+  },
+  {
+    "q": "What is the extension of compiled Java bytecode files?",
+    "options": [
+      ".java",
+      ".class",
+      ".exe",
+      ".jvm"
+    ],
+    "answer": 1,
+    "explain": "Java source files have the `.java` extension, while compiled bytecode files generated by `javac` have the `.class` extension.",
+    "topic": "File Extensions",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Correct understanding of Java compilation artifacts.",
+    "weakness": "Remember: .java is source code, .class is bytecode."
+  },
+  {
+    "q": "What occurs during the bytecode verification step inside the JVM ClassLoader subsystem?",
+    "options": [
+      "The compiler optimizes loops to run faster",
+      "The verifier checks that bytecode adheres to JVM safety and security constraints before execution",
+      "The OS assigns physical memory addresses to all static fields",
+      "Source code comments are parsed into HTML documentation"
+    ],
+    "answer": 1,
+    "explain": "Bytecode verification ensures the code does not violate memory access rules, overflow operand stacks, or attempt illegal type conversions.",
+    "topic": "ClassLoader & Security",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Advanced insight into JVM bytecode security verification.",
+    "weakness": "Review the role of the Bytecode Verifier in Java's sandbox security model."
+  },
+  {
+    "q": "Which Java naming convention is standard for classes?",
+    "options": [
+      "camelCase (e.g., studentRecord)",
+      "PascalCase / UpperCamelCase (e.g., StudentRecord)",
+      "snake_case (e.g., student_record)",
+      "SCREAMING_SNAKE_CASE (e.g., STUDENT_RECORD)"
+    ],
+    "answer": 1,
+    "explain": "Java conventions dictate PascalCase (UpperCamelCase) for classes and interfaces, lowerCamelCase for variables and methods, and SCREAMING_SNAKE_CASE for constants.",
+    "topic": "Naming Conventions",
+    "type": "theory",
+    "level": "easy",
+    "strength": "You know standard Java code naming conventions.",
+    "weakness": "Remember: Classes use UpperCamelCase, variables/methods use lowerCamelCase."
+  },
+  {
+    "q": "What is the exact return type required for the standard Java entry point `public static ... main(String[] args)`?",
+    "options": [
+      "int",
+      "boolean",
+      "void",
+      "String"
+    ],
+    "answer": 2,
+    "explain": "The main method must return `void`. Unlike C/C++, Java does not return an integer exit code from `main`; `System.exit(int status)` is used if an exit code is needed.",
+    "topic": "Main Method Signature",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Correct identification of `void` as the main method return type.",
+    "weakness": "Remember that `main` in Java never returns an int; it returns `void`."
+  },
+  {
+    "q": "What is automatic garbage collection in Java?",
+    "options": [
+      "A process that deletes compiled `.class` files after execution finishes",
+      "A runtime mechanism that automatically reclaims heap memory occupied by unreferenced objects",
+      "A compiler pass that removes unused variables from the source code",
+      "A tool that clears IDE cache files periodically"
+    ],
+    "answer": 1,
+    "explain": "Garbage collection runs in the background of the JVM to identify and deallocate objects in heap memory that are no longer reachable by any active reference.",
+    "topic": "Garbage Collection",
+    "type": "theory",
+    "level": "medium",
+    "strength": "You understand Java's automatic memory management philosophy.",
+    "weakness": "Review how the Garbage Collector scans the heap for unreferenced objects."
+  },
+  {
+    "q": "Can a single `.java` source file contain multiple `public` classes?",
+    "options": [
+      "Yes, as long as they all have unique names",
+      "Yes, provided they all define a `main` method",
+      "No, at most one class in a source file can be declared `public`, and its name must match the filename",
+      "No, Java source files cannot contain more than one class under any circumstances"
+    ],
+    "answer": 2,
+    "explain": "A `.java` file can contain multiple non-public (package-private) classes, but at most one `public` class, whose name must match the file's base name.",
+    "topic": "Class and File Structure",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Accurate understanding of Java source file structure constraints.",
+    "weakness": "Remember: Maximum of 1 `public` class per `.java` file, matching the filename."
+  },
+  {
+    "q": "What is the purpose of the `javadoc` tool?",
+    "options": [
+      "To convert Java source code to C++",
+      "To generate standardized HTML documentation from documentation comments (`/** ... */`)",
+      "To verify that all classes implement required interfaces",
+      "To package compiled classes into ZIP files"
+    ],
+    "answer": 1,
+    "explain": "`javadoc` parses source files and extracts tags (such as `@param`, `@return`, `@author`) inside `/** ... */` blocks to build HTML documentation.",
+    "topic": "Javadoc Documentation",
+    "type": "theory",
+    "level": "easy",
+    "strength": "You know the role of javadoc in generating project documentation.",
+    "weakness": "Recall that javadoc uses `/** ... */` syntax."
+  },
+  {
+    "q": "Which area of JVM memory stores local variables and method invocation frames?",
+    "options": [
+      "The Heap",
+      "The Method Area / Metaspace",
+      "The Java Virtual Machine Stack",
+      "The Native Method Stack"
+    ],
+    "answer": 2,
+    "explain": "Each thread has a private JVM Stack that stores stack frames containing local variables, partial results, and method invocation/return details.",
+    "topic": "JVM Memory Model",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Excellent knowledge of JVM memory regions (Stack vs Heap).",
+    "weakness": "Remember: local variables live on the Stack; object instances live on the Heap."
+  },
+  {
+    "q": "Where are object instances and their instance variables allocated in the JVM?",
+    "options": [
+      "On the Call Stack",
+      "Inside the Heap",
+      "Inside the CPU registers permanently",
+      "Inside the ClassLoader cache"
+    ],
+    "answer": 1,
+    "explain": "All Java objects and arrays are dynamically allocated on the Heap, which is shared among all threads and managed by the Garbage Collector.",
+    "topic": "JVM Memory Model",
+    "type": "theory",
+    "level": "medium",
+    "strength": "You know that objects are created in the Heap.",
+    "weakness": "Remember: `new` always allocates memory on the Heap."
+  },
+  {
+    "q": "What happens when the `java` launcher command is run without specifying an existing class name?",
+    "options": [
+      "It compiles all `.java` files in the current folder",
+      "It displays launcher usage and command-line options help",
+      "It launches an interactive Java GUI editor",
+      "It deletes all `.class` files in the directory"
+    ],
+    "answer": 1,
+    "explain": "Running `java` with no arguments outputs the command usage, flags, and syntax options.",
+    "topic": "Command-Line Tools",
+    "type": "theory",
+    "level": "easy",
+    "strength": "You recognize basic command-line CLI tool responses.",
+    "weakness": "Review `java` launcher flags and CLI arguments."
+  },
+  {
+    "q": "What is the key difference between single-line comments and multi-line comments in Java?",
+    "options": [
+      "Single-line comments start with `//` and extend to line end; multi-line comments use `/* ... */`",
+      "Single-line comments are compiled into bytecode; multi-line comments are ignored",
+      "Multi-line comments can be nested indefinitely inside other multi-line comments",
+      "Single-line comments can only appear inside method bodies"
+    ],
+    "answer": 0,
+    "explain": "`//` comments out the remainder of the line. `/* ... */` comments out everything between the delimiters. Note that multi-line comments cannot be nested.",
+    "topic": "Comment Syntax",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Correct understanding of comment delimiters in Java.",
+    "weakness": "Remember: multi-line comments `/* ... */` cannot be nested inside each other."
+  },
+  {
+    "q": "Why are Java bytecode files considered platform-independent while the JVM itself is platform-dependent?",
+    "options": [
+      "Bytecode contains native Windows machine code; the JVM converts it to Linux code",
+      "Bytecode conforms to a standardized universal instruction set; each OS requires a custom JVM built for its specific architecture",
+      "Bytecode is plain text that can be read by any text processor; the JVM is proprietary software",
+      "Bytecode is compiled on the client machine; the JVM runs strictly in cloud servers"
+    ],
+    "answer": 1,
+    "explain": "The bytecode specification is identical across all systems. However, executing that bytecode on Windows x86 requires a different JVM binary than on macOS ARM64.",
+    "topic": "Platform Independence",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Strong grasp of the dichotomy between universal bytecode and native JVM implementations.",
+    "weakness": "Remember: Bytecode is universal; the JVM is native to each OS/architecture."
+  },
+  {
+    "q": "Which of the following keywords is NOT a valid reserved keyword in modern Java?",
+    "options": [
+      "goto",
+      "const",
+      "include",
+      "transient"
+    ],
+    "answer": 2,
+    "explain": "`include` is used in C/C++, not Java (Java uses `import`). `goto` and `const` are reserved keywords in Java (though unused). `transient` is a valid keyword for serialization.",
+    "topic": "Reserved Keywords",
+    "type": "theory",
+    "level": "medium",
+    "strength": "You accurately identified Java reserved keywords vs C/C++ keywords.",
+    "weakness": "Note that `goto` and `const` are reserved words in Java, while `include` is not."
+  },
+  {
+    "q": "What is the significance of the `CLASSPATH` environment variable in Java?",
+    "options": [
+      "It tells the operating system where to find the `javac` executable file",
+      "It tells the JVM and compiler where to look for user-defined `.class` files and packages",
+      "It specifies the installation folder of the Java Development Kit",
+      "It forces the JVM to reserve a fixed amount of RAM for the heap"
+    ],
+    "answer": 1,
+    "explain": "`CLASSPATH` tells the compiler and JVM where to locate class files and libraries when loading classes outside the default JDK library.",
+    "topic": "Environment Variables",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Good understanding of CLASSPATH vs PATH environment variables.",
+    "weakness": "Remember: PATH locates executables (`javac`, `java`); CLASSPATH locates `.class` and `.jar` libraries."
+  },
+  {
+    "q": "What is the default value of uninitialized local variables declared inside a method?",
+    "options": [
+      "0 for primitives, null for objects",
+      "Empty string `\"\"`",
+      "They have no default value and cause a compiler error if accessed before assignment",
+      "false"
+    ],
+    "answer": 2,
+    "explain": "Unlike fields (class/instance variables), local variables in Java do NOT receive default values. Accessing an uninitialized local variable is a compile-time error.",
+    "topic": "Variable Initialization",
+    "type": "theory",
+    "level": "medium",
+    "strength": "You avoided the classic trap: local variables have NO default values.",
+    "weakness": "Always remember: fields get default values (0, null, false); local variables must be initialized before use."
+  },
+  {
+    "q": "Which of the following is true regarding case-sensitivity in Java?",
+    "options": [
+      "Java is case-insensitive; `Main` and `main` are completely equivalent",
+      "Only class names are case-sensitive; variable names are case-insensitive",
+      "Java is strictly case-sensitive for all identifiers, keywords, and class names",
+      "Keywords are case-insensitive, but method names are case-sensitive"
+    ],
+    "answer": 2,
+    "explain": "Java is entirely case-sensitive. `System` is not the same as `system`, and `void` is not the same as `Void`.",
+    "topic": "Case Sensitivity",
+    "type": "theory",
+    "level": "easy",
+    "strength": "You recognize that Java enforces strict case-sensitivity across all tokens.",
+    "weakness": "Remember: Java treats `MyClass`, `myclass`, and `MYCLASS` as completely distinct identifiers."
+  },
+  {
+    "q": "What is the purpose of the `package` statement at the top of a Java source file?",
+    "options": [
+      "To compile the source code into a standalone executable file",
+      "To define the namespace and folder hierarchy where the class belongs",
+      "To import third-party libraries from the internet automatically",
+      "To instruct the Garbage Collector to clean up unused memory"
+    ],
+    "answer": 1,
+    "explain": "A `package` statement groups related classes, prevents naming collisions, and maps to the directory structure on the filesystem.",
+    "topic": "Packages & Namespaces",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Good understanding of Java package architecture and namespacing.",
+    "weakness": "Review how package statements structure enterprise codebases."
+  },
+  {
+    "q": "What compilation error occurs in this code snippet?\n```java\npublic class Test {\n    public void main(String[] args) {\n        System.out.println(\"Hello\");\n    }\n}\n```",
+    "options": [
+      "Syntax error: `println` requires uppercase `Println`",
+      "No compilation error, but running `java Test` fails to find the main method because `static` is missing",
+      "Compilation error: `String[] args` must be renamed to `String args`",
+      "Compilation error: `Test` cannot have a public method"
+    ],
+    "answer": 1,
+    "explain": "The code compiles cleanly because it is a valid instance method. However, attempting to run `java Test` produces a runtime error: 'Main method is not static in class Test'.",
+    "topic": "Main Method Signatures",
+    "type": "error",
+    "level": "medium",
+    "strength": "You accurately differentiated between compile-time validity and main method launch requirements.",
+    "weakness": "Remember: A missing `static` compiles, but the JVM cannot launch it as the entry point."
+  },
+  {
+    "q": "What error will the compiler report for the following code?\n```java\npublic class Welcome {\n    public static void main(String[] args) {\n        int 1stScore = 95;\n        System.out.println(1stScore);\n    }\n}\n```",
+    "options": [
+      "Uninitialized variable error",
+      "Invalid identifier error: identifiers cannot begin with a digit",
+      "Type mismatch: integer cannot be assigned to 1stScore",
+      "Missing semicolon after class declaration"
+    ],
+    "answer": 1,
+    "explain": "Java identifiers cannot start with a digit. `1stScore` violates language identifier syntax rules.",
+    "topic": "Identifier Syntax Errors",
+    "type": "error",
+    "level": "easy",
+    "strength": "You caught the invalid identifier starting with a digit.",
+    "weakness": "Identifiers must begin with a letter, `$`, or `_`."
+  },
+  {
+    "q": "Identify the compilation error in the following code:\n```java\npublic class Example {\n    public static void main(String[] args) {\n        int x;\n        System.out.println(x);\n    }\n}\n```",
+    "options": [
+      "Variable x is out of scope",
+      "Variable x might not have been initialized",
+      "x cannot be printed using println",
+      "main method cannot declare primitive variables"
+    ],
+    "answer": 1,
+    "explain": "Local variable `x` is declared but never assigned a value before being read by `println`, triggering: `variable x might not have been initialized`.",
+    "topic": "Uninitialized Local Variables",
+    "type": "error",
+    "level": "easy",
+    "strength": "You correctly identified the uninitialized local variable compile-time error.",
+    "weakness": "Remember: local variables must be assigned a value before they are read."
+  },
+  {
+    "q": "What is wrong with this file if it is saved as `MainApp.java`?\n```java\npublic class Runner {\n    public static void main(String[] args) {\n        System.out.println(\"Running...\");\n    }\n}\n```",
+    "options": [
+      "A class named Runner cannot contain a main method",
+      "Compilation error: class Runner is public, should be declared in a file named Runner.java",
+      "The file must be named `Runner.class`",
+      "No error; the file name does not need to match the public class name"
+    ],
+    "answer": 1,
+    "explain": "In Java, a public top-level class must be saved in a source file matching its exact name with `.java` extension.",
+    "topic": "File Naming Constraints",
+    "type": "error",
+    "level": "easy",
+    "strength": "You spotted the mismatch between the public class name and file name.",
+    "weakness": "A public class `Runner` MUST reside in `Runner.java`."
+  },
+  {
+    "q": "What error occurs in this snippet?\n```java\npublic class PrintDemo {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World);\n    }\n}\n```",
+    "options": [
+      "Missing closing double quote resulting in an unclosed string literal error",
+      "System is not capitalized properly",
+      "main method must return a String",
+      "println cannot take String arguments"
+    ],
+    "answer": 0,
+    "explain": "The string literal `\"Hello World)` is missing its closing quote `\"`, causing an 'unclosed string literal' compile-time error.",
+    "topic": "String Literal Syntax",
+    "type": "error",
+    "level": "easy",
+    "strength": "You correctly caught the unclosed string literal.",
+    "weakness": "String literals in Java must be enclosed by matching double quotes on the same line."
+  },
+  {
+    "q": "Identify the compiler error in this code:\n```java\npublic class KeywordTest {\n    public static void main(String[] args) {\n        int class = 10;\n        System.out.println(class);\n    }\n}\n```",
+    "options": [
+      "`class` is a reserved keyword and cannot be used as a variable identifier",
+      "Integer variables cannot be printed directly",
+      "The main method cannot contain integer variables",
+      "`class` must be declared as `public`"
+    ],
+    "answer": 0,
+    "explain": "`class` is a reserved keyword in Java used for declaring classes, so it cannot be used as an identifier.",
+    "topic": "Reserved Keyword Misuse",
+    "type": "error",
+    "level": "easy",
+    "strength": "You correctly identified that `class` is a reserved keyword.",
+    "weakness": "Never use reserved keywords like `class`, `public`, `return`, or `for` as variable names."
+  },
+  {
+    "q": "What error occurs when compiling this code?\n```java\npublic class Comments {\n    public static void main(String[] args) {\n        /* Outer comment /* Inner comment */ still in comment? */\n        System.out.println(\"Done\");\n    }\n}\n```",
+    "options": [
+      "No error, nested comments are completely legal in Java",
+      "Syntax error: multi-line comments `/* ... */` cannot be nested in Java",
+      "System.out.println is commented out accidentally",
+      "Comments require double slashes inside methods"
+    ],
+    "answer": 1,
+    "explain": "In Java, multi-line comments do not nest. The first `*/` terminates the comment block, leaving the trailing `still in comment? */` as invalid Java syntax.",
+    "topic": "Nested Comment Errors",
+    "type": "error",
+    "level": "medium",
+    "strength": "You recognized that Java multi-line comments cannot be nested.",
+    "weakness": "The first `*/` closes the comment regardless of how many `/*` preceded it."
+  },
+  {
+    "q": "What compiler error will be generated here?\n```java\npublic class ScopeCheck {\n    System.out.println(\"Direct code\");\n    public static void main(String[] args) {}\n}\n```",
+    "options": [
+      "Missing main method",
+      "Executable statements cannot be placed directly inside a class body outside a method or block",
+      "`System` cannot be called before `main`",
+      "String literals cannot be passed to println outside static methods"
+    ],
+    "answer": 1,
+    "explain": "Executable statements like `System.out.println(...)` must reside inside a method, constructor, or initialization block, not directly inside the class body.",
+    "topic": "Class Body Structure",
+    "type": "error",
+    "level": "medium",
+    "strength": "You spotted the executable statement placed directly in the class body.",
+    "weakness": "Statements like method calls must be inside methods, constructors, or initializer blocks."
+  },
+  {
+    "q": "What error occurs in this code?\n```java\npublic class SemicolonTrap {\n    public static void main(String[] args)\n        System.out.println(\"Testing\");\n}\n```",
+    "options": [
+      "Missing semicolon after method header",
+      "Missing opening curly brace `{` for the main method body",
+      "Testing must be enclosed in single quotes",
+      "The class must be abstract"
+    ],
+    "answer": 1,
+    "explain": "A method with an implementation must enclose its body in curly braces `{ ... }`.",
+    "topic": "Method Body Syntax",
+    "type": "error",
+    "level": "easy",
+    "strength": "You spotted the missing curly brace for the method body.",
+    "weakness": "Methods require curly braces to define their execution scope."
+  },
+  {
+    "q": "What error occurs when compiling this class?\n```java\npublic class Duplicate {\n    public static void main(String[] args) {\n        int count = 5;\n        double count = 10.5;\n        System.out.println(count);\n    }\n}\n```",
+    "options": [
+      "Count cannot be cast to double",
+      "Variable `count` is already defined in the scope of `main`",
+      "Local variables cannot be declared twice in different classes",
+      "println cannot resolve ambiguous variables"
+    ],
+    "answer": 1,
+    "explain": "You cannot declare two variables with the same identifier in the same scope, even if their data types differ.",
+    "topic": "Variable Scope Redefinition",
+    "type": "error",
+    "level": "easy",
+    "strength": "You caught the duplicate variable declaration in the same local scope.",
+    "weakness": "Identifiers within the same scope must be unique."
+  },
+  {
+    "q": "What error occurs in this code?\n```java\npublic class CharEscape {\n    public static void main(String[] args) {\n        char c = '\\c';\n        System.out.println(c);\n    }\n}\n```",
+    "options": [
+      "Character constants cannot use single quotes",
+      "Illegal escape character `\\c` in character literal",
+      "`char` cannot be printed to console",
+      "Missing double quotes for string formatting"
+    ],
+    "answer": 1,
+    "explain": "`\\c` is not a valid escape sequence in Java (valid ones include `\\n`, `\\t`, `\\b`, `\\r`, `\\f`, `\\'`, `\\\"`, `\\\\`).",
+    "topic": "Escape Sequence Validation",
+    "type": "error",
+    "level": "medium",
+    "strength": "You spotted the invalid escape character sequence.",
+    "weakness": "Only specific escape characters like `\\n`, `\\t`, `\\\\`, `\\'` are valid in Java."
+  },
+  {
+    "q": "What is the error in the following package statement?\n```java\nimport java.util.Scanner;\npackage com.study.java;\npublic class App {}\n```",
+    "options": [
+      "`Scanner` cannot be imported before `App`",
+      "The `package` statement must be the very first non-comment statement in a Java source file",
+      "Package names cannot use dots",
+      "App must be declared as private"
+    ],
+    "answer": 1,
+    "explain": "If a package statement is present, it MUST appear as the very first token in the file (excluding comments). It cannot follow `import` statements.",
+    "topic": "Package Statement Placement",
+    "type": "error",
+    "level": "medium",
+    "strength": "You caught the illegal ordering of package and import statements.",
+    "weakness": "File structure order: package statement first, then imports, then class declarations."
+  },
+  {
+    "q": "What error occurs here?\n```java\npublic class MainEntry {\n    public static int main(String[] args) {\n        System.out.println(\"Starting...\");\n        return 0;\n    }\n}\n```",
+    "options": [
+      "Compilation error: main cannot return an integer in Java",
+      "The code compiles, but the JVM will not accept it as the application entry point because `main` must return `void`",
+      "The code compiles and runs successfully, returning exit code 0 to the OS",
+      "Missing arguments array in main header"
+    ],
+    "answer": 1,
+    "explain": "The code compiles without syntax errors as a regular method named `main`. But when running `java MainEntry`, the JVM fails with 'Main method must return a value of type void'.",
+    "topic": "Main Method Return Type",
+    "type": "error",
+    "level": "medium",
+    "strength": "You distinguished between compile-time acceptance and JVM entry-point conformance.",
+    "weakness": "The JVM specifically looks for `public static void main(String[] args)`."
+  },
+  {
+    "q": "What happens when compiling this code?\n```java\npublic class ConstCheck {\n    public static void main(String[] args) {\n        const int SPEED = 100;\n        System.out.println(SPEED);\n    }\n}\n```",
+    "options": [
+      "Compiles and prints 100",
+      "Compilation error: `const` is a reserved word, but constants in Java must be declared with `final`",
+      "Compilation error: constants must be declared outside methods",
+      "Compiles with a deprecation warning"
+    ],
+    "answer": 1,
+    "explain": "`const` is a reserved keyword in Java inherited from C++, but it has no function. Java uses the `final` keyword to declare constants.",
+    "topic": "Constant Declaration Syntax",
+    "type": "error",
+    "level": "medium",
+    "strength": "You recognized that Java uses `final`, not `const`, for constants.",
+    "weakness": "In Java, constants are declared using `final int SPEED = 100;`."
+  },
+  {
+    "q": "What error does the compiler produce here?\n```java\npublic class MultiLineStr {\n    public static void main(String[] args) {\n        String msg = \"Hello\nWorld\";\n        System.out.println(msg);\n    }\n}\n```",
+    "options": [
+      "Unclosed string literal error: standard string literals cannot span multiple lines without concatenation or escape sequences",
+      "Missing semicolon after Hello",
+      "World is recognized as an uninitialized variable",
+      "Strings cannot contain newline characters"
+    ],
+    "answer": 0,
+    "explain": "Standard double-quoted string literals in Java cannot span raw line breaks. You must either use `\\n` or text blocks `\"\"\" ... \"\"\"` (Java 15+).",
+    "topic": "String Literal Line Breaks",
+    "type": "error",
+    "level": "medium",
+    "strength": "You caught the multi-line string literal error.",
+    "weakness": "Standard string literals must be completed on the same line or use `\\n`."
+  },
+  {
+    "q": "What error occurs in this code?\n```java\npublic class BadImport {\n    import java.util.*;\n    public static void main(String[] args) {}\n}\n```",
+    "options": [
+      "Wildcard imports `*` are illegal in Java",
+      "`import` statements cannot be placed inside a class definition",
+      "java.util does not contain any classes",
+      "The main method cannot follow an import"
+    ],
+    "answer": 1,
+    "explain": "`import` statements must be placed outside and before class definitions, not inside the class body.",
+    "topic": "Import Statement Scope",
+    "type": "error",
+    "level": "easy",
+    "strength": "You correctly identified the misplaced import statement inside a class.",
+    "weakness": "Imports belong at the top of the file, outside any class braces."
+  },
+  {
+    "q": "What error is present in this method declaration?\n```java\npublic class ParamError {\n    public static void run(int a, b) {\n        System.out.println(a + b);\n    }\n}\n```",
+    "options": [
+      "Methods cannot accept two parameters",
+      "Syntax error: every parameter must explicitly specify its data type (should be `int a, int b`)",
+      "Parameters cannot use lowercase letters",
+      "Missing return type"
+    ],
+    "answer": 1,
+    "explain": "Unlike variable declarations where you can write `int a, b;`, method parameters require a distinct data type for every parameter: `int a, int b`.",
+    "topic": "Parameter Declaration Syntax",
+    "type": "error",
+    "level": "medium",
+    "strength": "You caught the missing data type in the parameter list.",
+    "weakness": "In Java, each method parameter must have its own type specification: `(int a, int b)`."
+  },
+  {
+    "q": "What error occurs in this code?\n```java\npublic class BadBrace {\n    public static void main(String[] args) {\n        System.out.println(\"Start\");\n    \n}\n```",
+    "options": [
+      "Missing closing curly brace `}` for the `main` method or class",
+      "Missing semicolon after main",
+      "String literal syntax error",
+      "No error"
+    ],
+    "answer": 0,
+    "explain": "There are two opening braces `{` (for class and method) but only one closing brace `}`, causing an 'reached end of file while parsing' syntax error.",
+    "topic": "Mismatched Curly Braces",
+    "type": "error",
+    "level": "easy",
+    "strength": "You caught the mismatched curly brace.",
+    "weakness": "Every opening brace `{` must have a matching closing brace `}`."
+  },
+  {
+    "q": "What compiler error is reported here?\n```java\npublic class CastError {\n    public static void main(String[] args) {\n        int x = (int) \"100\";\n        System.out.println(x);\n    }\n}\n```",
+    "options": [
+      "ClassCastException at runtime",
+      "Compile-time error: inconvertible types; cannot cast `java.lang.String` to `int`",
+      "NumberFormatException at compile time",
+      "Compiles cleanly and prints 100"
+    ],
+    "answer": 1,
+    "explain": "A `String` cannot be explicitly cast to a primitive `int` because they are inconvertible types. To parse a string into an integer, `Integer.parseInt(\"100\")` must be used.",
+    "topic": "Invalid Type Casting",
+    "type": "error",
+    "level": "hard",
+    "strength": "You correctly identified that primitive casting `(int)` cannot be applied to Strings.",
+    "weakness": "Use `Integer.parseInt(str)` instead of casting `(int) str`."
+  },
+  {
+    "q": "What error will occur when compiling this code?\n```java\npublic class VarMistake {\n    public static void main(String[] args) {\n        int public = 50;\n        System.out.println(public);\n    }\n}\n```",
+    "options": [
+      "Cannot use modifier `public` in local variable declaration",
+      "`public` is an invalid identifier because it is a reserved access modifier keyword",
+      "Missing semicolon",
+      "Variable must be declared as static"
+    ],
+    "answer": 1,
+    "explain": "`public` is a reserved keyword in Java, so it cannot be used as an identifier name.",
+    "topic": "Reserved Words as Identifiers",
+    "type": "error",
+    "level": "easy",
+    "strength": "You correctly recognized that `public` is a reserved keyword.",
+    "weakness": "Never name variables with Java keywords."
+  },
+  {
+    "q": "What compilation error occurs here?\n```java\npublic class ReturnVoid {\n    public static void main(String[] args) {\n        return 5;\n    }\n}\n```",
+    "options": [
+      "cannot return a value from a method with void result type",
+      "main method cannot have a return statement",
+      "5 must be cast to void",
+      "return statement must be enclosed in parentheses"
+    ],
+    "answer": 0,
+    "explain": "A method with return type `void` cannot return any value. A bare `return;` is allowed, but returning an expression like `5` is a compile-time error.",
+    "topic": "Void Return Mismatch",
+    "type": "error",
+    "level": "easy",
+    "strength": "You recognized that void methods cannot return a value.",
+    "weakness": "Void methods can only use `return;` without any value."
+  },
+  {
+    "q": "What error does the compiler report here?\n```java\npublic class CaseMistake {\n    Public static void main(String[] args) {\n        System.out.println(\"Hi\");\n    }\n}\n```",
+    "options": [
+      "Public is not a valid modifier keyword (Java keywords must be entirely lowercase: `public`)",
+      "Hi must be in double quotes",
+      "main must be capitalized",
+      "No error"
+    ],
+    "answer": 0,
+    "explain": "All Java keywords are lowercase. `Public` with a capital 'P' is treated as an unknown identifier or class type, causing a compilation error.",
+    "topic": "Keyword Casing Errors",
+    "type": "error",
+    "level": "easy",
+    "strength": "You caught the capitalized keyword `Public`.",
+    "weakness": "Java keywords are strictly lowercase: `public`, `static`, `void`."
+  },
+  {
+    "q": "What error occurs in this file?\n```java\n// File: Calculation.java\npublic class MathHelper {}\npublic class LogicHelper {}\n```",
+    "options": [
+      "A Java source file can contain at most one `public` class",
+      "MathHelper cannot be public because Math is a reserved word",
+      "Both classes must have a main method",
+      "Classes cannot be empty"
+    ],
+    "answer": 0,
+    "explain": "A single `.java` file cannot contain more than one top-level `public` class. Furthermore, the public class name must match the filename `Calculation.java`.",
+    "topic": "Multiple Public Classes",
+    "type": "error",
+    "level": "medium",
+    "strength": "You caught the duplicate public class error in a single file.",
+    "weakness": "Rule: Maximum 1 public class per file, matching the file name."
+  },
+  {
+    "q": "What is the error in the following snippet?\n```java\npublic class ArgsError {\n    public static void main(String args) {\n        System.out.println(args);\n    }\n}\n```",
+    "options": [
+      "The code fails to compile because args must be an array",
+      "The code compiles cleanly, but running it causes the JVM to report that no valid `main(String[] args)` entry point was found",
+      "println cannot print single String parameters",
+      "args cannot be used as a parameter name"
+    ],
+    "answer": 1,
+    "explain": "The code is syntactically valid Java, so it compiles. But the JVM launcher specifically searches for `main(String[] args)` (an array of Strings), so it will not launch.",
+    "topic": "Main Method Parameter Signature",
+    "type": "error",
+    "level": "medium",
+    "strength": "You correctly recognized that `main` must take `String[] args`, not `String args`.",
+    "weakness": "The standard entry point requires an array of Strings: `String[] args`."
+  },
+  {
+    "q": "What compiler error occurs in this code?\n```java\npublic class DotError {\n    public static void main(String[] args) {\n        System.out,println(\"Typo\");\n    }\n}\n```",
+    "options": [
+      "Illegal comma separator instead of dot between `out` and `println`",
+      "Typo cannot be printed",
+      "Missing semicolon after Typo",
+      "main method cannot take String array"
+    ],
+    "answer": 0,
+    "explain": "`System.out,println` contains a comma instead of a period, causing an invalid syntax compile-time error.",
+    "topic": "Syntax Punctuation Errors",
+    "type": "error",
+    "level": "easy",
+    "strength": "You caught the comma typo instead of dot operator.",
+    "weakness": "Member access in Java uses dots: `System.out.println()`."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class Output1 {\n    public static void main(String[] args) {\n        System.out.print(\"A\");\n        System.out.println(\"B\");\n        System.out.print(\"C\");\n    }\n}\n```",
+    "options": [
+      "A\nB\nC",
+      "AB\nC",
+      "ABC",
+      "A\nBC"
+    ],
+    "answer": 1,
+    "explain": "`print(\"A\")` outputs 'A' without newline. `println(\"B\")` prints 'B' and then moves to the next line. `print(\"C\")` prints 'C' on the new line.",
+    "topic": "Print vs Println",
+    "type": "output",
+    "level": "easy",
+    "strength": "You accurately traced the output stream line-break behavior.",
+    "weakness": "Remember: `print` stays on the same line, while `println` appends a newline."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class Concat1 {\n    public static void main(String[] args) {\n        System.out.println(\"Total: \" + 10 + 20);\n    }\n}\n```",
+    "options": [
+      "Total: 30",
+      "Total: 1020",
+      "Total: 10 20",
+      "Compile-time error"
+    ],
+    "answer": 1,
+    "explain": "Left-to-right evaluation: `\"Total: \" + 10` produces `\"Total: 10\"`. Then `\"Total: 10\" + 20` produces `\"Total: 1020\"` via string concatenation.",
+    "topic": "String Concatenation Precedence",
+    "type": "output",
+    "level": "easy",
+    "strength": "You mastered the left-to-right string concatenation rule.",
+    "weakness": "Because evaluation is left-to-right, numbers concatenated after a string become string characters."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class Concat2 {\n    public static void main(String[] args) {\n        System.out.println(10 + 20 + \" = Sum\");\n    }\n}\n```",
+    "options": [
+      "1020 = Sum",
+      "30 = Sum",
+      "10 + 20 = Sum",
+      "Compile-time error"
+    ],
+    "answer": 1,
+    "explain": "Evaluation goes left-to-right: `10 + 20` is evaluated as integer addition yielding `30`. Then `30 + \" = Sum\"` evaluates to `\"30 = Sum\"`.",
+    "topic": "Arithmetic Precedence in Concatenation",
+    "type": "output",
+    "level": "easy",
+    "strength": "You correctly identified integer addition before string concatenation.",
+    "weakness": "Left-to-right: arithmetic occurs first until a String operand is encountered."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class EscapeTest {\n    public static void main(String[] args) {\n        System.out.println(\"Hello\\\"World\\\"\");\n    }\n}\n```",
+    "options": [
+      "Hello\\World\\",
+      "Hello\"World\"",
+      "Hello\\\"World\\\"",
+      "HelloWorld"
+    ],
+    "answer": 1,
+    "explain": "The escape sequence `\\\"` prints a literal double quote character without terminating the string literal.",
+    "topic": "Escape Sequence Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "You correctly interpreted the escaped double quote sequences.",
+    "weakness": "`\\\"` renders as a literal quote character inside string output."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class BackslashTest {\n    public static void main(String[] args) {\n        System.out.println(\"C:\\\\tools\\\\bin\");\n    }\n}\n```",
+    "options": [
+      "C:\\tools\\bin",
+      "C:\\\\tools\\\\bin",
+      "C:toolsbin",
+      "Compilation error: invalid escape sequence"
+    ],
+    "answer": 0,
+    "explain": "Each `\\\\` escape sequence prints a single backslash character.",
+    "topic": "Backslash Escape Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "You correctly resolved the double backslash escape characters.",
+    "weakness": "`\\\\` prints one backslash."
+  },
+  {
+    "q": "What is the output of this code when executed with `java App one two three`?\n```java\npublic class App {\n    public static void main(String[] args) {\n        System.out.println(args.length);\n    }\n}\n```",
+    "options": [
+      "0",
+      "1",
+      "3",
+      "4 (including App)"
+    ],
+    "answer": 2,
+    "explain": "In Java, command-line arguments are zero-indexed and do NOT include the class name itself. Passing `one two three` yields an array of length 3.",
+    "topic": "Command Line Arguments",
+    "type": "output",
+    "level": "medium",
+    "strength": "You know that `args` contains only the arguments passed to the class, not the class name.",
+    "weakness": "Unlike C/C++, Java's `args[0]` is the first actual parameter, not the program name."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class ArgsFirst {\n    public static void main(String[] args) {\n        System.out.println(args[0]);\n    }\n}\n```\nwhen executed as: `java ArgsFirst Alpha Beta`",
+    "options": [
+      "ArgsFirst",
+      "Alpha",
+      "Beta",
+      "Alpha Beta"
+    ],
+    "answer": 1,
+    "explain": "`args[0]` accesses the first argument after the class name, which is `Alpha`.",
+    "topic": "Args Array Access",
+    "type": "output",
+    "level": "medium",
+    "strength": "You accurately extracted the first command-line argument.",
+    "weakness": "Java command-line argument indexing starts with the first argument after the class name."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class MathParentheses {\n    public static void main(String[] args) {\n        System.out.println(\"Result: \" + (10 + 20));\n    }\n}\n```",
+    "options": [
+      "Result: 1020",
+      "Result: 30",
+      "Result: (10 + 20)",
+      "Result: 10 + 20"
+    ],
+    "answer": 1,
+    "explain": "Parentheses force `10 + 20` to evaluate first as arithmetic (30). Then `\"Result: \" + 30` creates `\"Result: 30\"`.",
+    "topic": "Parentheses Override",
+    "type": "output",
+    "level": "easy",
+    "strength": "You understood how parentheses enforce arithmetic evaluation before concatenation.",
+    "weakness": "Parentheses have higher precedence and force addition before string concatenation."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class EmptyPrint {\n    public static void main(String[] args) {\n        System.out.print(\"Java\");\n        System.out.println();\n        System.out.print(\"Rock\");\n    }\n}\n```",
+    "options": [
+      "JavaRock",
+      "Java\nRock",
+      "Java Rock",
+      "Compilation error: println() requires arguments"
+    ],
+    "answer": 1,
+    "explain": "`System.out.println()` with no arguments prints an empty line (a newline character).",
+    "topic": "Empty println Behavior",
+    "type": "output",
+    "level": "easy",
+    "strength": "You know that calling `println()` without arguments simply prints a newline.",
+    "weakness": "`println()` is overloaded to accept 0 parameters to advance to the next line."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class TabPrint {\n    public static void main(String[] args) {\n        System.out.println(\"A\\tB\\nC\\tD\");\n    }\n}\n```",
+    "options": [
+      "A B C D on a single line",
+      "A and B separated by a tab on line 1, C and D separated by a tab on line 2",
+      "A\\tB\\nC\\tD verbatim",
+      "Compile-time error: invalid escape sequence"
+    ],
+    "answer": 1,
+    "explain": "`\\t` inserts a horizontal tab and `\\n` inserts a newline.",
+    "topic": "Tab and Newline Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "You accurately traced tab and newline escape characters.",
+    "weakness": "`\\t` produces tab spacing and `\\n` breaks to a new line."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class MixedConcat {\n    public static void main(String[] args) {\n        int a = 5;\n        int b = 2;\n        System.out.println(a + b + \"-\" + a + b);\n    }\n}\n```",
+    "options": [
+      "7-7",
+      "7-52",
+      "52-52",
+      "52-7"
+    ],
+    "answer": 1,
+    "explain": "`a + b` evaluates to 7. `7 + \"-\"` gives `\"7-\"`. Then `\"7-\" + 5` gives `\"7-5\"`, and `\"7-5\" + 2` gives `\"7-52\"`.",
+    "topic": "Mixed Concatenation Tracing",
+    "type": "output",
+    "level": "medium",
+    "strength": "You accurately traced the multi-stage evaluation of mixed addition and string concatenation.",
+    "weakness": "Once a string is introduced, subsequent `+` operations become string concatenations."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class NullString {\n    public static void main(String[] args) {\n        String s = null;\n        System.out.println(\"Value: \" + s);\n    }\n}\n```",
+    "options": [
+      "Value: null",
+      "NullPointerException",
+      "Value: ",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "When a null reference is concatenated with a String, Java converts it to the string literal `\"null\"` without throwing a `NullPointerException`.",
+    "topic": "Null String Concatenation",
+    "type": "output",
+    "level": "medium",
+    "strength": "You correctly identified that concatenating a null reference converts it to the text 'null'.",
+    "weakness": "String concatenation safely converts null references to the string 'null'."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class CharPlusString {\n    public static void main(String[] args) {\n        char c = 'J';\n        System.out.println(c + \"ava\");\n    }\n}\n```",
+    "options": [
+      "Java",
+      "74ava",
+      "Compilation error",
+      "J ava"
+    ],
+    "answer": 0,
+    "explain": "Concatenating a char with a String converts the char to its string representation ('J' + \"ava\" -> \"Java\").",
+    "topic": "Char String Concatenation",
+    "type": "output",
+    "level": "easy",
+    "strength": "You recognized char-to-string concatenation.",
+    "weakness": "Concatenating a char with a String appends the character directly."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class CharPlusChar {\n    public static void main(String[] args) {\n        System.out.println('A' + 'B');\n    }\n}\n```",
+    "options": [
+      "AB",
+      "131",
+      "A + B",
+      "Compilation error: cannot add characters"
+    ],
+    "answer": 1,
+    "explain": "The `+` operator between two characters performs integer arithmetic on their ASCII/Unicode values ('A' is 65, 'B' is 66 -> 65 + 66 = 131).",
+    "topic": "Char Arithmetic Promotion",
+    "type": "output",
+    "level": "hard",
+    "strength": "You avoided the famous trap: 'A' + 'B' performs integer addition, not concatenation!",
+    "weakness": "Two chars with `+` promote to ints and add numeric code points (65 + 66 = 131)."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class OrderOfInit {\n    static int x = 10;\n    public static void main(String[] args) {\n        int x = 20;\n        System.out.println(x);\n    }\n}\n```",
+    "options": [
+      "10",
+      "20",
+      "0",
+      "Compilation error: duplicate variable x"
+    ],
+    "answer": 1,
+    "explain": "The local variable `x` declared inside `main` shadows the static class field `x`, so `System.out.println(x)` prints the local variable value (20).",
+    "topic": "Variable Shadowing",
+    "type": "output",
+    "level": "medium",
+    "strength": "You understand local variable shadowing of class fields.",
+    "weakness": "A local variable takes precedence over a class field of the same name within its scope."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class PrintZero {\n    public static void main(String[] args) {\n        int a = 0;\n        System.out.print(a);\n        System.out.print(a + 1);\n    }\n}\n```",
+    "options": [
+      "01",
+      "0\n1",
+      "1",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "Both statements use `print()`, which does not add a newline, outputting '0' and then '1' immediately following it.",
+    "topic": "Sequential Print",
+    "type": "output",
+    "level": "easy",
+    "strength": "You accurately predicted continuous output from multiple `print()` calls.",
+    "weakness": "`print()` outputs directly to standard out without trailing newlines."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class BooleanPrint {\n    public static void main(String[] args) {\n        boolean flag = true;\n        System.out.println(\"Status: \" + flag);\n    }\n}\n```",
+    "options": [
+      "Status: true",
+      "Status: 1",
+      "Status: TRUE",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "In Java, boolean values are converted to lowercase string literals `\"true\"` or `\"false\"` when concatenated with strings.",
+    "topic": "Boolean String Representation",
+    "type": "output",
+    "level": "easy",
+    "strength": "You know that Java booleans print as 'true' or 'false', not 1 or 0.",
+    "weakness": "Java booleans render as lowercase text 'true' or 'false'."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class MultiPrint {\n    public static void main(String[] args) {\n        int count = 1;\n        System.out.print(count + \" \");\n        count = count + 2;\n        System.out.println(count);\n    }\n}\n```",
+    "options": [
+      "1 3",
+      "1\n3",
+      "3",
+      "1 2"
+    ],
+    "answer": 0,
+    "explain": "First, `1 ` is printed without a newline. Then `count` is updated to 3, and `println(3)` prints `3` and ends the line, resulting in `1 3`.",
+    "topic": "Sequential Execution Trace",
+    "type": "output",
+    "level": "easy",
+    "strength": "You accurately traced variable re-assignment and mixed print calls.",
+    "weakness": "Traced sequential evaluation and state change cleanly."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class SubstringPrint {\n    public static void main(String[] args) {\n        System.out.println(\"Java\".length());\n    }\n}\n```",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "Compilation error: cannot call method on literal string"
+    ],
+    "answer": 1,
+    "explain": "String literals in Java are instances of `java.lang.String`. The string `\"Java\"` contains 4 characters.",
+    "topic": "String Literal Methods",
+    "type": "output",
+    "level": "easy",
+    "strength": "You correctly determined string length from a string literal.",
+    "weakness": "`\"Java\".length()` returns 4."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class ClassNamePrint {\n    public static void main(String[] args) {\n        System.out.println(ClassNamePrint.class.getSimpleName());\n    }\n}\n```",
+    "options": [
+      "ClassNamePrint",
+      "ClassNamePrint.class",
+      "class ClassNamePrint",
+      "Compilation error"
+    ],
+    "answer": 0,
+    "explain": "`getSimpleName()` on the Class object returns the simple name of the underlying class: `ClassNamePrint`.",
+    "topic": "Reflection Basics",
+    "type": "output",
+    "level": "hard",
+    "strength": "You correctly identified class metadata retrieval via `.class.getSimpleName()`.",
+    "weakness": "`Class.getSimpleName()` returns the unadorned class name."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class StringQuote {\n    public static void main(String[] args) {\n        System.out.println(\"'Hello'\");\n    }\n}\n```",
+    "options": [
+      "'Hello'",
+      "Hello",
+      "\"Hello\"",
+      "Compilation error: single quotes inside double quotes"
+    ],
+    "answer": 0,
+    "explain": "Single quotes do not need to be escaped inside double-quoted string literals. The exact characters `'Hello'` are printed.",
+    "topic": "Single Quotes in Strings",
+    "type": "output",
+    "level": "easy",
+    "strength": "You recognized that single quotes do not require escaping inside double-quoted strings.",
+    "weakness": "Only double quotes and backslashes require escaping inside string literals."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\npublic class MathPrint {\n    public static void main(String[] args) {\n        System.out.println(1 + 2 + \"3\" + 4 + 5);\n    }\n}\n```",
+    "options": [
+      "15",
+      "3345",
+      "339",
+      "12345"
+    ],
+    "answer": 1,
+    "explain": "`1 + 2` evaluates to 3. Then `3 + \"3\"` evaluates to `\"33\"`. Subsequent `+` operations concatenate: `\"33\" + 4 -> \"334\"`, `\"334\" + 5 -> \"3345\"`.",
+    "topic": "Complex Concatenation Flow",
+    "type": "output",
+    "level": "medium",
+    "strength": "You accurately stepped through the transition from numeric addition to string concatenation.",
+    "weakness": "`1 + 2` is 3, then concatenating `\"3\"` turns all subsequent operations into string concatenations: `3345`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class EscapeNewline {\n    public static void main(String[] args) {\n        System.out.print(\"Line1\\nLine2\");\n    }\n}\n```",
+    "options": [
+      "Line1\\nLine2",
+      "Line1\nLine2",
+      "Line1Line2",
+      "Compilation error"
+    ],
+    "answer": 1,
+    "explain": "The embedded `\\n` within the string literal causes a newline break, producing 'Line1' on the first line and 'Line2' on the second.",
+    "topic": "Embedded Escape Newline",
+    "type": "output",
+    "level": "easy",
+    "strength": "You recognized that `\\n` creates a line break within a string literal.",
+    "weakness": "`\\n` triggers a line break even when called inside `System.out.print()`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class StaticBlockDemo {\n    static {\n        System.out.print(\"Static \");\n    }\n    public static void main(String[] args) {\n        System.out.print(\"Main\");\n    }\n}\n```",
+    "options": [
+      "Main",
+      "Static Main",
+      "Main Static",
+      "Compilation error: static blocks are illegal outside methods"
+    ],
+    "answer": 1,
+    "explain": "Static initialization blocks execute when the class is loaded by the ClassLoader, which occurs before the `main` method starts.",
+    "topic": "Static Initializer Order",
+    "type": "output",
+    "level": "hard",
+    "strength": "You accurately identified that static initializer blocks run before `main`.",
+    "weakness": "The JVM executes static blocks upon class loading prior to invoking `main()`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\npublic class CommentOutput {\n    public static void main(String[] args) {\n        // System.out.print(\"One\");\n        /* System.out.print(\"Two\"); */\n        System.out.print(\"Three\");\n    }\n}\n```",
+    "options": [
+      "OneTwoThree",
+      "Three",
+      "TwoThree",
+      "OneThree"
+    ],
+    "answer": 1,
+    "explain": "Comments are completely stripped out by the compiler and produce no bytecode. Only `System.out.print(\"Three\")` is executed.",
+    "topic": "Comment Erasure",
+    "type": "output",
+    "level": "easy",
+    "strength": "You correctly observed that comments are ignored by the compiler.",
+    "weakness": "Comments do not generate bytecode and are ignored during execution."
+  },
+  {
+    "q": "You are configuring a production Linux server to run pre-compiled Java microservice JAR files. The server does NOT compile code. What should you install to minimize storage and security attack surface?",
+    "options": [
+      "The complete JDK (Java Development Kit)",
+      "The JRE (Java Runtime Environment)",
+      "The C++ build essentials package",
+      "The Javadoc documentation bundle"
+    ],
+    "answer": 1,
+    "explain": "The JRE provides the JVM and core runtime libraries needed to run compiled bytecode without unnecessary development tools like compilers or debuggers.",
+    "topic": "Production Deployment",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You selected the leanest and most secure runtime for production deployment.",
+    "weakness": "A production server running compiled JARs requires only the JRE, not the full JDK."
+  },
+  {
+    "q": "A team member complains that typing `javac` in the terminal results in 'command not found', even though the JDK is installed. Which system setting is incorrectly configured?",
+    "options": [
+      "The `CLASSPATH` variable",
+      "The system `PATH` environment variable does not include the JDK `bin` directory",
+      "The monitor display resolution",
+      "The Java memory heap max limit"
+    ],
+    "answer": 1,
+    "explain": "The operating system searches directories listed in the `PATH` environment variable to find executables like `javac` and `java`.",
+    "topic": "Environment Troubleshooting",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You correctly diagnosed the missing JDK bin entry in the PATH environment variable.",
+    "weakness": "The `PATH` environment variable tells the shell where to locate command-line binaries like `javac`."
+  },
+  {
+    "q": "You are designing an enterprise Java application. According to standard Java naming conventions, which of the following represents the correct naming for a class, a method, and a constant?",
+    "options": [
+      "Class: `bank_account`, Method: `GetBalance`, Constant: `max_limit`",
+      "Class: `BankAccount`, Method: `getBalance`, Constant: `MAX_LIMIT`",
+      "Class: `bankAccount`, Method: `getBalance`, Constant: `MaxLimit`",
+      "Class: `BANK_ACCOUNT`, Method: `get_balance`, Constant: `MAX_LIMIT`"
+    ],
+    "answer": 1,
+    "explain": "Standard Java conventions: Classes in UpperCamelCase (`BankAccount`), methods in lowerCamelCase (`getBalance`), and constants in SCREAMING_SNAKE_CASE (`MAX_LIMIT`).",
+    "topic": "Industry Code Standards",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You accurately applied standard Java naming conventions across identifiers.",
+    "weakness": "Remember: Classes use UpperCamelCase, methods use lowerCamelCase, constants use SCREAMING_SNAKE_CASE."
+  },
+  {
+    "q": "A developer compiles `PaymentService.java` on a Windows 11 computer with JDK 17. They copy `PaymentService.class` directly to a Red Hat Enterprise Linux 9 server with OpenJDK 17 installed. Will the file run without recompilation?",
+    "options": [
+      "No, because Windows and Linux use incompatible executable binary formats",
+      "Yes, because Java bytecode is platform-independent and can be executed by any compliant JVM of the same or higher version",
+      "No, because the byte order (endianness) of Windows and Linux is inverted",
+      "Yes, but only if Windows Subsystem for Linux is installed on the server"
+    ],
+    "answer": 1,
+    "explain": "This embodies Java's WORA (Write Once, Run Anywhere) principle. Bytecode generated on Windows is fully portable to any compatible JVM on Linux.",
+    "topic": "Cross-Platform Deployment",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You understood how platform-independent bytecode enables seamless cross-OS deployment.",
+    "weakness": "Compiled `.class` files are identical across operating systems."
+  },
+  {
+    "q": "You are writing a CLI utility and need to print a formatted summary table of student grades. You need exact column spacing and two decimal places for averages. Which method should you choose?",
+    "options": [
+      "`System.out.print()`",
+      "`System.out.println()`",
+      "`System.out.printf()`",
+      "`System.err.print()`"
+    ],
+    "answer": 2,
+    "explain": "`System.out.printf()` supports format specifiers like `%-15s` for column width and `%.2f` for decimal formatting.",
+    "topic": "Formatted Output Choice",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You selected `printf` for tabular and decimal formatting.",
+    "weakness": "Use `printf()` with format specifiers (`%s`, `%.2f`, `%-15s`) to align tabular data."
+  },
+  {
+    "q": "A banking application processes high-frequency transactions. Profiling shows that a specific cryptographic calculation method is called 500,000 times per minute. Which JVM mechanism automatically optimizes this method to native CPU instructions?",
+    "options": [
+      "The Garbage Collector",
+      "The JIT (Just-In-Time) compiler using hot-spot compilation",
+      "The Bytecode Verifier",
+      "The javadoc generator"
+    ],
+    "answer": 1,
+    "explain": "The JIT compiler detects 'hot spots' (methods or loops executed repeatedly) and compiles them into native machine code directly executable by the CPU.",
+    "topic": "Performance Optimization",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "You correctly identified the JIT compiler's role in optimizing high-frequency code paths.",
+    "weakness": "The JIT compiler accelerates performance by compiling hot bytecode paths to native machine instructions."
+  },
+  {
+    "q": "Your project contains three files: `Order.java`, `Customer.java`, and `Invoice.java`. You want to compile all of them simultaneously in the terminal. What command achieves this?",
+    "options": [
+      "`java Order Customer Invoice`",
+      "`javac *.java`",
+      "`compile Order.java Customer.java Invoice.java`",
+      "`jvm --build all`"
+    ],
+    "answer": 1,
+    "explain": "`javac *.java` uses the wildcard character to compile all Java source files in the current directory into bytecode.",
+    "topic": "Batch Compilation",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You know how to use wildcard compilation with `javac`.",
+    "weakness": "`javac *.java` compiles all `.java` files in the folder."
+  },
+  {
+    "q": "You need to pass the database URL `jdbc:mysql://localhost:3306/db` and port `3306` to your application when launching it from the command line. How do you pass these parameters and read them inside Java?",
+    "options": [
+      "Pass them as `java MyApp jdbc:mysql://localhost:3306/db 3306` and read them from `args[0]` and `args[1]`",
+      "Type them into the terminal after the program launches",
+      "Store them in the `System.in` buffer beforehand",
+      "Pass them as compiler flags to `javac`"
+    ],
+    "answer": 0,
+    "explain": "Arguments supplied after the class name on the command line are passed to `main(String[] args)` as elements of the `args` array.",
+    "topic": "CLI Argument Passing",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You know how to pass runtime parameters via CLI arguments.",
+    "weakness": "Command-line parameters passed after the class name populate `args[0]`, `args[1]`, etc."
+  },
+  {
+    "q": "You are building an open-source library and want to generate comprehensive API documentation website for developers. What type of comments and command should you use?",
+    "options": [
+      "Single-line comments `//` with `java --doc`",
+      "Javadoc comments `/** ... */` with tags like `@param` and `@return`, processed using the `javadoc` tool",
+      "Block comments `/* ... */` with the `javac -doc` flag",
+      "Markdown files compiled with `make`"
+    ],
+    "answer": 1,
+    "explain": "Javadoc comments `/** ... */` support standardized tags (`@param`, `@return`, `@throws`) and are processed by the `javadoc` tool to produce HTML documentation.",
+    "topic": "API Documentation Strategy",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You know the industry standard Javadoc workflow.",
+    "weakness": "Use `/** ... */` comments with tags and run `javadoc` to generate HTML documentation."
+  },
+  {
+    "q": "A legacy Java application running in production suddenly halts with `java.lang.OutOfMemoryError: Java heap space`. What does this indicate about the application's runtime state?",
+    "options": [
+      "The computer's hard drive has run out of disk space",
+      "The JVM heap has no more memory available to allocate new objects, and garbage collection cannot reclaim enough space",
+      "The method call stack has exceeded its recursion limit",
+      "The CPU is overheating and throttling execution"
+    ],
+    "answer": 1,
+    "explain": "`OutOfMemoryError: Java heap space` occurs when the heap is full and the Garbage Collector cannot free enough memory to satisfy object allocation requests.",
+    "topic": "Memory Leak Diagnosis",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "You accurately identified JVM heap exhaustion.",
+    "weakness": "Heap space exhaustion means object allocation requests exceed available JVM heap memory."
+  },
+  {
+    "q": "You are reviewing code written by a junior developer: `int Number_Of_Students = 30;`. How should this variable declaration be refactored to follow standard Java conventions?",
+    "options": [
+      "`int NUMBER_OF_STUDENTS = 30;`",
+      "`int numberOfStudents = 30;`",
+      "`int number_of_students = 30;`",
+      "`int NumberOfStudents = 30;`"
+    ],
+    "answer": 1,
+    "explain": "In Java, variables must follow `lowerCamelCase` conventions (e.g., `numberOfStudents`).",
+    "topic": "Code Refactoring",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You applied the correct lowerCamelCase convention to variable naming.",
+    "weakness": "Local and instance variables in Java use lowerCamelCase."
+  },
+  {
+    "q": "A Java application crashes immediately upon launch with `Error: Could not find or load main class com.example.App`. What is the most probable cause of this error?",
+    "options": [
+      "The CPU does not support 64-bit Java bytecode",
+      "The class is not on the CLASSPATH, or the folder hierarchy does not match the package name `com/example/App.class`",
+      "The computer has no internet access",
+      "The `main` method returns an `int` instead of `void`"
+    ],
+    "answer": 1,
+    "explain": "The JVM ClassLoader maps package declarations to folder paths. If the class file is not located in `com/example/App.class` relative to the classpath, it cannot be loaded.",
+    "topic": "Classpath & Package Troubleshooting",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "You diagnosed the classic 'Could not find or load main class' error.",
+    "weakness": "The package name `com.example` requires the class to reside in directory `com/example/`."
+  },
+  {
+    "q": "You need to verify which version of the Java compiler is currently active in your development terminal. What command should you run?",
+    "options": [
+      "`java -check`",
+      "`javac -version`",
+      "`jvm --info`",
+      "`javac -help -v`"
+    ],
+    "answer": 1,
+    "explain": "`javac -version` prints the active version of the Java compiler installed and accessible via PATH.",
+    "topic": "Developer Tooling",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You know how to inspect compiler version information via CLI.",
+    "weakness": "Use `javac -version` to verify the compiler version."
+  },
+  {
+    "q": "You are writing a utility that outputs system status messages to standard output and error alerts to standard error. How should these be routed in Java?",
+    "options": [
+      "Status messages to `System.out.println()`; errors to `System.err.println()`",
+      "Both to `System.out.println()` with different colors",
+      "Status messages to `System.err.println()`; errors to `System.in.println()`",
+      "Status messages to `System.exit()`; errors to `System.out()`"
+    ],
+    "answer": 0,
+    "explain": "`System.out` is connected to stdout, while `System.err` is connected to stderr, allowing shell pipelines to separate normal output from diagnostics.",
+    "topic": "Standard Streams",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You correctly separated standard output and standard error streams.",
+    "weakness": "Use `System.out` for normal output and `System.err` for error messages."
+  },
+  {
+    "q": "A distributed system requires a unique identifier for classes that are serialized and sent over a network. Why does Java use package names formatted like `com.company.project`?",
+    "options": [
+      "To ensure class files can be downloaded from web servers via HTTP",
+      "To provide a globally unique namespace by reversing an internet domain name",
+      "Because the Java compiler requires domains to register licenses",
+      "To make file paths shorter on disk"
+    ],
+    "answer": 1,
+    "explain": "Java conventions recommend using reversed domain names (e.g., `com.google`, `org.apache`) as package prefixes to guarantee globally unique namespaces.",
+    "topic": "Package Naming Strategy",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You understand the reverse-domain convention for package names.",
+    "weakness": "Reversing domain names guarantees unique package namespaces across organizations."
+  },
+  {
+    "q": "During a code review, you see: `final double PI = 3.1415926535;`. Why is `final` recommended here?",
+    "options": [
+      "It forces the variable to be stored on the hard drive",
+      "It prevents accidental re-assignment, ensuring mathematical integrity throughout the program",
+      "It speeds up execution by skipping the JVM garbage collector",
+      "It allows other classes to change the value dynamically"
+    ],
+    "answer": 1,
+    "explain": "`final` creates an immutable constant that cannot be altered after initialization, safeguarding critical values from inadvertent modification.",
+    "topic": "Defensive Programming",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You recognized the value of `final` in creating immutable constants.",
+    "weakness": "`final` protects constant values from being accidentally overwritten."
+  },
+  {
+    "q": "You want to organize a large project into packages. If a class `Order` belongs to package `com.shop.billing`, in which folder must `Order.java` reside relative to the source root?",
+    "options": [
+      "`com_shop_billing/`",
+      "`com/shop/billing/`",
+      "`billing/shop/com/`",
+      "`src/packages/Order/`"
+    ],
+    "answer": 1,
+    "explain": "Java's package naming directly mirrors filesystem folder hierarchies: dots in package names represent directory separators.",
+    "topic": "Directory Mapping",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You understand the direct mapping between package names and folder structures.",
+    "weakness": "Package dots correspond to nested subfolders: `com/shop/billing/Order.java`."
+  },
+  {
+    "q": "A developer wants to make sure their source code is completely self-documenting for a team of 10 developers. What is the most effective approach?",
+    "options": [
+      "Write 10 lines of comments for every single line of code",
+      "Use expressive, self-explanatory identifier names, clear modular methods, and Javadoc for public APIs",
+      "Avoid using variables and hard-code values everywhere",
+      "Put all code into a single massive file so teammates don't have to switch tabs"
+    ],
+    "answer": 1,
+    "explain": "Clean code philosophy emphasizes meaningful names and small focused methods so code reads like well-written prose, supplemented by Javadoc for external contracts.",
+    "topic": "Clean Code Practices",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You understand clean code principles and documentation best practices.",
+    "weakness": "Clear names and clean method boundaries make code self-documenting."
+  },
+  {
+    "q": "You receive a `.jar` file containing an executable Java program. What command line executes this archive directly?",
+    "options": [
+      "`javac -jar app.jar`",
+      "`java -jar app.jar`",
+      "`run app.jar`",
+      "`jvm --open app.jar`"
+    ],
+    "answer": 1,
+    "explain": "The `-jar` flag instructs the `java` launcher to read the `Main-Class` manifest header inside `app.jar` and execute its main method.",
+    "topic": "JAR Execution",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You know how to run executable JAR files using `java -jar`.",
+    "weakness": "Use `java -jar archive.jar` to execute packaged Java applications."
+  },
+  {
+    "q": "You are building a high-reliability system where unhandled exceptions must never crash the service silently. How does the JVM handle unhandled exceptions thrown from `main`?",
+    "options": [
+      "It restarts the computer automatically",
+      "It prints the stack trace to `System.err` and terminates the thread with a non-zero exit status",
+      "It ignores the exception and continues executing the next line of code",
+      "It converts the exception into a string and saves it to a hidden file"
+    ],
+    "answer": 1,
+    "explain": "When an exception propagates out of `main` without being caught, the JVM prints the exception stack trace to standard error and terminates the process.",
+    "topic": "JVM Fault Handling",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You understand default JVM unhandled exception behavior.",
+    "weakness": "Unhandled exceptions print a stack trace and terminate the thread."
+  },
+  {
+    "q": "A customer reports that your desktop Java app runs with corrupted foreign characters when displaying Japanese text. What feature of Java handles international character sets, and what encoding does Java use internally for `char` and `String`?",
+    "options": [
+      "ASCII 7-bit encoding",
+      "UTF-16 (Unicode)",
+      "ISO-8859-1 exclusively",
+      "EBCDIC"
+    ],
+    "answer": 1,
+    "explain": "Java's `char` type is 16 bits wide, designed to support Unicode (UTF-16 code units) natively to handle international characters across languages.",
+    "topic": "Unicode Support",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "You know Java's native Unicode character architecture.",
+    "weakness": "Java uses UTF-16 Unicode internally for all characters and strings."
+  },
+  {
+    "q": "You are writing a script that checks whether a user's operating system is Windows or macOS to set an appropriate file path. How can you query the host OS name at runtime?",
+    "options": [
+      "`System.getOperatingSystem()`",
+      "`System.getProperty(\"os.name\")`",
+      "`JVM.getHostPlatform()`",
+      "`System.in.getOS()`"
+    ],
+    "answer": 1,
+    "explain": "`System.getProperty(\"os.name\")` queries standard JVM system properties to inspect OS information, file separators, and Java version.",
+    "topic": "System Properties",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You know how to access JVM system properties using `System.getProperty()`.",
+    "weakness": "`System.getProperty(\"os.name\")` returns the operating system name."
+  },
+  {
+    "q": "In a secure environment, why should developers never hard-code API passwords or encryption keys directly in Java source code files?",
+    "options": [
+      "Because Java will refuse to compile classes that contain the word 'password'",
+      "Because compiled `.class` files can be easily decompiled, exposing hard-coded strings in plain text",
+      "Because passwords will cause stack overflow errors in the JVM",
+      "Because the JIT compiler deletes constant strings automatically"
+    ],
+    "answer": 1,
+    "explain": "Bytecode preserves string literals in the constant pool. Anyone with access to the `.class` file can view them or decompile the file with standard tools.",
+    "topic": "Application Security",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You understand why credentials must not be hard-coded in compiled bytecode.",
+    "weakness": "Decompiling `.class` files reveals string literals; use environment variables or secret vaults."
+  },
+  {
+    "q": "A developer accidentally writes an infinite recursive method with no base case: `void loop() { loop(); }`. What error will the JVM throw at runtime?",
+    "options": [
+      "`java.lang.OutOfMemoryError: Java heap space`",
+      "`java.lang.StackOverflowError`",
+      "`java.lang.NullPointerException`",
+      "`java.lang.ArithmeticException`"
+    ],
+    "answer": 1,
+    "explain": "Every method invocation pushes a new stack frame onto the thread's call stack. Infinite recursion quickly exhausts the call stack memory, triggering a `StackOverflowError`.",
+    "topic": "Call Stack Dynamics",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "You correctly identified the StackOverflowError resulting from infinite recursion.",
+    "weakness": "Recursive calls without base cases exhaust the call stack, throwing `StackOverflowError`."
+  },
+  {
+    "q": "You are preparing for your university WIX1002 Java examination. The exam contains code snippets with subtle bugs. What is the most effective mental model for predicting Java code execution?",
+    "options": [
+      "Guessing based on how Python or JavaScript would execute the code",
+      "Simulating the JVM step-by-step: tracking variable memory state on the stack and heap, observing operator precedence, and validating type compatibility",
+      "Assuming all code snippets contain syntax errors",
+      "Memorizing outputs from textbook problems without understanding the mechanics"
+    ],
+    "answer": 1,
+    "explain": "Tracing code with a JVM mental model (Stack frames, Heap objects, type promotion, operator precedence) is the guaranteed method to predict output and spot tricky exam traps.",
+    "topic": "Exam Strategy & JVM Model",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "You understand the power of JVM mental model simulation for academic success.",
+    "weakness": "Trace execution methodically: state on stack, objects on heap, and operator precedence."
+  }
+]

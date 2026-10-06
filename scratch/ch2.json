@@ -1,0 +1,1602 @@
+[
+  {
+    "q": "What is the fundamental difference between a `while` loop and a `do-while` loop in Java?",
+    "options": [
+      "`while` loop is post-tested; `do-while` loop is pre-tested",
+      "`while` loop checks the condition before executing the loop body; `do-while` checks after, guaranteeing at least one execution",
+      "`while` loop supports `break`; `do-while` loop does not",
+      "`do-while` loops can only iterate through arrays"
+    ],
+    "answer": 1,
+    "explain": "A `while` loop is an entry-controlled loop (evaluating condition before entering the body, potentially running 0 times). A `do-while` loop is exit-controlled, ensuring the body executes at least once.",
+    "topic": "Loop Architecture",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands the entry-controlled vs exit-controlled distinction.",
+    "weakness": "Remember that `do-while` executes its body at least once before checking the condition."
+  },
+  {
+    "q": "Which of the following data types CANNOT be used as the selector expression in a traditional Java `switch` statement?",
+    "options": [
+      "int",
+      "char",
+      "String",
+      "double"
+    ],
+    "answer": 3,
+    "explain": "Traditional Java `switch` statements support `byte`, `short`, `char`, `int`, their corresponding wrapper classes, `enum`, and `String` (from Java 7). Floating-point types (`float`, `double`) and `boolean`/`long` are strictly prohibited.",
+    "topic": "Switch Selector Types",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Identifies unsupported types in switch statements.",
+    "weakness": "Switch statements do not accept `double`, `float`, `long`, or `boolean`."
+  },
+  {
+    "q": "What phenomenon occurs in a `switch` statement if a matching `case` block omits the `break` statement?",
+    "options": [
+      "Compilation error: missing break",
+      "Runtime `NoSuchCaseException`",
+      "Fall-through: execution continues sequentially into subsequent case blocks until a break or the end of the switch is encountered",
+      "The switch statement restarts from the first case"
+    ],
+    "answer": 2,
+    "explain": "Omitting `break` triggers fall-through behavior, where execution flows unconditionally into the subsequent cases regardless of their case label values.",
+    "topic": "Switch Fall-Through",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands switch fall-through mechanics.",
+    "weakness": "Omitting `break` causes execution to fall through into subsequent case statements."
+  },
+  {
+    "q": "In a standard three-part `for` loop header `for (init; condition; update)`, in what exact order are the parts executed for the very first iteration?",
+    "options": [
+      "condition -> init -> update -> body",
+      "init -> condition -> body -> update",
+      "init -> body -> condition -> update",
+      "condition -> body -> update -> init"
+    ],
+    "answer": 1,
+    "explain": "For the first iteration: `init` runs once, then `condition` is evaluated. If true, the `body` executes, followed by the `update` expression.",
+    "topic": "For Loop Lifecycle",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the lifecycle execution order of a for loop.",
+    "weakness": "For loop order: init runs once, then condition, then body, then update."
+  },
+  {
+    "q": "What is the dangling else problem in nested if-else structures?",
+    "options": [
+      "An `else` clause that has no code inside its block",
+      "Ambiguity in code readability where an `else` matches the closest preceding unmatched `if`, which may differ from indentation",
+      "An `else` statement placed outside a method",
+      "When an `else` block causes an infinite loop"
+    ],
+    "answer": 1,
+    "explain": "In Java, an `else` is always bound to the nearest preceding unmatched `if` at the same block level, regardless of indentation. Using curly braces `{}` avoids ambiguity.",
+    "topic": "Dangling Else Problem",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands syntactic binding of the dangling else.",
+    "weakness": "In Java, `else` pairs with the closest preceding unmatched `if`; use braces `{}` to clarify intent."
+  },
+  {
+    "q": "What happens when the condition in a `while` loop is a compile-time constant `while (false)`?",
+    "options": [
+      "The loop executes zero times at runtime without errors",
+      "The compiler issues an 'unreachable statement' error for the loop body",
+      "The JVM throws an `IllegalArgumentException`",
+      "The code compiles but crashes immediately upon entry"
+    ],
+    "answer": 1,
+    "explain": "Java strictly checks for reachable code. A `while (false)` statement renders its body provably unreachable, resulting in a compile-time error.",
+    "topic": "Unreachable Code Rules",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands compiler enforcement of unreachable code in constant while loops.",
+    "weakness": "`while (false) { ... }` causes a compilation error because the loop body is unreachable."
+  },
+  {
+    "q": "What is the purpose of a labeled `break` statement in Java (`break label;`)?",
+    "options": [
+      "To jump backwards to restart an earlier method",
+      "To terminate an outer enclosing loop or block identified by the label",
+      "To jump to a specific line number like a C goto statement",
+      "To exit the JVM runtime completely"
+    ],
+    "answer": 1,
+    "explain": "Java does not support arbitrary `goto`, but supports labeled `break` to cleanly break out of multiple levels of nested loops.",
+    "topic": "Labeled Break",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands multi-level loop termination via labeled break.",
+    "weakness": "A labeled `break` allows exiting an outer loop from deep within nested loops."
+  },
+  {
+    "q": "How does a labeled `continue` statement (`continue outer;`) differ from an unlabeled `continue`?",
+    "options": [
+      "Unlabeled continue skips to the next iteration of the innermost loop; labeled continue skips to the next iteration of the outer labeled loop",
+      "Labeled continue exits the program; unlabeled continue does not",
+      "Labeled continue resets the loop variable to zero",
+      "They are functionally identical in all scenarios"
+    ],
+    "answer": 0,
+    "explain": "Unlabeled `continue` skips the remainder of the innermost loop iteration. Labeled `continue` transfers control to the update/condition check of the specified outer labeled loop.",
+    "topic": "Labeled Continue",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Distinguishes labeled continue from standard innermost continue.",
+    "weakness": "Labeled `continue label;` skips to the next iteration of the outer enclosing loop designated by the label."
+  },
+  {
+    "q": "What are the requirements for case label values in a traditional Java `switch` statement?",
+    "options": [
+      "They can be any variable accessible in scope",
+      "They must be compile-time constants (literals or final variables initialized with constant expressions) and within range of the switch selector type",
+      "They must be unique Strings only",
+      "They can be boolean expressions like `x > 10`"
+    ],
+    "answer": 1,
+    "explain": "Every case label must be a compile-time constant expression whose value is assignable to the switch selector type. Variable expressions or duplicate case values are illegal.",
+    "topic": "Switch Case Constant Rules",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows the requirement for constant expressions in switch case labels.",
+    "weakness": "Case labels must be compile-time constants (e.g. literals or `final` constants); variables are disallowed."
+  },
+  {
+    "q": "What is the result of omitting all three expressions in a `for` loop: `for ( ; ; )`?",
+    "options": [
+      "Compile-time error: missing condition",
+      "An intentional infinite loop whose condition is implicitly treated as `true`",
+      "A loop that executes zero times",
+      "A loop that iterates exactly `Integer.MAX_VALUE` times"
+    ],
+    "answer": 1,
+    "explain": "In Java, omitting the condition in `for (;;)` implicitly defaults to `true`, creating an intentional infinite loop.",
+    "topic": "Infinite For Loop",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Recognizes standard idiom for infinite for loop `for(;;)`.",
+    "weakness": "`for (;;)` creates an infinite loop because an omitted condition defaults to `true`."
+  },
+  {
+    "q": "Can a `switch` statement have a `default` case placed anywhere other than the very bottom?",
+    "options": [
+      "No, `default` must strictly be the final statement in the switch block",
+      "Yes, `default` can appear anywhere inside the switch block and is only executed if no matching case is found (or via fall-through)",
+      "Yes, but it causes a compiler warning",
+      "No, placing `default` at the top causes an infinite loop"
+    ],
+    "answer": 1,
+    "explain": "The `default` label can appear anywhere within the switch body. It is evaluated only after all `case` labels have failed to match, unless reached via fall-through.",
+    "topic": "Switch Default Placement",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Understands flexible placement of default in switch blocks.",
+    "weakness": "`default` can appear at the top, middle, or bottom; it only triggers if no case matches (or via fall-through)."
+  },
+  {
+    "q": "In an enhanced for loop (for-each: `for (int x : array)`), what limitation applies regarding mutating array elements?",
+    "options": [
+      "It can only read array elements; assigning to `x` modifies the local copy and does NOT change the array element",
+      "Assigning to `x` throws an `UnsupportedOperationException`",
+      "The array is automatically cloned into read-only memory",
+      "Enhanced for loops cannot be used on primitive arrays"
+    ],
+    "answer": 0,
+    "explain": "In an enhanced for-each loop over primitive arrays, the iteration variable `x` receives a copy of each element's value. Reassigning `x = 10;` modifies only the local variable, leaving the array unchanged.",
+    "topic": "Enhanced For Loop Semantics",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands that for-each iteration variable does not modify primitive array elements.",
+    "weakness": "Modifying the loop variable in an enhanced for-each loop does not update the underlying array."
+  },
+  {
+    "q": "Why is it hazardous to use floating-point variables (`float` or `double`) as loop counters (e.g. `for (double d = 0.0; d != 1.0; d += 0.1)`)?",
+    "options": [
+      "Floating point variables cannot be incremented with `+=`",
+      "Accumulated binary rounding errors may cause the counter to skip exact equality `d != 1.0`, resulting in an unexpected or infinite loop",
+      "The JVM converts double loop counters to zero automatically",
+      "Loop conditions require integer types only"
+    ],
+    "answer": 1,
+    "explain": "Because 0.1 cannot be represented exactly in binary floating point, successive additions accumulate rounding errors, causing `d` to skip `1.0` (e.g. 0.9999999999999999 -> 1.0999999999999999) and looping indefinitely.",
+    "topic": "Floating-Point Loop Counter",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands the danger of floating-point roundoff in loop conditions.",
+    "weakness": "Never use floating-point numbers with exact equality `!=` or `==` as loop termination conditions."
+  },
+  {
+    "q": "Can a `break` statement be used inside an `if` block that is NOT inside a loop or switch?",
+    "options": [
+      "Yes, it breaks out of the `if` block automatically",
+      "No, an unlabeled `break` statement must be inside a loop or switch, otherwise a compile-time error occurs",
+      "Yes, if the condition is false",
+      "Yes, but only in Java 8 and above"
+    ],
+    "answer": 1,
+    "explain": "An unlabeled `break` statement can only appear inside a `while`, `do`, `for`, or `switch` statement. Using it directly inside a standalone `if` causes a compilation error: 'break outside switch or loop'.",
+    "topic": "Break Statement Scope",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands valid syntactic scopes for unlabeled break.",
+    "weakness": "`break` must reside inside a loop or switch; it cannot be used in a standalone `if` statement."
+  },
+  {
+    "q": "What is the effect of placing a semicolon immediately after a `while` condition: `while (x < 10); { x++; }`?",
+    "options": [
+      "The semicolon is ignored as empty whitespace",
+      "The semicolon forms an empty loop body; if `x < 10` is true initially, it creates an infinite loop because `x` is never updated",
+      "A compilation error occurs: unexpected token ';'",
+      "The block `{ x++; }` executes 10 times"
+    ],
+    "answer": 1,
+    "explain": "The semicolon `;` terminates the loop statement with an empty body. The loop repeatedly checks `x < 10` without executing `{ x++; }`, hanging in an infinite loop.",
+    "topic": "Null Statement Loop Trap",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Recognized the classic accidental null statement trap after loop headers.",
+    "weakness": "A semicolon after `while(...)` or `for(...)` creates an empty body that often results in an infinite loop."
+  },
+  {
+    "q": "Can multiple variables be initialized in the initialization section of a standard `for` loop?",
+    "options": [
+      "No, only one variable can ever be declared",
+      "Yes, but only if they are of the same data type, separated by commas (e.g. `for (int i = 0, j = 10; ...)` )",
+      "Yes, variables of different types can be declared separated by semicolons",
+      "Yes, using the `and` keyword"
+    ],
+    "answer": 1,
+    "explain": "Java allows declaring multiple variables in the loop initialization header, provided they share the same data type declaration separated by commas: `for (int i = 0, j = 10; i < j; i++, j--)`.",
+    "topic": "For Loop Multiple Variables",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows syntax rules for multiple variables in for loop headers.",
+    "weakness": "Multiple loop variables can be declared in the header if they share the same type (separated by commas)."
+  },
+  {
+    "q": "What is an off-by-one error in loop design?",
+    "options": [
+      "Incrementing by 2 instead of 1",
+      "A logic error where a loop iterates one time too many or one time too few, often caused by confusing `<` with `<=`",
+      "A loop whose counter starts at negative one",
+      "An error when an array has only one element"
+    ],
+    "answer": 1,
+    "explain": "An off-by-one error (OBOE) occurs when the loop boundary condition is slightly misplaced (e.g., using `<= array.length` instead of `< array.length`), executing one iteration too many or too few.",
+    "topic": "Off-By-One Logic Error",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands off-by-one boundary errors.",
+    "weakness": "Watch boundary conditions: iterating array indices requires `< array.length`, not `<=`."
+  },
+  {
+    "q": "What is the maximum number of times the condition expression in a `for` loop `for (int i = 0; i < N; i++)` is evaluated if the loop completes normally (where N >= 0)?",
+    "options": [
+      "N times",
+      "N - 1 times",
+      "N + 1 times",
+      "2 * N times"
+    ],
+    "answer": 2,
+    "explain": "The condition is evaluated N times yielding `true` (entering the body), plus 1 final time where it evaluates to `false` to terminate the loop. Total: `N + 1` evaluations.",
+    "topic": "Loop Condition Evaluations",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Understands exact evaluation count of loop conditions.",
+    "weakness": "A loop executing N times evaluates its condition N + 1 times (the last one returns false)."
+  },
+  {
+    "q": "Can a `continue` statement be used inside a `switch` statement that is NOT inside a loop?",
+    "options": [
+      "Yes, it acts like break",
+      "No, `continue` must strictly reside inside an iteration statement (for, while, do); it cannot be used in a switch alone",
+      "Yes, it skips to the default case",
+      "Yes, it restarts the switch"
+    ],
+    "answer": 1,
+    "explain": "`continue` is strictly a loop-control statement. Inside a standalone `switch`, using `continue` causes a compile-time error: 'continue outside of loop'.",
+    "topic": "Continue Statement Scope",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands that continue cannot be used in a standalone switch.",
+    "weakness": "`continue` only works inside loops (while, do, for); it cannot be used inside a standalone switch."
+  },
+  {
+    "q": "What happens when duplicate `case` labels exist inside a single `switch` statement?",
+    "options": [
+      "The second case is silently ignored",
+      "Compilation error: duplicate case label",
+      "Runtime exception `DuplicateCaseException`",
+      "Both case blocks execute simultaneously"
+    ],
+    "answer": 1,
+    "explain": "The Java compiler requires all case label values within a switch statement to be mutually unique. Duplicate case labels trigger a compile error.",
+    "topic": "Duplicate Case Error",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Recognized that duplicate case labels are rejected by the compiler.",
+    "weakness": "Every case label in a switch block must be unique."
+  },
+  {
+    "q": "In a `do-while` loop, what punctuation is strictly required immediately after the closing parenthesis of `while (condition)`?",
+    "options": [
+      "A colon `:`",
+      "A semicolon `;`",
+      "A closing brace `}`",
+      "No punctuation is permitted"
+    ],
+    "answer": 1,
+    "explain": "A `do-while` loop statement must terminate with a semicolon `;` following the condition parenthesis: `do { ... } while (condition);`.",
+    "topic": "Do-While Syntax",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the required semicolon in do-while loop syntax.",
+    "weakness": "Always end a `do-while` loop with a trailing semicolon: `while (condition);`."
+  },
+  {
+    "q": "What is the difference between an entry-controlled loop and an exit-controlled loop?",
+    "options": [
+      "Entry-controlled loops run at least once; exit-controlled may run zero times",
+      "Entry-controlled tests condition before body execution; exit-controlled tests condition after body execution",
+      "Entry-controlled loops cannot use `break`",
+      "Exit-controlled loops cannot use nested loops"
+    ],
+    "answer": 1,
+    "explain": "`for` and `while` are entry-controlled (test before entering body). `do-while` is exit-controlled (tests after executing body).",
+    "topic": "Loop Classification",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Correctly classifies entry-controlled vs exit-controlled loops.",
+    "weakness": "Entry-controlled loops test condition first; exit-controlled loops test condition at the end."
+  },
+  {
+    "q": "Which of the following describes the execution of a `break` statement inside an inner loop of two nested loops?",
+    "options": [
+      "It terminates both the inner and outer loops",
+      "It terminates only the innermost enclosing loop and resumes execution in the outer loop",
+      "It skips to the next iteration of the inner loop",
+      "It terminates the entire program"
+    ],
+    "answer": 1,
+    "explain": "An unlabeled `break` statement only terminates the innermost enclosing loop or switch statement that directly contains it.",
+    "topic": "Nested Loop Break",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands that unlabeled break terminates only the innermost loop.",
+    "weakness": "Unlabeled `break` exits only the immediate innermost loop, returning control to the outer loop."
+  },
+  {
+    "q": "Can the update expression of a `for` loop decrement the counter instead of incrementing it?",
+    "options": [
+      "No, `for` loops can only increment",
+      "Yes, update expressions can decrement (e.g. `i--`), add steps (e.g. `i += 5`), or execute any valid expression statement",
+      "Only if `i` is declared as a `double`",
+      "Only when accompanied by a `break` statement"
+    ],
+    "answer": 1,
+    "explain": "The update expression in a `for` loop can be any valid expression statement, such as decrementing (`i--`), step addition (`i += 2`), multiplication (`i *= 2`), or even method calls.",
+    "topic": "For Loop Update Flexibility",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands flexible update expressions in for loops.",
+    "weakness": "For loop update statements can increment, decrement, scale, or perform any valid expression."
+  },
+  {
+    "q": "In Java, can a boolean expression be used directly as an `if` condition without `== true` (e.g. `if (isReady)` vs `if (isReady == true)`)?",
+    "options": [
+      "No, `== true` is mandatory in Java",
+      "Yes, writing `if (isReady)` is idiomatic and clean because `isReady` is already a boolean",
+      "`if (isReady)` only works if `isReady` is non-zero integer",
+      "It throws a `NullPointerException`"
+    ],
+    "answer": 1,
+    "explain": "`if` statements require a boolean expression. If a variable is already a boolean, testing `if (isReady)` is direct, clean, and preferred over redundant `if (isReady == true)`.",
+    "topic": "Boolean Condition Idiom",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows clean idiomatic boolean testing in if conditions.",
+    "weakness": "Direct boolean evaluation `if (flag)` is cleaner than redundant `if (flag == true)`."
+  },
+  {
+    "q": "Identify the compilation error in the following snippet:\n```java\nint x = 10;\nif (x = 20) {\n    System.out.println(\"Twenty\");\n}\n```",
+    "options": [
+      "println cannot take String literals",
+      "Incompatible types: int cannot be converted to boolean (used assignment '=' instead of comparison '==')",
+      "x cannot be modified inside an if statement",
+      "Variable x is not in scope"
+    ],
+    "answer": 1,
+    "explain": "In Java, `x = 20` is an assignment that returns the integer `20`. Because Java `if` conditions strictly require a `boolean`, passing an `int` causes a compile error: 'int cannot be converted to boolean'.",
+    "topic": "Assignment in Condition Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught accidental assignment operator '=' inside if condition.",
+    "weakness": "Use comparison operator `==` inside conditions; assignment `=` yields an int which is not boolean in Java."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nint day = 3;\nswitch (day) {\n    case 1: System.out.println(\"Mon\"); break;\n    case 1: System.out.println(\"Duplicate\"); break;\n}\n```",
+    "options": [
+      "break cannot be on the same line as println",
+      "Duplicate case label: case 1 appears more than once",
+      "switch requires curly braces for each case",
+      "switch cannot evaluate int"
+    ],
+    "answer": 1,
+    "explain": "Case labels within a single switch block must be distinct. Having two `case 1:` labels causes a compile-time error: 'duplicate case label'.",
+    "topic": "Duplicate Case Label",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted duplicate case label in switch.",
+    "weakness": "Every case label in a switch statement must be unique."
+  },
+  {
+    "q": "What is the compilation error in the following snippet?\n```java\nfinal int a = 5;\nint b = 10;\nswitch (b) {\n    case a: System.out.println(\"A\"); break;\n    case b: System.out.println(\"B\"); break;\n}\n```",
+    "options": [
+      "case a is invalid because final constants cannot be cases",
+      "case b is invalid: constant expression required (b is a non-final variable)",
+      "switch cannot take variable b",
+      "No error: code compiles cleanly"
+    ],
+    "answer": 1,
+    "explain": "`case a:` is valid because `a` is a `final` constant. However, `b` is a non-final variable, so `case b:` violates the rule that case labels must be compile-time constants.",
+    "topic": "Non-Constant Case Label",
+    "type": "error",
+    "level": "medium",
+    "strength": "Distinguished constant vs non-constant expressions in switch case labels.",
+    "weakness": "Case labels must be compile-time constants; non-final variables like `b` are illegal as case labels."
+  },
+  {
+    "q": "Why does the following snippet produce a compilation error?\n```java\nwhile (true) {\n    System.out.println(\"Running\");\n}\nSystem.out.println(\"Done\");\n```",
+    "options": [
+      "while(true) is an illegal condition in Java",
+      "Unreachable statement: line 4 can never be reached due to the infinite while loop",
+      "System.out.println cannot be called twice",
+      "Infinite loops cause stack overflow at compile-time"
+    ],
+    "answer": 1,
+    "explain": "Because `while (true)` has no break statement, the compiler proves that the statement following the loop is unreachable, throwing a compile-time error: 'unreachable statement'.",
+    "topic": "Unreachable Statement Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized compiler rejection of code following infinite loop.",
+    "weakness": "Code placed immediately after an unconditional infinite loop without break is unreachable and rejected by the compiler."
+  },
+  {
+    "q": "What is the bug in this loop intended to print numbers 1 to 5?\n```java\nfor (int i = 1; i <= 5; i++); {\n    System.out.println(i);\n}\n```",
+    "options": [
+      "i <= 5 causes an index out of bounds error",
+      "The semicolon after the for loop header creates an empty loop; furthermore, 'i' is out of scope in the block `{ System.out.println(i); }`",
+      "for loops cannot use <= operator",
+      "System.out.println requires string concatenation"
+    ],
+    "answer": 1,
+    "explain": "The trailing semicolon `;` ends the for loop immediately. When the loop finishes, `i` goes out of scope, causing a compile error when `{ System.out.println(i); }` tries to reference `i`.",
+    "topic": "Semicolon Loop Header & Scope Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Spotted trailing semicolon on for loop and subsequent variable scope failure.",
+    "weakness": "Do not put a semicolon after the for loop header; it creates an empty body and isolates the loop variable."
+  },
+  {
+    "q": "Why does the following code fail to compile?\n```java\nint x = 10;\nswitch (x) {\n    case 10:\n        int count = 1;\n        break;\n    case 20:\n        int count = 2;\n        break;\n}\n```",
+    "options": [
+      "Variables cannot be declared inside a switch",
+      "Variable 'count' is already defined in scope: the entire switch block shares a single local variable scope",
+      "count must be declared final",
+      "break cannot appear after variable declaration"
+    ],
+    "answer": 1,
+    "explain": "A `switch` block forms a single contiguous variable scope. Declaring `int count` in `case 10` and again in `case 20` causes a duplicate variable declaration error. Enclosing each case in `{ int count = ...; }` solves this.",
+    "topic": "Switch Scope Duplicate Variable",
+    "type": "error",
+    "level": "hard",
+    "strength": "Mastered the single-scope nature of switch statements.",
+    "weakness": "The entire switch statement is one scope; declare variables once or wrap individual cases in braces `{}`."
+  },
+  {
+    "q": "What is the compilation error in the following snippet?\n```java\nboolean done = false;\ndo {\n    System.out.println(\"Working\");\n} while (!done)\n```",
+    "options": [
+      "while cannot be negated with !",
+      "Missing semicolon ';' after while(!done) in do-while loop syntax",
+      "do cannot be followed by while",
+      "done must be an integer"
+    ],
+    "answer": 1,
+    "explain": "A `do-while` loop requires a terminating semicolon after the closing parenthesis: `while (!done);`. Omitting it triggers a syntax error: ';' expected.",
+    "topic": "Missing Do-While Semicolon",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified missing terminating semicolon in do-while loop.",
+    "weakness": "Every `do-while` loop must terminate with a semicolon after the condition: `while (...);`."
+  },
+  {
+    "q": "Identify the compilation issue in this snippet:\n```java\nint score = 85;\nif (score >= 90)\n    String grade = \"A\";\n```",
+    "options": [
+      "String cannot be declared inside a method",
+      "Variable declaration cannot be the direct sub-statement of an if statement without a block `{}`",
+      "score must be a double",
+      "grade is a reserved keyword"
+    ],
+    "answer": 1,
+    "explain": "The Java Language Specification explicitly forbids a variable declaration as the single statement of an `if`, `while`, or `for` statement without braces `{}` because the variable would instantly go out of scope.",
+    "topic": "Single Statement Variable Declaration",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that variable declarations cannot be unbraced branch statements.",
+    "weakness": "Variable declarations cannot stand alone as single unbraced statements under `if`, `while`, or `for`."
+  },
+  {
+    "q": "What is the bug in the following loop?\n```java\nint count = 1;\nwhile (count <= 10) {\n    System.out.println(count);\n}\n```",
+    "options": [
+      "count cannot be initialized to 1",
+      "Infinite loop: `count` is never incremented inside the loop body",
+      "while cannot use <=",
+      "println crashes after 10 lines"
+    ],
+    "answer": 1,
+    "explain": "Because `count` is never updated (`count++`) inside the loop body, `count <= 10` remains perpetually true, executing an infinite loop.",
+    "topic": "Missing Loop Update",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught missing loop update variable causing infinite loop.",
+    "weakness": "Ensure the loop control variable is modified within the loop body to guarantee termination."
+  },
+  {
+    "q": "Why does the following enhanced for-each loop fail to compile?\n```java\nint number = 100;\nfor (int n : number) {\n    System.out.println(n);\n}\n```",
+    "options": [
+      "number is not an array or an instance of java.lang.Iterable",
+      "n must be declared as Object",
+      "enhanced for loop requires colon and semicolon",
+      "println cannot print n"
+    ],
+    "answer": 0,
+    "explain": "The enhanced for-each loop requires the target expression on the right of `:` to be an array or an object implementing `java.lang.Iterable`. A primitive `int` cannot be iterated over.",
+    "topic": "ForEach Target Requirement",
+    "type": "error",
+    "level": "easy",
+    "strength": "Understands iterable/array requirement for enhanced for-each loop.",
+    "weakness": "Enhanced for loops only accept arrays or collections implementing `Iterable`."
+  },
+  {
+    "q": "Identify the bug in this code:\n```java\nint x = 5;\nif (x > 0);\n{\n    System.out.println(\"Positive\");\n}\n```",
+    "options": [
+      "System.out.println cannot be inside braces",
+      "The semicolon after `if (x > 0);` terminates the if statement, making the block `{ println... }` execute unconditionally",
+      "x > 0 is not a valid condition",
+      "Variables must be declared inside the if block"
+    ],
+    "answer": 1,
+    "explain": "The semicolon immediately after `if (x > 0);` creates an empty statement. The subsequent block executes unconditionally regardless of whether `x > 0` is true or false.",
+    "topic": "Semicolon After If Bug",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught unintentional semicolon terminating if condition.",
+    "weakness": "Never place a semicolon directly after an `if (...)` condition; it disconnects the subsequent block."
+  },
+  {
+    "q": "Why does this loop fail to compile?\n```java\nfor (int i = 0, double d = 0.5; i < 5; i++) {\n    System.out.println(i);\n}\n```",
+    "options": [
+      "i and d must be incremented together",
+      "Multiple variables declared in a for-loop init section must be of the same type; mixing 'int' and 'double' declarations is illegal",
+      "d must be an integer",
+      "double cannot be initialized to 0.5"
+    ],
+    "answer": 1,
+    "explain": "In a `for` loop header, all declared variables in the initialization part must share the exact same type specifier. Mixing `int` and `double` in the same init clause is invalid syntax.",
+    "topic": "Mixed Types in For Header",
+    "type": "error",
+    "level": "medium",
+    "strength": "Spotted illegal mixed type declarations in for loop header.",
+    "weakness": "All variables declared in a for loop initialization clause must share the same data type."
+  },
+  {
+    "q": "What compilation error occurs in this snippet?\n```java\nbreak;\n```",
+    "options": [
+      "Missing label",
+      "break outside switch or loop",
+      "break cannot be in lowercase",
+      "Syntax error: expected return"
+    ],
+    "answer": 1,
+    "explain": "An unlabeled `break` statement is only permitted within an enclosing loop or switch statement.",
+    "topic": "Break Scope Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized break statement placed outside loop or switch context.",
+    "weakness": "`break` must be inside a loop or switch."
+  },
+  {
+    "q": "Why does the following snippet fail to compile?\n```java\nint x = 5;\ncontinue;\n```",
+    "options": [
+      "continue cannot be on line 2",
+      "continue outside of loop",
+      "x must be incremented first",
+      "continue must take a parameter"
+    ],
+    "answer": 1,
+    "explain": "A `continue` statement can only be used inside the body of a loop (`for`, `while`, `do-while`). Using it outside a loop causes a compile error: 'continue outside of loop'.",
+    "topic": "Continue Scope Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized continue statement placed outside loop context.",
+    "weakness": "`continue` is strictly valid only inside loop bodies."
+  },
+  {
+    "q": "Identify the compile error in this labeled break statement:\n```java\nmyLoop: \nint x = 10;\nwhile (x > 0) {\n    break myLoop;\n}\n```",
+    "options": [
+      "Labels cannot end with a colon",
+      "The label 'myLoop' is attached to `int x = 10;`, not the while loop, so `break myLoop` is invalid",
+      "x must be decremented inside the loop",
+      "Labels cannot be used on while loops"
+    ],
+    "answer": 1,
+    "explain": "A label applies only to the immediate statement that follows it. Here `myLoop:` labels `int x = 10;`. The while loop is not labeled, so breaking to `myLoop` is illegal.",
+    "topic": "Label Binding Error",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that a label attaches strictly to the immediately following statement.",
+    "weakness": "Place the label immediately before the loop header: `myLoop: while (...)`."
+  },
+  {
+    "q": "What error occurs in this switch statement?\n```java\nString fruit = \"Apple\";\nswitch (fruit) {\n    case null:\n        System.out.println(\"Null\");\n        break;\n}\n```",
+    "options": [
+      "Strings cannot be used in switch statements",
+      "In Java 8-16, `case null` is illegal and causes a compile error (only introduced in pattern matching switch Java 17+ / 21)",
+      "null must be in double quotes \"null\"",
+      "Apple cannot match null"
+    ],
+    "answer": 1,
+    "explain": "In standard traditional Java switch (prior to pattern matching preview), `case null:` is a syntax error. Passing a null selector to a traditional switch throws a `NullPointerException` at runtime.",
+    "topic": "Switch Null Case Error",
+    "type": "error",
+    "level": "hard",
+    "strength": "Understands that traditional switch does not permit `case null` and throws NPE on null selector.",
+    "weakness": "In traditional Java switch, `case null:` is invalid, and a null selector expression throws `NullPointerException`."
+  },
+  {
+    "q": "Why does this code cause a compiler error?\n```java\nfor (int i = 0; i < 10; i++) {\n    if (i == 5) return;\n}\nSystem.out.println(i);\n```",
+    "options": [
+      "return cannot be used inside for loops",
+      "Cannot find symbol: variable 'i' (scope of 'i' is restricted to the for loop body)",
+      "i == 5 is an invalid condition",
+      "System.out.println cannot access integer variables"
+    ],
+    "answer": 1,
+    "explain": "Variable `i` is declared in the for-loop header. Its scope is strictly confined to the loop body and header. Referencing `i` after the loop terminates fails to compile.",
+    "topic": "Loop Variable Scope Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized variable out-of-scope following loop termination.",
+    "weakness": "Variables declared in a for loop header are only accessible inside the loop."
+  },
+  {
+    "q": "What is the issue with this switch statement?\n```java\ndouble grade = 3.5;\nswitch (grade) {\n    case 3.5: System.out.println(\"Good\"); break;\n}\n```",
+    "options": [
+      "3.5 is not a valid case label",
+      "Incompatible types: double cannot be dereferenced or used as a switch selector expression",
+      "println cannot print strings inside switch",
+      "grade must be declared final"
+    ],
+    "answer": 1,
+    "explain": "`switch` expressions do not support floating-point types (`float` or `double`). Compiling this produces: 'incompatible types: possible lossy conversion from double to int'.",
+    "topic": "Double Switch Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted illegal floating-point selector in switch.",
+    "weakness": "Floating-point types (`double`, `float`) are not permitted in Java switch statements."
+  },
+  {
+    "q": "What error occurs in this code snippet?\n```java\nint x = 10;\nif (x > 5) \n    int y = 20;\nelse\n    int y = 30;\n```",
+    "options": [
+      "Variable y cannot be initialized twice",
+      "Declarations are not allowed as single unbraced statements in if/else branches",
+      "x > 5 must be in curly braces",
+      "else cannot follow if without braces"
+    ],
+    "answer": 1,
+    "explain": "Neither the `if` nor the `else` branch allows an unbraced local variable declaration. Both lines produce compilation errors: 'variable declaration not allowed here'.",
+    "topic": "Unbraced Branch Declaration",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized forbidden standalone variable declarations in both if and else branches.",
+    "weakness": "Use braces `{}` if you need to declare a variable inside an `if` or `else` branch."
+  },
+  {
+    "q": "Why does the following snippet produce an unreachable code error?\n```java\nfor (int i = 0; i < 5; i++) {\n    break;\n    System.out.println(i);\n}\n```",
+    "options": [
+      "i is never incremented",
+      "Statement `System.out.println(i);` is unreachable because `break` unconditionally terminates the iteration prior to reaching it",
+      "break cannot appear as the first statement in a loop",
+      "i < 5 is always true"
+    ],
+    "answer": 1,
+    "explain": "Because `break` exits the loop unconditionally, any statements placed after `break` within the same block can never be executed, causing a compile-time 'unreachable statement' error.",
+    "topic": "Unreachable Code After Break",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted unreachable statements immediately following an unconditional break.",
+    "weakness": "Statements placed directly after an unconditional `break` or `continue` are unreachable and cause a compile error."
+  },
+  {
+    "q": "What is the compilation issue in this code?\n```java\nint x = 5;\nwhile (x > 0) \n    x--;\n    System.out.println(x);\n```",
+    "options": [
+      "System.out.println causes a compilation error",
+      "No compile error, but indentation misleadingly implies println is inside the loop when only `x--;` is repeated",
+      "while loops must have braces `{}` in Java",
+      "x-- cannot be used without assignment"
+    ],
+    "answer": 1,
+    "explain": "Without braces `{}`, only the single statement `x--;` belongs to the while loop. `System.out.println(x);` executes only once after the loop finishes. It compiles, but indentation creates a severe logic bug.",
+    "topic": "Missing Braces Logic Trap",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands single-statement body semantics and indentation pitfalls without braces.",
+    "weakness": "Without braces, only the first statement belongs to the loop body; subsequent statements execute after the loop."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nint x = 2;\nswitch (x) {\n    case 1 + 1:\n        System.out.println(\"Two\");\n        break;\n    case 2:\n        System.out.println(\"Also Two\");\n        break;\n}\n```",
+    "options": [
+      "`1 + 1` is an invalid expression for a case label",
+      "`1 + 1` evaluates to 2 at compile-time, causing a 'duplicate case label: 2' compilation error with `case 2`",
+      "System.out.println cannot be called inside case 1 + 1",
+      "case labels cannot contain arithmetic"
+    ],
+    "answer": 1,
+    "explain": "`1 + 1` is a constant expression evaluated at compile time to 2. Because `case 2:` already exists, the compiler rejects the switch due to duplicate case labels.",
+    "topic": "Constant Expression Duplicate Case",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized compile-time constant evaluation leading to duplicate case labels.",
+    "weakness": "Constant expressions like `1 + 1` evaluate to 2 at compile time, colliding with `case 2:`."
+  },
+  {
+    "q": "Identify the bug in this code intended to sum numbers 1 to 5:\n```java\nint sum = 0;\nfor (int i = 1; i <= 5; i++) \n    sum += i;\n    System.out.println(\"Sum: \" + sum);\n```",
+    "options": [
+      "sum += i is an invalid expression",
+      "The println is indented but outside the loop, so it only prints once at the end (Sum: 15) instead of each step",
+      "Loop runs infinitely",
+      "i is not accessible by sum"
+    ],
+    "answer": 1,
+    "explain": "Because braces are omitted, only `sum += i;` is inside the loop. The println executes once after the loop completes. While valid syntax, it is a common bug when the developer intended intermediate printing.",
+    "topic": "Omitted Braces Semantic Trap",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted unintended loop scope due to omitted braces.",
+    "weakness": "Always use braces `{}` around loop bodies to prevent misleading indentation bugs."
+  },
+  {
+    "q": "What error occurs in this code snippet?\n```java\nint x = 0;\ndo {\n    int val = 10;\n    x++;\n} while (val > 0);\n```",
+    "options": [
+      "do-while loops cannot declare variables",
+      "Cannot find symbol: variable 'val' is declared inside the loop block and is out of scope in the while condition",
+      "val > 0 is an invalid condition",
+      "Missing semicolon"
+    ],
+    "answer": 1,
+    "explain": "Variables declared inside the `do { ... }` block are local to that block. The `while (val > 0)` condition is outside the block scope, so `val` cannot be resolved.",
+    "topic": "Do-While Variable Scope",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught referencing a block-scoped variable in do-while condition.",
+    "weakness": "Variables tested in a `do-while` condition must be declared outside the `do` block."
+  },
+  {
+    "q": "Why does the following snippet produce a compile-time error?\n```java\nint n = 10;\nif (n > 5) {\n    int a = 1;\n} else if (n > 2) {\n    int a = 2;\n}\nSystem.out.println(a);\n```",
+    "options": [
+      "Cannot declare variable 'a' in both if and else blocks",
+      "Cannot find symbol: variable 'a' is local to each if/else block and not accessible outside them",
+      "n > 5 condition conflicts with n > 2",
+      "else if cannot follow if"
+    ],
+    "answer": 1,
+    "explain": "`a` is declared separately inside the local scopes of each branch. When the if-else terminates, `a` ceases to exist, making `System.out.println(a)` fail to compile.",
+    "topic": "Branch Scope Isolation",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized block-level scope isolation in if-else branches.",
+    "weakness": "Variables declared inside if-else blocks cannot be accessed outside the blocks; declare them before the if-statement."
+  },
+  {
+    "q": "What is the output of the following switch snippet?\n```java\nint num = 2;\nswitch (num) {\n    case 1: System.out.print(\"1 \");\n    case 2: System.out.print(\"2 \");\n    case 3: System.out.print(\"3 \");\n    default: System.out.print(\"D \");\n}\n```",
+    "options": [
+      "2 ",
+      "2 3 D ",
+      "1 2 3 D ",
+      "2 3 "
+    ],
+    "answer": 1,
+    "explain": "Because there are no `break` statements, execution matches `case 2` and falls through sequentially executing `case 3` and `default`: outputting `\"2 3 D \"`.",
+    "topic": "Switch Fall-Through Execution",
+    "type": "output",
+    "level": "easy",
+    "strength": "Correctly tracked switch fall-through without break statements.",
+    "weakness": "Without `break`, execution continues down all remaining cases including default."
+  },
+  {
+    "q": "What does the following nested loop print?\n```java\nfor (int i = 1; i <= 2; i++) {\n    for (int j = 1; j <= 3; j++) {\n        if (j == 2) continue;\n        System.out.print(i + \"\" + j + \" \");\n    }\n}\n```",
+    "options": [
+      "11 13 21 23 ",
+      "11 12 13 21 22 23 ",
+      "11 21 ",
+      "13 23 "
+    ],
+    "answer": 0,
+    "explain": "When `i = 1`: `j = 1` -> prints `11`. `j = 2` -> continue skips. `j = 3` -> prints `13`. When `i = 2`: `j = 1` -> prints `21`. `j = 2` -> continue skips. `j = 3` -> prints `23`. Output: `11 13 21 23 `.",
+    "topic": "Nested Loop Continue Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Accurately traced nested loop iterations and continue skip behavior.",
+    "weakness": "`continue` skips the remainder of the current inner loop iteration only."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\nint count = 0;\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (i == j) break;\n        count++;\n    }\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "0",
+      "3",
+      "6",
+      "9"
+    ],
+    "answer": 1,
+    "explain": "`i=0`: `j=0` -> `0==0` break immediately (0 iterations). `i=1`: `j=0` -> count=1; `j=1` -> `1==1` break (1 iteration). `i=2`: `j=0` -> count=2; `j=1` -> count=3; `j=2` -> break (2 iterations). Total count: `3`.",
+    "topic": "Nested Loop Break Counting",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced inner loop break conditions across multiple outer iterations.",
+    "weakness": "Trace nested loops systematically by tracking variable states for each outer iteration."
+  },
+  {
+    "q": "What is the output of this labeled break snippet?\n```java\nouter:\nfor (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= 3; j++) {\n        if (i * j > 2) break outer;\n        System.out.print(i + \"*\" + j + \" \");\n    }\n}\n```",
+    "options": [
+      "1*1 1*2 ",
+      "1*1 1*2 2*1 ",
+      "1*1 ",
+      "1*1 1*2 1*3 "
+    ],
+    "answer": 0,
+    "explain": "`i=1, j=1`: `1*1=1 <= 2` -> prints `1*1 `. `i=1, j=2`: `1*2=2 <= 2` -> prints `1*2 `. `i=1, j=3`: `1*3=3 > 2` -> `break outer;` terminates both loops immediately. Output: `1*1 1*2 `.",
+    "topic": "Labeled Break Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Correctly recognized outer loop termination from inner loop labeled break.",
+    "weakness": "`break outer;` completely terminates the outer loop immediately."
+  },
+  {
+    "q": "What does this while loop output?\n```java\nint x = 10;\nwhile (x --> 7) {\n    System.out.print(x + \" \");\n}\n```",
+    "options": [
+      "9 8 7 ",
+      "10 9 8 ",
+      "9 8 ",
+      "10 9 8 7 "
+    ],
+    "answer": 0,
+    "explain": "The syntax `x --> 7` is `(x--) > 7`. Iteration 1: `10 > 7` true (x becomes 9), prints 9. Iteration 2: `9 > 7` true (x becomes 8), prints 8. Iteration 3: `8 > 7` true (x becomes 7), prints 7. Iteration 4: `7 > 7` false (x becomes 6), loop ends. Output: `9 8 7 `.",
+    "topic": "Post-Decrement Loop Operator",
+    "type": "output",
+    "level": "hard",
+    "strength": "Mastered post-decrement combined with comparison operator `x-- > N`.",
+    "weakness": "`x-- > y` evaluates `x > y` with the current value and then decrements `x` before the body runs."
+  },
+  {
+    "q": "What is the output of this do-while loop?\n```java\nint i = 5;\ndo {\n    System.out.print(i + \" \");\n    i++;\n} while (i < 5);\n```",
+    "options": [
+      "Nothing",
+      "5 ",
+      "5 6 ",
+      "Infinite loop"
+    ],
+    "answer": 1,
+    "explain": "The `do` block executes unconditionally first: prints 5 and increments `i` to 6. Then condition `6 < 5` is evaluated: false! Loop terminates. Output: `5 `.",
+    "topic": "Do-While Single Execution",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized that do-while loop runs at least once even when initial condition is false.",
+    "weakness": "A `do-while` loop always executes its body at least once before checking the condition."
+  },
+  {
+    "q": "What is the output of the following switch code?\n```java\nint x = 20;\nswitch (x) {\n    default:\n        System.out.print(\"Def \");\n    case 1:\n        System.out.print(\"One \");\n        break;\n    case 2:\n        System.out.print(\"Two \");\n}\n```",
+    "options": [
+      "Def ",
+      "Def One ",
+      "Two ",
+      "One "
+    ],
+    "answer": 1,
+    "explain": "`x = 20` matches neither 1 nor 2, so execution starts at `default:`. Because there is no `break` at default, execution falls through into `case 1:` printing `\"One \"` before hitting `break`. Output: `\"Def One \"`.",
+    "topic": "Default Fall-Through",
+    "type": "output",
+    "level": "hard",
+    "strength": "Mastery of fall-through when default is placed at top of switch.",
+    "weakness": "When `default` appears first and matches, execution falls through to subsequent cases until a `break`."
+  },
+  {
+    "q": "What is printed by the following code?\n```java\nint sum = 0;\nfor (int i = 1; i <= 10; i++) {\n    if (i % 2 == 0) continue;\n    sum += i;\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "25",
+      "30",
+      "55",
+      "20"
+    ],
+    "answer": 0,
+    "explain": "Even numbers are skipped by `continue`. The loop sums odd numbers between 1 and 10: `1 + 3 + 5 + 7 + 9 = 25`.",
+    "topic": "Odd Sum Accumulation",
+    "type": "output",
+    "level": "easy",
+    "strength": "Correctly computed sum of filtered numbers using continue.",
+    "weakness": "`continue` skips even numbers; summing odd numbers 1, 3, 5, 7, 9 yields 25."
+  },
+  {
+    "q": "What does this snippet print?\n```java\nint a = 0;\nfor (int i = 0; i < 5; i += 2) {\n    a += i;\n}\nSystem.out.println(a);\n```",
+    "options": [
+      "6",
+      "10",
+      "4",
+      "12"
+    ],
+    "answer": 0,
+    "explain": "`i` takes values 0, 2, 4 (at i=6, `6 < 5` is false). Sum `a = 0 + 2 + 4 = 6`.",
+    "topic": "Step Loop Sum",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked loop counter with step increment of 2.",
+    "weakness": "Values of `i` are 0, 2, and 4; their sum is 6."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint x = 0;\nfor (int i = 0; i < 3; i++) {\n    for (int j = 0; j < 3; j++) {\n        if (j > i) continue;\n        x++;\n    }\n}\nSystem.out.println(x);\n```",
+    "options": [
+      "3",
+      "6",
+      "9",
+      "4"
+    ],
+    "answer": 1,
+    "explain": "`i=0`: j=0 (1). `i=1`: j=0, 1 (2). `i=2`: j=0, 1, 2 (3). Total iterations where `j <= i` is `1 + 2 + 3 = 6`. So `x = 6`.",
+    "topic": "Triangular Iteration Count",
+    "type": "output",
+    "level": "medium",
+    "strength": "Calculated nested loop triangular iterations correctly.",
+    "weakness": "Condition `j <= i` produces triangular numbers: 1 + 2 + 3 = 6."
+  },
+  {
+    "q": "What does the following code print?\n```java\nint x = 1;\nif (x > 0)\n    if (x < 1)\n        System.out.println(\"A\");\nelse\n    System.out.println(\"B\");\n```",
+    "options": [
+      "A",
+      "B",
+      "Nothing printed",
+      "A and B"
+    ],
+    "answer": 1,
+    "explain": "According to the dangling else rule, the `else` binds to the inner `if (x < 1)`. Since `x > 0` is true and `x < 1` is false, the inner `else` executes, printing `B`.",
+    "topic": "Dangling Else Output",
+    "type": "output",
+    "level": "hard",
+    "strength": "Correctly resolved dangling else association to nearest inner if.",
+    "weakness": "`else` attaches to `if (x < 1)`; since `x = 1` is not `< 1`, the else branch executes, printing 'B'."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint i = 0;\nwhile (i < 5) {\n    i++;\n    if (i == 3) break;\n}\nSystem.out.println(i);\n```",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": 1,
+    "explain": "`i` starts at 0. Iteration 1: `i` becomes 1. Iteration 2: `i` becomes 2. Iteration 3: `i` becomes 3, matching `i == 3`, and breaks immediately. Final value of `i` is 3.",
+    "topic": "While Loop Break Value",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked loop variable at point of break termination.",
+    "weakness": "The loop breaks immediately when `i` reaches 3, outputting 3."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\nint x = 5;\nboolean b = true;\nif (x == 5 && (b = false)) {\n    x = 10;\n}\nSystem.out.println(x + \" \" + b);\n```",
+    "options": [
+      "5 true",
+      "5 false",
+      "10 false",
+      "10 true"
+    ],
+    "answer": 1,
+    "explain": "`x == 5` is true, so evaluation proceeds to the second operand `(b = false)`. `b` is assigned false, making the condition false. The if body does NOT execute. So `x = 5` and `b = false`.",
+    "topic": "Assignment Side Effect in Condition",
+    "type": "output",
+    "level": "medium",
+    "strength": "Tracked variable side effects inside evaluated boolean operands.",
+    "weakness": "`(b = false)` executes, setting `b` to false and failing the if condition; `x` remains 5."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint count = 0;\nfor (int i = 1; i <= 100; i *= 2) {\n    count++;\n}\nSystem.out.println(count);\n```",
+    "options": [
+      "6",
+      "7",
+      "8",
+      "100"
+    ],
+    "answer": 1,
+    "explain": "`i` doubles each step: 1, 2, 4, 8, 16, 32, 64 (7 values). Next is 128 which exceeds 100. Thus `count` is 7.",
+    "topic": "Geometric Loop Iterations",
+    "type": "output",
+    "level": "medium",
+    "strength": "Accurately calculated geometric progression loop count.",
+    "weakness": "Powers of 2 <= 100 are 1, 2, 4, 8, 16, 32, 64 (7 iterations)."
+  },
+  {
+    "q": "What is printed by this code?\n```java\nint a = 1, b = 2;\nif (a++ == 1 || ++b == 3) {\n    System.out.println(a + \" \" + b);\n}\n```",
+    "options": [
+      "2 2",
+      "2 3",
+      "1 2",
+      "1 3"
+    ],
+    "answer": 0,
+    "explain": "`a++ == 1` tests `1 == 1` (true), and increments `a` to 2. Because `||` short-circuits when the left operand is true, `++b == 3` is completely skipped! `b` remains 2. Output: `\"2 2\"`.",
+    "topic": "Logical OR Short-Circuit",
+    "type": "output",
+    "level": "medium",
+    "strength": "Spotted short-circuit skip of second operand in logical OR.",
+    "weakness": "`||` stops evaluation when the first operand is true; `++b` is never executed, leaving `b = 2`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint n = 1;\nswitch (n) {\n    case 1: n += 5;\n    case 2: n += 10;\n    case 3: n += 20; break;\n    default: n += 100;\n}\nSystem.out.println(n);\n```",
+    "options": [
+      "6",
+      "16",
+      "36",
+      "136"
+    ],
+    "answer": 2,
+    "explain": "Matches `case 1`: `n = 1 + 5 = 6`. Falls through to `case 2`: `n = 6 + 10 = 16`. Falls through to `case 3`: `n = 16 + 20 = 36`. Encounters `break` and exits. Prints 36.",
+    "topic": "Accumulated Switch Fall-Through",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced variable accumulation across multiple fall-through cases.",
+    "weakness": "Trace cumulative modifications as execution flows through un-broken case blocks: 1 -> 6 -> 16 -> 36."
+  },
+  {
+    "q": "What does this loop print?\n```java\nfor (int i = 0; i < 5; i++) {\n    if (i == 2) continue;\n    if (i == 4) break;\n    System.out.print(i + \" \");\n}\n```",
+    "options": [
+      "0 1 3 ",
+      "0 1 2 3 ",
+      "0 1 3 4 ",
+      "0 1 "
+    ],
+    "answer": 0,
+    "explain": "`i=0`: prints 0. `i=1`: prints 1. `i=2`: continue skips printing. `i=3`: prints 3. `i=4`: break exits loop. Output: `0 1 3 `.",
+    "topic": "Combined Continue and Break",
+    "type": "output",
+    "level": "easy",
+    "strength": "Properly executed interplay of continue and break statements.",
+    "weakness": "At `i=2` continue skips; at `i=4` break terminates; output is `0 1 3 `."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\nint sum = 0;\nfor (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= i; j++) {\n        sum += j;\n    }\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "10",
+      "14",
+      "6",
+      "9"
+    ],
+    "answer": 0,
+    "explain": "`i=1`: j=1 (sum += 1 -> 1). `i=2`: j=1, 2 (sum += 1 + 2 -> 4). `i=3`: j=1, 2, 3 (sum += 1 + 2 + 3 -> 10). Output: 10.",
+    "topic": "Nested Triangle Sum",
+    "type": "output",
+    "level": "easy",
+    "strength": "Computed inner loop sum accumulation across varying bounds.",
+    "weakness": "`(1) + (1 + 2) + (1 + 2 + 3) = 1 + 3 + 6 = 10`."
+  },
+  {
+    "q": "What does this snippet print?\n```java\nint x = 0;\ndo {\n    x++;\n    if (x == 3) continue;\n    System.out.print(x + \" \");\n} while (x < 4);\n```",
+    "options": [
+      "1 2 4 ",
+      "1 2 ",
+      "1 2 3 4 ",
+      "1 2 4 5 "
+    ],
+    "answer": 0,
+    "explain": "Iteration 1: x=1, prints 1. Iteration 2: x=2, prints 2. Iteration 3: x=3, continue skips print, condition `3 < 4` is true. Iteration 4: x=4, prints 4, condition `4 < 4` is false. Loop ends. Output: `1 2 4 `.",
+    "topic": "Do-While Continue Execution",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced continue within do-while loop correctly.",
+    "weakness": "`continue` in a `do-while` loop skips to the `while (condition)` check, not the top of the body."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint a = 2;\nint res = (a > 1) ? (a > 3 ? 10 : 20) : 30;\nSystem.out.println(res);\n```",
+    "options": [
+      "10",
+      "20",
+      "30",
+      "undefined"
+    ],
+    "answer": 1,
+    "explain": "`a > 1` is true (`2 > 1`), so outer ternary evaluates `(a > 3 ? 10 : 20)`. In inner ternary, `2 > 3` is false, selecting 20. Output: 20.",
+    "topic": "Nested Ternary Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Accurately parsed nested ternary operator branches.",
+    "weakness": "Outer branch true -> inner condition `2 > 3` false -> yields 20."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint x = 5;\nwhile (x > 0) {\n    x -= 2;\n}\nSystem.out.println(x);\n```",
+    "options": [
+      "0",
+      "-1",
+      "1",
+      "2"
+    ],
+    "answer": 1,
+    "explain": "Start x=5. Iter 1: x becomes 3 (3 > 0 true). Iter 2: x becomes 1 (1 > 0 true). Iter 3: x becomes -1 (-1 > 0 false). Loop terminates. Final x is -1.",
+    "topic": "Step Loop Termination Value",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked loop exit value when step decrements pass zero.",
+    "weakness": "Decrements: 5 -> 3 -> 1 -> -1; loop stops when condition `-1 > 0` is false, leaving -1."
+  },
+  {
+    "q": "What does this code output?\n```java\nchar grade = 'B';\nswitch (grade) {\n    case 'A': System.out.print(\"Excellent \");\n    case 'B':\n    case 'C': System.out.print(\"Well Done \"); break;\n    case 'D': System.out.print(\"Passed \");\n    default: System.out.print(\"Invalid\");\n}\n```",
+    "options": [
+      "Well Done ",
+      "Excellent Well Done ",
+      "Well Done Passed ",
+      "Invalid"
+    ],
+    "answer": 0,
+    "explain": "Matches `case 'B':`. Since `case 'B'` has no statements, it falls directly into `case 'C':`, which prints `\"Well Done \"` and hits `break`. Output: `\"Well Done \"`.",
+    "topic": "Multi-Case Sharing in Switch",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized idiomatic case sharing pattern in switch statements.",
+    "weakness": "Multiple cases sharing a block (case 'B': case 'C':) executes the common block once."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\nint count = 0;\nfor (int i = 0; i < 2; i++)\n    for (int j = 0; j < 2; j++)\n        for (int k = 0; k < 2; k++)\n            count++;\nSystem.out.println(count);\n```",
+    "options": [
+      "6",
+      "8",
+      "12",
+      "16"
+    ],
+    "answer": 1,
+    "explain": "The 3 nested loops each run 2 times. Total iterations = `2 * 2 * 2 = 8`. Count = 8.",
+    "topic": "Triple Nested Loop Iteration Count",
+    "type": "output",
+    "level": "easy",
+    "strength": "Calculated multiplicative iteration count of nested loops.",
+    "weakness": "Multiply loop bounds for independent nested loops: 2 * 2 * 2 = 8."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint sum = 0;\nfor (int i = 1; i <= 5; i++) {\n    if (i == 3) continue;\n    sum += i;\n    if (i == 4) break;\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "7",
+      "10",
+      "3",
+      "12"
+    ],
+    "answer": 0,
+    "explain": "`i=1`: sum = 1. `i=2`: sum = 3. `i=3`: skipped by continue. `i=4`: sum = 3 + 4 = 7; then break exits loop immediately. Output: 7.",
+    "topic": "Interleaved Break and Continue",
+    "type": "output",
+    "level": "medium",
+    "strength": "Tracked sequential accumulation with continue and break conditions.",
+    "weakness": "1 + 2 = 3; 3 is skipped; 4 is added (sum=7) and then break triggers, printing 7."
+  },
+  {
+    "q": "What is printed by this loop?\n```java\nint x = 1;\nwhile (x < 10) {\n    x = x * 2 + 1;\n}\nSystem.out.println(x);\n```",
+    "options": [
+      "15",
+      "9",
+      "11",
+      "31"
+    ],
+    "answer": 0,
+    "explain": "Start x=1. Iter 1: x = 1*2 + 1 = 3 (3 < 10 true). Iter 2: x = 3*2 + 1 = 7 (7 < 10 true). Iter 3: x = 7*2 + 1 = 15 (15 < 10 false). Loop terminates. Prints 15.",
+    "topic": "Recurrence Relation Loop",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced arithmetic recurrence progression inside while loop.",
+    "weakness": "Values of x: 1 -> 3 -> 7 -> 15. When x=15, condition 15 < 10 is false, printing 15."
+  },
+  {
+    "q": "You are building an ATM withdrawal module for a bank in Malaysia. The user requests `withdrawAmount`. The ATM only dispenses RM 50 and RM 100 notes. How should you validate if the requested amount is dispensable before checking account balance?",
+    "options": [
+      "`if (withdrawAmount % 50 != 0 || withdrawAmount <= 0) { reject(); }`",
+      "`if (withdrawAmount / 50 == 0) { reject(); }`",
+      "`if (withdrawAmount % 100 != 0) { reject(); }`",
+      "`if (withdrawAmount > 1000) { reject(); }`"
+    ],
+    "answer": 0,
+    "explain": "Since any multiple of RM 100 is also a multiple of RM 50, checking `withdrawAmount % 50 != 0 || withdrawAmount <= 0` cleanly verifies that the amount can be dispensed in RM 50 and RM 100 notes.",
+    "topic": "ATM Note Dispensation Validation",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Formulated clean modular arithmetic for ATM note validation.",
+    "weakness": "Any sum of RM 50 and RM 100 notes must be a positive multiple of 50 (`amount % 50 == 0`)."
+  },
+  {
+    "q": "A university grade assignment program converts numeric scores (0 to 100) to letter grades (A, B, C, F). A developer wants to use a `switch` statement instead of cascading `if-else`. How can scores be mapped to integer switch cases cleanly?",
+    "options": [
+      "Use `switch (score)` with 101 individual case labels",
+      "Use `switch (score / 10)` to map scores into buckets: 10 and 9 for A, 8 for B, 7 for C, etc.",
+      "Convert score to double and switch on `(double) score`",
+      "Switch on `score % 10`"
+    ],
+    "answer": 1,
+    "explain": "Dividing an integer score by 10 (`score / 10`) performs integer truncation, mapping 90-99 to 9, 80-89 to 8, etc. Cases 10 and 9 map to 'A', 8 to 'B', making a compact switch statement.",
+    "topic": "Score Range Bucket Switching",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied integer division bucket mapping to compact switch statements.",
+    "weakness": "`score / 10` clusters numeric ranges into clean integer buckets suitable for switch cases."
+  },
+  {
+    "q": "In an e-commerce order processing pipeline, an order can have statuses: PENDING, PAID, SHIPPED, DELIVERED, CANCELLED. Why is a `switch` statement generally preferred over a 5-branch `if-else-if` ladder when branching on enum or int status codes?",
+    "options": [
+      "`if-else-if` cannot compare enums",
+      "`switch` statements are more readable, prevent repetitive variable evaluations, and can be compiled into efficient `tableswitch` or `lookupswitch` bytecode jump tables",
+      "`switch` uses less stack memory than `if`",
+      "Java prohibits more than 3 `if` statements in a single method"
+    ],
+    "answer": 1,
+    "explain": "A `switch` statement makes branch intentions clear and allows the JVM compiler to generate jump tables (`tableswitch` / `lookupswitch`) that achieve O(1) branch dispatch instead of sequential O(N) comparisons.",
+    "topic": "Switch Performance & Clean Code",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands bytecode jump table efficiency and readability of switch statements.",
+    "weakness": "Switch statements improve readability and enable compiler jump table optimizations."
+  },
+  {
+    "q": "You are writing a CLI menu loop for a library catalog application. The menu must display at least once, accept user choice 1 to 4, and repeat until the user selects 4 (Exit). Which loop construct is the industry standard for this pattern?",
+    "options": [
+      "A `for` loop from 1 to 4",
+      "A `do-while` loop, because the menu must unconditionally display before reading input, and repeat while `choice != 4`",
+      "An infinite recursive method call without base case",
+      "A `while (false)` loop"
+    ],
+    "answer": 1,
+    "explain": "CLI menus represent the canonical use-case for `do-while` loops: the menu must render at least once before user input is acquired and evaluated.",
+    "topic": "Menu-Driven Do-While Pattern",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Recognized standard do-while design pattern for CLI interactive menus.",
+    "weakness": "Use a `do-while` loop for menu-driven applications where prompts must show at least once."
+  },
+  {
+    "q": "A cellular network billing engine checks whether a phone number prefix matches domestic telecom operators. If a prefix matches Celcom, Maxis, or Digi, the domestic rate applies; otherwise international rates apply. How is this written concisely in a `switch`?",
+    "options": [
+      "Write separate duplicate methods for each operator",
+      "Group matching cases sequentially: `case \"012\": case \"019\": case \"016\": return DOMESTIC_RATE; default: return INTL_RATE;`",
+      "Use `case \"012\" || \"019\" || \"016\":`",
+      "Switch statements cannot compare phone prefix strings"
+    ],
+    "answer": 1,
+    "explain": "Sequential case labels without break fall through to a shared handler: `case \"012\": case \"019\": case \"016\": return DOMESTIC_RATE;`.",
+    "topic": "Shared Case Fall-Through Pattern",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Employed shared case labels for multi-match business logic.",
+    "weakness": "Stack case labels together without `break` to share a common code block."
+  },
+  {
+    "q": "A security system monitors failed login attempts. An IP is blocked if it fails 5 consecutive attempts. A successful login resets the failure counter to 0. Which control flow structure correctly models this verification loop?",
+    "options": [
+      "A single if-statement without loops",
+      "A while loop checking attempts; if auth fails, increment `fails`; if `fails >= 5`, block and break; if auth succeeds, `fails = 0` and break",
+      "A switch statement on the IP address",
+      "A for loop that ignores successful logins"
+    ],
+    "answer": 1,
+    "explain": "A loop tracking consecutive failures with early break upon success or upon reaching the 5-failure threshold accurately models real-world rate limiting.",
+    "topic": "Rate Limiting & Consecutive Failures",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Modeled security rate limiting with dynamic failure tracking.",
+    "weakness": "Reset consecutive failure counters upon successful action; break and block when threshold is met."
+  },
+  {
+    "q": "A scientific simulation models radioactive decay where a sample's atoms halve every 5 days. Starting with 10,000 atoms, which loop calculates the number of 5-day periods until fewer than 100 atoms remain?",
+    "options": [
+      "`int p = 0; for (int a = 10000; a >= 100; a /= 2) p++;`",
+      "`int p = 0; for (int a = 10000; a < 100; a /= 2) p++;`",
+      "`int p = 0; while (a > 100) { p = 10000 / 2; }`",
+      "`int p = 10000 / 100 * 5;`"
+    ],
+    "answer": 0,
+    "explain": "Starting with 10,000 atoms, each iteration halves `a` (`a /= 2`) and increments period counter `p++` as long as `a >= 100`.",
+    "topic": "Simulation Loop Modeling",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Correctly configured simulation decay loop bounds and updates.",
+    "weakness": "Loop condition `a >= 100` with update `a /= 2` accurately simulates exponential decay."
+  },
+  {
+    "q": "In a game engine, the main game loop must run at 60 FPS while `isRunning` is true, but must immediately pause if `isPaused` is true, without terminating the outer game session. How is this implemented cleanly?",
+    "options": [
+      "`while (isRunning) { if (isPaused) continue; updateWorld(); render(); }`",
+      "`while (isRunning) { if (isPaused) break; updateWorld(); render(); }`",
+      "`while (isRunning) { updateWorld(); render(); isRunning = false; }`",
+      "`do { updateWorld(); } while (isPaused);`"
+    ],
+    "answer": 0,
+    "explain": "Using `if (isPaused) continue;` skips `updateWorld()` and `render()` during paused states while keeping the game loop alive awaiting user unpause.",
+    "topic": "Game Loop Pause Architecture",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied `continue` in game loops to skip rendering during pause without loop exit.",
+    "weakness": "`continue` skips world updates while paused without terminating the main game loop."
+  },
+  {
+    "q": "A data validation routine parses a CSV file containing 10,000 rows. If a row is corrupted, it should log a warning and immediately proceed to the next row without crashing or stopping the import. Which keyword achieves this?",
+    "options": [
+      "`break`",
+      "`continue`",
+      "`return`",
+      "`System.exit(0)`"
+    ],
+    "answer": 1,
+    "explain": "`continue` immediately skips the remainder of the current row processing iteration and proceeds to read the next CSV row.",
+    "topic": "Batch Processing Error Recovery",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Used continue for resilient error recovery in batch ETL pipelines.",
+    "weakness": "`continue` skips problematic records without halting batch iteration."
+  },
+  {
+    "q": "You are searching a 2D matrix representing an airport terminal grid for a lost passenger's luggage ID. Once the luggage is found, you want to terminate BOTH the row loop and the column loop immediately to save CPU cycles. What is the cleanest approach in Java?",
+    "options": [
+      "Set both row and column counters to `Integer.MAX_VALUE`",
+      "Use a labeled break (`search: for (...) { for (...) { if (found) break search; } }`)",
+      "Throw and catch a runtime exception",
+      "Call `System.exit(0)`"
+    ],
+    "answer": 1,
+    "explain": "A labeled `break search;` immediately exits both nested loops cleanly without dirty variable flags or exception overhead.",
+    "topic": "2D Grid Search Early Exit",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Employed labeled break for optimal multi-level search termination.",
+    "weakness": "Use labeled `break label;` to exit nested loops immediately upon finding a target element."
+  },
+  {
+    "q": "A banking app generates a 6-digit One-Time Password (OTP). It must ensure that the generated OTP does NOT contain the digit '0' anywhere. Which loop structure generates random digits 1 to 9 for all 6 positions?",
+    "options": [
+      "`for (int i = 0; i < 6; i++) { int digit = rand.nextInt(9) + 1; otp += digit; }`",
+      "`for (int i = 0; i < 6; i++) { int digit = rand.nextInt(10); otp += digit; }`",
+      "`while (otp.length() < 6) { int digit = 0; otp += digit; }`",
+      "`for (int i = 1; i <= 6; i *= 0) { ... }`"
+    ],
+    "answer": 0,
+    "explain": "`rand.nextInt(9)` produces 0 to 8. Adding 1 shifts the range to 1 to 9, guaranteeing no digit is zero across all 6 iterations.",
+    "topic": "OTP Generation Algorithm",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Designed clean loop with bounded random number generation.",
+    "weakness": "`rand.nextInt(9) + 1` generates digits 1 to 9, preventing zero digits across 6 iterations."
+  },
+  {
+    "q": "A ride-hailing app in Kuala Lumpur calculates base fare based on pickup time. Peak hours are 07:00-09:00 and 17:00-20:00. Given integer `hour` (0 to 23), which boolean expression determines if peak pricing applies?",
+    "options": [
+      "`(hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 20)`",
+      "`hour >= 7 && hour <= 9 && hour >= 17 && hour <= 20`",
+      "`hour >= 7 || hour <= 20`",
+      "`(hour >= 7 || hour <= 9) && (hour >= 17 || hour <= 20)`"
+    ],
+    "answer": 0,
+    "explain": "The morning peak is `(hour >= 7 && hour <= 9)`. The evening peak is `(hour >= 17 && hour <= 20)`. Either window qualifies peak pricing, connected by `||`.",
+    "topic": "Time Window Logic",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Correctly modeled disjoint time intervals with logical operators.",
+    "weakness": "Use `||` between separate time windows and `&&` within each continuous window."
+  },
+  {
+    "q": "A warehouse robot sorts packages into 3 shipping bays based on weight: Bay 1 (< 5kg), Bay 2 (5kg to 20kg inclusive), Bay 3 (> 20kg). Which `if-else` structure prevents redundant boundary checks?",
+    "options": [
+      "`if (w < 5) Bay1; else if (w <= 20) Bay2; else Bay3;`",
+      "`if (w < 5) Bay1; if (w >= 5 && w <= 20) Bay2; if (w > 20) Bay3;`",
+      "`if (w > 20) Bay3; else if (w < 5) Bay1; else if (w >= 5 && w <= 20) Bay2;`",
+      "`switch ((int) w) { ... }`"
+    ],
+    "answer": 0,
+    "explain": "Because the first condition filters out `< 5`, the `else if (w <= 20)` implicitly knows `w >= 5`. No redundant `w >= 5 &&` check is necessary, making code cleaner and faster.",
+    "topic": "Efficient Decision Ladders",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Eliminated redundant boundary conditions in if-else ladders.",
+    "weakness": "In sorted if-else ladders, previous branches already filter bounds, eliminating redundant checks."
+  },
+  {
+    "q": "A network packet downloader implements an exponential backoff retry policy: if a download fails, it waits 1s, then 2s, then 4s, up to 5 max retries. Which loop header models this cleanest?",
+    "options": [
+      "`for (int attempt = 1, delay = 1; attempt <= 5; attempt++, delay *= 2)`",
+      "`for (int attempt = 1; attempt <= 5; delay += 2)`",
+      "`while (delay < 5) { attempt *= 2; }`",
+      "`for (int delay = 1; delay == 5; delay++)`"
+    ],
+    "answer": 0,
+    "explain": "Declaring both `attempt` and `delay` in the `for` loop header maintains loop state cleanly, doubling `delay *= 2` on each failed retry attempt up to 5.",
+    "topic": "Exponential Backoff Loop",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Engineered dual-variable for loop header for exponential retry backoff.",
+    "weakness": "Use a dual-variable loop header `for (int attempt=1, delay=1; ...; attempt++, delay*=2)` for backoff algorithms."
+  },
+  {
+    "q": "You are developing a prime number verification function `boolean isPrime(int n)`. Why should the trial division loop terminate at `Math.sqrt(n)` rather than `n - 1`?",
+    "options": [
+      "Java throws an exception if a loop exceeds the square root",
+      "If `n` has a factor greater than `sqrt(n)`, it must also have a corresponding factor less than or equal to `sqrt(n)`; checking beyond `sqrt(n)` is redundant O(N) work",
+      "`Math.sqrt(n)` rounds to the nearest prime",
+      "`n - 1` causes an arithmetic overflow"
+    ],
+    "answer": 1,
+    "explain": "Factors occur in complementary pairs `(a * b = n)`. If both factors were strictly greater than `sqrt(n)`, their product would exceed `n`. Thus trial division up to `sqrt(n)` guarantees primality in O(sqrt(N)) time.",
+    "topic": "Primality Test Optimization",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands algorithmic optimization of trial division to O(sqrt(N)).",
+    "weakness": "Trial division only needs to test up to `Math.sqrt(n)` because factors pair across the square root."
+  },
+  {
+    "q": "In a lottery simulation, you need to select 6 unique random numbers from 1 to 49. When a newly generated number is already picked, what control flow statement should be used to re-roll without advancing the count of picked numbers?",
+    "options": [
+      "Use `continue` inside a while loop that only increments the counter when the number is confirmed unique",
+      "Use `break` to terminate the lottery",
+      "Use `return` to exit the application",
+      "Reset all previously selected numbers to 0"
+    ],
+    "answer": 0,
+    "explain": "A `while (count < 6)` loop generates a candidate number. If already chosen, it skips incrementing `count` (or calls `continue`), ensuring exactly 6 unique numbers are collected.",
+    "topic": "Lottery Unique Selection Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied conditional loop counter advancement to ensure unique collection.",
+    "weakness": "Only advance the loop counter when a candidate satisfies uniqueness constraints."
+  },
+  {
+    "q": "A student is building a calculator that evaluates simple mathematical operations: `+`, `-`, `*`, `/`. How should division by zero be prevented in the `/` case of a `switch` statement?",
+    "options": [
+      "Rely on the switch statement to automatically prevent division by zero",
+      "Inside `case '/':`, wrap division in `if (b != 0) { return a / b; } else { printError(); }`",
+      "Throw an exception before the switch starts",
+      "Add a `case 0:` inside the operator switch"
+    ],
+    "answer": 1,
+    "explain": "In `case '/':`, inspect the divisor `if (b == 0)` to handle the edge case gracefully rather than allowing a runtime `ArithmeticException` crash.",
+    "topic": "Defensive Branch Handling",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Embedded defensive zero checks inside switch branch operations.",
+    "weakness": "Always check `b != 0` inside division cases before performing arithmetic."
+  },
+  {
+    "q": "A smart thermostat adjusts air conditioning mode based on current temperature: > 26°C -> Cooling, < 20°C -> Heating, otherwise -> Fan Only. Which structure best represents this three-state control logic?",
+    "options": [
+      "`if (temp > 26) cool(); else if (temp < 20) heat(); else fanOnly();`",
+      "`switch (temp) { case 26: cool(); }`",
+      "`while (temp > 26) { cool(); }`",
+      "`do { heat(); } while (temp < 20);`"
+    ],
+    "answer": 0,
+    "explain": "An `if-else-if-else` ladder provides clear, unambiguous branching for three non-overlapping ranges.",
+    "topic": "Three-State Thermostat Logic",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Selected clean if-else-if-else ladder for multi-range device control.",
+    "weakness": "Use if-else-if-else ladders for continuous floating-point range evaluation."
+  },
+  {
+    "q": "A payment gateway verifies a user's credit card expiration date. The card expires at the end of `expMonth` in `expYear`. Given current year `curYear` and current month `curMonth`, which expression correctly validates that the card has NOT expired?",
+    "options": [
+      "`expYear > curYear || (expYear == curYear && expMonth >= curMonth)`",
+      "`expYear >= curYear && expMonth >= curMonth` (Fails if expYear > curYear but expMonth < curMonth)",
+      "`expYear + expMonth > curYear + curMonth`",
+      "`expYear == curYear && expMonth == curMonth`"
+    ],
+    "answer": 0,
+    "explain": "If the expiration year is in the future (`expYear > curYear`), the card is valid regardless of month. If it is the current year (`expYear == curYear`), the expiration month must be `>= curMonth`.",
+    "topic": "Date Expiration Verification Logic",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Accurately structured multi-field date validity condition.",
+    "weakness": "When comparing dates across years and months: `futureYear || (sameYear && validMonth)`."
+  },
+  {
+    "q": "A text processing program counts the number of vowels in a string. Which control flow structure inside a character iteration loop provides the cleanest vowel matching?",
+    "options": [
+      "`switch (Character.toLowerCase(ch)) { case 'a': case 'e': case 'i': case 'o': case 'u': vowelCount++; break; }`",
+      "Five nested `if` statements",
+      "A while loop checking each vowel sequentially",
+      "Converting each character to double"
+    ],
+    "answer": 0,
+    "explain": "A `switch` statement with stacked cases `case 'a': case 'e': case 'i': case 'o': case 'u':` is clean, readable, and highly optimized by the JVM.",
+    "topic": "Vowel Counting Switch Idiom",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Implemented stacked case switch for multi-character matching.",
+    "weakness": "Stack multiple character cases together to group vowel matching cleanly."
+  },
+  {
+    "q": "You are writing a numerical approximation program that approximates PI using an infinite series. The loop must stop when the change between successive approximations is less than `0.000001` (epsilon). What is the appropriate loop choice?",
+    "options": [
+      "A `for` loop running fixed 100 times",
+      "A `while` loop: `while (Math.abs(current - previous) >= EPSILON)`",
+      "A `switch` statement on the error term",
+      "A `do-while (false)` loop"
+    ],
+    "answer": 1,
+    "explain": "When termination depends on dynamic numerical convergence rather than a fixed iteration count, a `while` loop evaluating convergence threshold `Math.abs(delta) >= EPSILON` is the correct design.",
+    "topic": "Convergence Loop Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Selected while loop based on dynamic epsilon convergence criteria.",
+    "weakness": "Use while loops when termination depends on mathematical convergence rather than fixed iteration counts."
+  },
+  {
+    "q": "A file upload handler allows 3 retry attempts if a network timeout occurs. If all 3 attempts fail, an error message is shown. Which loop flag pattern implements this cleanly?",
+    "options": [
+      "`boolean success = false; for (int i = 1; i <= 3; i++) { if (tryUpload()) { success = true; break; } } if (!success) showError();`",
+      "`for (int i = 1; i <= 3; i++) { tryUpload(); showError(); }`",
+      "`while (true) { tryUpload(); }`",
+      "`if (tryUpload() && tryUpload() && tryUpload()) showError();`"
+    ],
+    "answer": 0,
+    "explain": "The standard retry pattern uses a loop with early `break` on success and a boolean `success` flag checked after loop termination to handle exhaustion.",
+    "topic": "Retry-Exhaustion Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Applied classic retry loop pattern with boolean success flag.",
+    "weakness": "Use a boolean flag to track success across retry iterations and display errors upon exhaustion."
+  },
+  {
+    "q": "A factory packaging machine places chocolate bars into boxes of 24. At the end of a shift, `totalBars` chocolates were produced. Which formula calculates both full boxes and leftover bars without duplicate calculations?",
+    "options": [
+      "`int boxes = totalBars / 24; int leftover = totalBars % 24;`",
+      "`int boxes = totalBars * 24; int leftover = totalBars / 24;`",
+      "`int boxes = totalBars - 24; int leftover = 24;`",
+      "`int boxes = (int) Math.sqrt(totalBars); int leftover = 0;`"
+    ],
+    "answer": 0,
+    "explain": "Integer division `/ 24` gives the number of complete boxes, and modulus `% 24` gives the remaining loose chocolates.",
+    "topic": "Batch Packaging Division & Remainder",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Correctly applied division and modulus for packaging batches.",
+    "weakness": "Division yields complete batches; modulus yields remainder."
+  },
+  {
+    "q": "A developer needs to implement a countdown timer for a rocket launch from 10 down to 1, followed by printing 'Liftoff!'. Which loop header is the standard countdown idiom?",
+    "options": [
+      "`for (int i = 10; i >= 1; i--)`",
+      "`for (int i = 10; i > 1; i--)` (Stops at 2)",
+      "`for (int i = 1; i <= 10; i--)` (Infinite negative loop)",
+      "`while (i < 10) { i--; }`"
+    ],
+    "answer": 0,
+    "explain": "`for (int i = 10; i >= 1; i--)` starts at 10, decrements on each step, and includes 1 before terminating.",
+    "topic": "Countdown Loop Idiom",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Accurately structured countdown loop boundary and decrement.",
+    "weakness": "`for (int i = 10; i >= 1; i--)` runs from 10 down to 1 inclusively."
+  },
+  {
+    "q": "An online exam system enforces a time limit. Every second, `timeLeft` decrements. If `timeLeft == 0`, the exam automatically submits and the loop exits. If the student clicks 'Submit' early (`isSubmitted == true`), it also exits immediately. Which while condition models this?",
+    "options": [
+      "`while (timeLeft > 0 && !isSubmitted)`",
+      "`while (timeLeft > 0 || !isSubmitted)`",
+      "`while (timeLeft == 0 && isSubmitted)`",
+      "`while (timeLeft > 0 || isSubmitted)`"
+    ],
+    "answer": 0,
+    "explain": "The exam timer loop should continue running while time remains AND the student has not yet submitted (`timeLeft > 0 && !isSubmitted`). If either condition ceases, the loop terminates immediately.",
+    "topic": "Dual Condition Termination",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Formulated dual-termination while loop condition for online exam timer.",
+    "weakness": "Connect ongoing prerequisites with `&&` so either termination event stops the loop."
+  }
+]

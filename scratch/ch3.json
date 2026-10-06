@@ -1,0 +1,1602 @@
+[
+  {
+    "q": "What is an array in Java?",
+    "options": [
+      "A dynamically resizable list of heterogeneous elements",
+      "A fixed-size indexed collection of elements of the same data type stored in contiguous memory",
+      "A primitive data type like int or char",
+      "A key-value hash map"
+    ],
+    "answer": 1,
+    "explain": "In Java, an array is an object holding a fixed number of values of a single type. Once instantiated, its size cannot be changed.",
+    "topic": "Array Fundamentals",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands core definition and fixed-size nature of Java arrays.",
+    "weakness": "Remember: Java arrays have a fixed length once created."
+  },
+  {
+    "q": "What are the default values assigned to elements of an array declared as `int[] numbers = new int[5];`?",
+    "options": [
+      "Garbage memory values",
+      "All 0s",
+      "All nulls",
+      "All -1s"
+    ],
+    "answer": 1,
+    "explain": "When an array is allocated on the heap, all its elements are automatically initialized to their default type values. For numeric primitives (int, byte, short, long), the default is 0.",
+    "topic": "Array Default Values",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows default element values for numeric primitive arrays.",
+    "weakness": "Array elements default to 0 for numeric types, false for boolean, and null for objects."
+  },
+  {
+    "q": "What is the default value for elements of an array declared as `boolean[] flags = new boolean[3];`?",
+    "options": [
+      "true",
+      "false",
+      "0",
+      "null"
+    ],
+    "answer": 1,
+    "explain": "The default value for primitive boolean elements in a newly instantiated array is `false`.",
+    "topic": "Boolean Array Initialization",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows boolean array defaults.",
+    "weakness": "Boolean array elements initialize to `false` by default."
+  },
+  {
+    "q": "What property is used to determine the number of elements in an array in Java?",
+    "options": [
+      "`arr.length()`",
+      "`arr.length`",
+      "`arr.size()`",
+      "`arr.count`"
+    ],
+    "answer": 1,
+    "explain": "In Java, arrays have a public final field `length` (not a method). `String` has `.length()` and collections have `.size()`.",
+    "topic": "Array Length Property",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes array `.length` field from string `.length()` method.",
+    "weakness": "Arrays use the `.length` field; do not include parentheses."
+  },
+  {
+    "q": "What runtime exception is thrown if you attempt to access an array at an invalid index (e.g. `arr[-1]` or `arr[arr.length]`)?",
+    "options": [
+      "`NullPointerException`",
+      "`ArrayIndexOutOfBoundsException`",
+      "`IllegalArgumentException`",
+      "`IndexOutOfBoundsException`"
+    ],
+    "answer": 1,
+    "explain": "Accessing an array with an index `< 0` or `>= arr.length` throws `java.lang.ArrayIndexOutOfBoundsException`.",
+    "topic": "Array Bounds",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the exact exception thrown on invalid array indexing.",
+    "weakness": "Negative indices or index >= length throw `ArrayIndexOutOfBoundsException`."
+  },
+  {
+    "q": "What happens when you assign one array variable to another: `int[] b = a;`?",
+    "options": [
+      "A deep copy of all elements is created in a new memory location",
+      "Both variables reference the exact same array object on the heap (aliasing)",
+      "The elements of a are converted to double",
+      "A compilation error occurs"
+    ],
+    "answer": 1,
+    "explain": "Array variables store references to heap objects. `b = a` copies the memory address (reference), so both `a` and `b` point to the identical array object.",
+    "topic": "Array Reference Copying",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands reference assignment vs deep object copying.",
+    "weakness": "`b = a` copies the reference, not the elements; mutating `b[0]` modifies `a[0]`."
+  },
+  {
+    "q": "What is a 'jagged' (ragged) array in Java?",
+    "options": [
+      "An array that contains different primitive types in each row",
+      "A multidimensional array where each row can have a different number of columns",
+      "An array that has no memory allocated",
+      "A circular array buffer"
+    ],
+    "answer": 1,
+    "explain": "In Java, a 2D array is an 'array of arrays'. Each row is an independent 1D array object, meaning rows can have varying lengths.",
+    "topic": "Jagged Arrays",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands non-rectangular jagged arrays in Java.",
+    "weakness": "Java 2D arrays are arrays of arrays, so rows can have different lengths."
+  },
+  {
+    "q": "Which method in the standard Java library is the most efficient native way to copy a subsegment of an array?",
+    "options": [
+      "`System.arraycopy()`",
+      "`Arrays.copyRange()`",
+      "A manual `for` loop",
+      "`clone()`"
+    ],
+    "answer": 0,
+    "explain": "`System.arraycopy()` is a native system call that copies bytes directly in memory, offering maximum performance.",
+    "topic": "Array Copy Performance",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows System.arraycopy as the native high-performance array copy mechanism.",
+    "weakness": "Use `System.arraycopy()` for fast, low-level block copying."
+  },
+  {
+    "q": "What does `Arrays.binarySearch(arr, key)` require before it can be reliably used?",
+    "options": [
+      "The array must contain only positive numbers",
+      "The array must be sorted in ascending order",
+      "The array cannot contain duplicates",
+      "The array must have an even length"
+    ],
+    "answer": 1,
+    "explain": "Binary search relies on sorted ordering to eliminate half of the search space at each step. If the array is unsorted, results are undefined.",
+    "topic": "Binary Search Preconditions",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands that binary search strictly requires a pre-sorted array.",
+    "weakness": "Always sort arrays before invoking `Arrays.binarySearch()`."
+  },
+  {
+    "q": "What does `Arrays.equals(arr1, arr2)` compare for two 1D primitive arrays?",
+    "options": [
+      "Whether `arr1 == arr2` (same memory reference)",
+      "Whether both arrays have the same length and corresponding pairs of elements are equal",
+      "Whether the sum of elements in both arrays is identical",
+      "Whether both arrays were created on the same thread"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.equals(arr1, arr2)` checks if both arrays have identical lengths and equal element values at corresponding indices.",
+    "topic": "Arrays.equals Semantics",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands content equality testing via Arrays.equals.",
+    "weakness": "Use `Arrays.equals()` to compare element values, not `==` which only compares references."
+  },
+  {
+    "q": "What happens when you pass an array to a method and modify one of its elements inside that method?",
+    "options": [
+      "The modification is lost when the method returns because Java is pass-by-value",
+      "The modification persists in the caller's array because the method received a copy of the reference pointing to the original heap object",
+      "Throws an `UnsupportedOperationException`",
+      "The original array is duplicated automatically"
+    ],
+    "answer": 1,
+    "explain": "Java is pass-by-value, meaning the reference is copied. Both the caller and method point to the same array object on the heap, so element mutations persist.",
+    "topic": "Pass-by-Value Array Mutation",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands how pass-by-value applies to object references.",
+    "weakness": "Mutations to array elements inside methods affect the caller because both reference the same heap array."
+  },
+  {
+    "q": "What does `Arrays.toString(arr)` return for a 1D integer array `int[] arr = {1, 2, 3};`?",
+    "options": [
+      "`\"1 2 3\"`",
+      "`\"[1, 2, 3]\"`",
+      "`\"1, 2, 3\"`",
+      "`\"{1, 2, 3}\"`"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.toString()` returns a bracketed, comma-delimited string representation: `\"[1, 2, 3]\"`.",
+    "topic": "Arrays.toString Formatting",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows standard string representation format of Arrays.toString.",
+    "weakness": "`Arrays.toString()` formats arrays as `[elem1, elem2, ...]`. "
+  },
+  {
+    "q": "Which method should be used to produce a readable String representation of a 2D or multidimensional array?",
+    "options": [
+      "`Arrays.toString(matrix)`",
+      "`Arrays.deepToString(matrix)`",
+      "`matrix.toString()`",
+      "`String.valueOf(matrix)`"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.toString()` on a 2D array prints object hash codes for inner arrays. `Arrays.deepToString()` recursively traverses nested arrays to print complete contents.",
+    "topic": "Deep String Representation",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows deepToString for multidimensional arrays.",
+    "weakness": "Use `Arrays.deepToString()` for nested or multidimensional arrays."
+  },
+  {
+    "q": "What is the return value of `Arrays.binarySearch(arr, key)` when the key is NOT found in the sorted array?",
+    "options": [
+      "`-1`",
+      "`-(insertion_point + 1)`",
+      "`0`",
+      "`Integer.MIN_VALUE`"
+    ],
+    "answer": 1,
+    "explain": "In Java, `Arrays.binarySearch()` returns `-(insertion_point + 1)`, which is negative and encodes the exact index where the key would be inserted.",
+    "topic": "Binary Search Return Value",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Mastery of binary search negative insertion point formula.",
+    "weakness": "Unfound keys yield `-(insertion point + 1)`; check `< 0` to detect absence."
+  },
+  {
+    "q": "How many elements can an array declared as `int[][] grid = new int[4][5];` store in total?",
+    "options": [
+      "9",
+      "20",
+      "4",
+      "5"
+    ],
+    "answer": 1,
+    "explain": "A 4x5 2D array contains 4 rows of 5 columns each, storing `4 * 5 = 20` elements.",
+    "topic": "2D Array Capacity",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Calculates total capacity of 2D rectangular arrays.",
+    "weakness": "Total elements in rectangular matrix = rows * columns."
+  },
+  {
+    "q": "Can an array be resized in Java after it has been created?",
+    "options": [
+      "Yes, by assigning a new value to `arr.length`",
+      "No, array sizes are strictly immutable once instantiated; to resize, a new array must be created and elements copied over",
+      "Yes, using `arr.resize(newSize)`",
+      "Yes, if declared with the `var` keyword"
+    ],
+    "answer": 1,
+    "explain": "Arrays in Java have fixed length. To 'resize', you must allocate a new larger array (e.g. via `Arrays.copyOf()`) and reassign the reference.",
+    "topic": "Array Immutability",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Understands array size immutability in Java.",
+    "weakness": "Arrays cannot change size; create a new array and copy elements."
+  },
+  {
+    "q": "What is stored in an array declared as `String[] words = new String[3];` before any elements are assigned?",
+    "options": [
+      "Empty strings `\"\"`",
+      "`null` for all elements",
+      "`\"null\"` string literals",
+      "Undefined memory values"
+    ],
+    "answer": 1,
+    "explain": "Because `String` is a reference type (object), its array elements initialize to `null` by default.",
+    "topic": "Reference Array Initialization",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows that reference array elements initialize to null.",
+    "weakness": "Object and String array elements default to `null`."
+  },
+  {
+    "q": "In a 2D array `int[][] matrix`, what does `matrix.length` represent?",
+    "options": [
+      "The total number of cells in the entire matrix",
+      "The number of rows",
+      "The number of columns in the first row",
+      "The size in bytes"
+    ],
+    "answer": 1,
+    "explain": "`matrix.length` represents the number of rows (the length of the outer array). `matrix[0].length` represents the number of columns in row 0.",
+    "topic": "2D Array Dimensions",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Distinguishes row count from column count in 2D arrays.",
+    "weakness": "`matrix.length` is row count; `matrix[i].length` is column count for row i."
+  },
+  {
+    "q": "Which sorting algorithm is implemented by `Arrays.sort()` for primitive types (e.g. `int[]`) in standard modern Java?",
+    "options": [
+      "Bubble Sort",
+      "Dual-Pivot Quicksort",
+      "Merge Sort",
+      "Insertion Sort only"
+    ],
+    "answer": 1,
+    "explain": "For primitive arrays, `Arrays.sort()` uses a highly optimized Dual-Pivot Quicksort offering O(N log N) average performance.",
+    "topic": "Primitive Sorting Algorithm",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows Java's Dual-Pivot Quicksort implementation.",
+    "weakness": "`Arrays.sort(primitive[])` uses Dual-Pivot Quicksort."
+  },
+  {
+    "q": "Can an array in Java have a length of 0 (`new int[0]`)?",
+    "options": [
+      "No, length must be at least 1",
+      "Yes, zero-length arrays are valid objects and frequently used to represent empty collections without returning null",
+      "No, it causes an IllegalArgumentException",
+      "Only for String arrays"
+    ],
+    "answer": 1,
+    "explain": "A zero-length array is completely valid. It is an instantiated array object with `.length == 0` and is an industry-standard pattern for returning empty results safely.",
+    "topic": "Zero-Length Arrays",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands zero-length array validity and usage.",
+    "weakness": "Zero-length arrays (`new int[0]`) are valid and avoid returning null."
+  },
+  {
+    "q": "What is the effect of invoking `.clone()` on a 1D primitive array `int[] copy = original.clone();`?",
+    "options": [
+      "Creates a shallow copy that actually contains a completely independent copy of all primitive values",
+      "Fails to compile because arrays do not implement Cloneable",
+      "Returns the exact same reference as original",
+      "Throws a CloneNotSupportedException"
+    ],
+    "answer": 0,
+    "explain": "For 1D primitive arrays, `.clone()` duplicates the array object and all its primitive elements, creating an independent array.",
+    "topic": "Array Cloning",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Understands clone() behavior on 1D primitive arrays.",
+    "weakness": "Calling `.clone()` on a 1D primitive array creates an independent copy of values."
+  },
+  {
+    "q": "What happens if you invoke `.clone()` on a 2D array `int[][] copy = matrix.clone();`?",
+    "options": [
+      "It clones all rows deeply, creating independent 1D row arrays",
+      "It performs a shallow copy: `copy` is a new outer array, but its rows still reference the exact same 1D row arrays as `matrix`",
+      "It throws ClassCastException",
+      "It converts the 2D array to 1D"
+    ],
+    "answer": 1,
+    "explain": "`.clone()` on multidimensional arrays is shallow: only the outer array is duplicated; the inner row references still point to the original rows.",
+    "topic": "Multidimensional Array Shallow Clone",
+    "type": "theory",
+    "level": "hard",
+    "strength": "Deep understanding of shallow vs deep cloning in 2D arrays.",
+    "weakness": "`.clone()` on 2D arrays copies row references, not the inner row objects."
+  },
+  {
+    "q": "Which statement creates an anonymous array passed directly to a method `printItems(new int[]{1, 2, 3})`?",
+    "options": [
+      "`printItems({1, 2, 3})`",
+      "`printItems(new int[]{1, 2, 3})`",
+      "`printItems(int[3]{1, 2, 3})`",
+      "`printItems(new array(1, 2, 3))`"
+    ],
+    "answer": 1,
+    "explain": "Anonymous array creation requires `new int[]{...}`. The array initializer `{1, 2, 3}` without `new int[]` is only permitted during direct variable declarations.",
+    "topic": "Anonymous Array Syntax",
+    "type": "theory",
+    "level": "medium",
+    "strength": "Knows anonymous array instantiation syntax.",
+    "weakness": "Use `new int[]{1, 2, 3}` when passing array literals directly to methods."
+  },
+  {
+    "q": "What does `Arrays.fill(arr, 7)` do?",
+    "options": [
+      "Appends the number 7 to the end of the array",
+      "Assigns the value 7 to every element in the array",
+      "Checks if the array contains 7",
+      "Throws an exception if array is already full"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.fill()` assigns the specified value to all elements of the array.",
+    "topic": "Arrays.fill Utility",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows the behavior of Arrays.fill.",
+    "weakness": "`Arrays.fill(arr, val)` sets every element in `arr` to `val`."
+  },
+  {
+    "q": "What is the maximum allowed array index for an array of size N in Java?",
+    "options": [
+      "N",
+      "N - 1",
+      "N + 1",
+      "2^31 - 1"
+    ],
+    "answer": 1,
+    "explain": "Because Java arrays use zero-based indexing, the valid indices range from `0` to `N - 1`.",
+    "topic": "Zero-Based Indexing",
+    "type": "theory",
+    "level": "easy",
+    "strength": "Knows maximum index is length - 1.",
+    "weakness": "In zero-based indexing, the last element is always at index `length - 1`."
+  },
+  {
+    "q": "Why does the following array declaration fail to compile?\n```java\nint[5] arr = new int[];\n```",
+    "options": [
+      "Arrays cannot store int",
+      "Dimension size [5] cannot appear in the type declaration, and size is missing in the `new int[]` allocation",
+      "new keyword cannot be used with arrays",
+      "int must be capitalized Integer"
+    ],
+    "answer": 1,
+    "explain": "In Java, dimensions cannot be specified on the left side (`int[5] arr` is illegal). The size belongs in the instantiation: `int[] arr = new int[5];`.",
+    "topic": "Array Declaration Syntax Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted misplaced dimension size in array declaration.",
+    "weakness": "Specify size during allocation `new int[5]`, not in the type declaration `int[]`."
+  },
+  {
+    "q": "What error occurs at runtime in this code?\n```java\nint[] nums = {10, 20, 30};\nSystem.out.println(nums[3]);\n```",
+    "options": [
+      "Prints null",
+      "Prints 0",
+      "Throws ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3",
+      "Compilation error: array index must be constant"
+    ],
+    "answer": 2,
+    "explain": "An array of 3 elements has valid indices 0, 1, and 2. Index 3 is out of bounds, throwing `ArrayIndexOutOfBoundsException` at runtime.",
+    "topic": "Off-By-One ArrayIndexOutOfBoundsException",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified runtime ArrayIndexOutOfBoundsException on boundary index.",
+    "weakness": "Valid indices for length 3 are 0, 1, and 2; index 3 triggers an exception."
+  },
+  {
+    "q": "Identify the compilation error in the following snippet:\n```java\nint[] arr = new int[3];\narr.length = 5;\n```",
+    "options": [
+      "Cannot assign a value to final variable length",
+      "length is a method and requires parentheses",
+      "arr is not in scope",
+      "Length must be modified using setLength()"
+    ],
+    "answer": 0,
+    "explain": "The `length` field of an array is `public final`. It is strictly read-only and cannot be reassigned.",
+    "topic": "Immutable Array Length Field",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized that array length is a final read-only field.",
+    "weakness": "`arr.length` is a final field and cannot be reassigned."
+  },
+  {
+    "q": "Why does the following standalone array initialization fail to compile?\n```java\nint[] nums;\nnums = {1, 2, 3};\n```",
+    "options": [
+      "Numbers must be separated by semicolons",
+      "Array initializer `{...}` can only be used in a declaration; reassignment requires `new int[]{1, 2, 3}`",
+      "nums is a reserved word",
+      "Curly braces are only for code blocks"
+    ],
+    "answer": 1,
+    "explain": "Array shortcut syntax `{1, 2, 3}` is only valid at the point of declaration (`int[] nums = {1, 2, 3};`). In later statements, it must be written as `nums = new int[]{1, 2, 3};`.",
+    "topic": "Array Initializer Shortcut Rules",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized illegal array shortcut assignment after declaration.",
+    "weakness": "Outside the declaration statement, allocate with `new int[]{...}`."
+  },
+  {
+    "q": "What is the runtime exception thrown by this code?\n```java\nint[] data = null;\nSystem.out.println(data.length);\n```",
+    "options": [
+      "`ArrayIndexOutOfBoundsException`",
+      "`NullPointerException`",
+      "`IllegalArgumentException`",
+      "`0`"
+    ],
+    "answer": 1,
+    "explain": "Attempting to access a field (`.length`) or index on an array reference that is `null` throws `NullPointerException`.",
+    "topic": "Null Array Dereference",
+    "type": "error",
+    "level": "easy",
+    "strength": "Identified NullPointerException when dereferencing null array.",
+    "weakness": "Accessing `.length` on a null array reference throws `NullPointerException`."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nint[][] matrix = new int[][];\n```",
+    "options": [
+      "matrix must be 3D",
+      "Cannot allocate a multidimensional array without at least specifying the first (row) dimension",
+      "new int[][] requires curly braces",
+      "matrix cannot be named matrix"
+    ],
+    "answer": 1,
+    "explain": "When allocating a multidimensional array, the first dimension must always be specified: `new int[3][]` or `new int[3][3]`.",
+    "topic": "Missing Dimension in 2D Array",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught missing first dimension in multidimensional array instantiation.",
+    "weakness": "The first (row) dimension size must always be provided when instantiating multidimensional arrays."
+  },
+  {
+    "q": "What is the bug in this enhanced for loop intended to double array values?\n```java\nint[] arr = {1, 2, 3};\nfor (int x : arr) {\n    x = x * 2;\n}\nSystem.out.println(arr[0]);\n```",
+    "options": [
+      "Compilation error: for-each cannot multiply",
+      "Logic bug: `x` is a local copy; modifying `x` does NOT change the array element in `arr`, so `arr[0]` remains 1",
+      "Throws ArrayIndexOutOfBoundsException",
+      "Prints 0"
+    ],
+    "answer": 1,
+    "explain": "In an enhanced for-each loop, `x` holds a copy of each primitive value. Modifying `x` does not alter the underlying array element.",
+    "topic": "Enhanced For Loop Primitive Mutation Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands that for-each loop variable is a local copy for primitives.",
+    "weakness": "Use standard indexed for loop `arr[i] = ...` if you need to mutate elements."
+  },
+  {
+    "q": "Identify the bug in this array search:\n```java\nint[] arr = {5, 2, 8, 1, 9};\nint idx = Arrays.binarySearch(arr, 8);\n```",
+    "options": [
+      "binarySearch cannot search integers",
+      "The array is not sorted; calling `Arrays.binarySearch` on an unsorted array produces undefined results",
+      "idx must be boolean",
+      "arr must be declared final"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.binarySearch` requires the array to be sorted beforehand (`Arrays.sort(arr)`). Searching an unsorted array results in undefined behavior.",
+    "topic": "Unsorted Binary Search Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Spotted binary search invoked on unsorted array.",
+    "weakness": "Always call `Arrays.sort()` before calling `Arrays.binarySearch()`."
+  },
+  {
+    "q": "Why does this code throw an exception?\n```java\nint[][] jagged = new int[3][];\njagged[0][0] = 5;\n```",
+    "options": [
+      "`ArrayIndexOutOfBoundsException`",
+      "`NullPointerException` because row 0 is null (its columns have not been allocated yet)",
+      "`ClassCastException`",
+      "`ArrayStoreException`"
+    ],
+    "answer": 1,
+    "explain": "`new int[3][]` allocates an outer array of 3 rows, but each row is `null`. Accessing `jagged[0][0]` dereferences `null`, throwing `NullPointerException`.",
+    "topic": "Unallocated Jagged Row NullPointerException",
+    "type": "error",
+    "level": "medium",
+    "strength": "Identified unallocated row dereference in jagged array.",
+    "weakness": "Allocate the row `jagged[0] = new int[2];` before accessing its elements."
+  },
+  {
+    "q": "What is wrong with this negative array size declaration?\n```java\nint size = -5;\nint[] arr = new int[size];\n```",
+    "options": [
+      "Compilation error: size cannot be negative",
+      "Throws `NegativeArraySizeException` at runtime",
+      "Array allocates 5 elements in reverse",
+      "Throws `ArrayIndexOutOfBoundsException`"
+    ],
+    "answer": 1,
+    "explain": "Attempting to allocate an array with a negative dimension throws `java.lang.NegativeArraySizeException` at runtime.",
+    "topic": "NegativeArraySizeException",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized NegativeArraySizeException on negative dimension.",
+    "weakness": "Instantiating an array with negative length throws `NegativeArraySizeException`."
+  },
+  {
+    "q": "Why does this code fail to compile?\n```java\nint[] arr = {1, 2, 3};\nint len = arr.length();\n```",
+    "options": [
+      "length is not a method for arrays; it is a field and must be written as `arr.length`",
+      "arr is not an object",
+      "int cannot store length",
+      "length() returns long"
+    ],
+    "answer": 0,
+    "explain": "`length` is a field for arrays, not a method. Appending `()` causes: 'cannot find symbol: method length()'.",
+    "topic": "Array length() Method Error",
+    "type": "error",
+    "level": "easy",
+    "strength": "Distinguishes array field `.length` from method `.length()`.",
+    "weakness": "Do not write `arr.length()`; use `arr.length` without parentheses."
+  },
+  {
+    "q": "What is the issue with comparing two arrays using `==`?\n```java\nint[] a = {1, 2, 3};\nint[] b = {1, 2, 3};\nif (a == b) { System.out.println(\"Equal\"); }\n```",
+    "options": [
+      "Compile error: == cannot be used on arrays",
+      "`==` compares memory addresses (references), not array element contents, so the condition evaluates to false",
+      "Throws NullPointerException",
+      "a and b are automatically merged"
+    ],
+    "answer": 1,
+    "explain": "`==` tests reference identity (whether both variables point to the exact same heap object). Because `a` and `b` are separate array objects, `a == b` is false. Use `Arrays.equals(a, b)`.",
+    "topic": "Array Reference Equality Trap",
+    "type": "error",
+    "level": "easy",
+    "strength": "Avoids using `==` for array element content equality.",
+    "weakness": "Use `Arrays.equals(a, b)` to compare element contents, not `==`."
+  },
+  {
+    "q": "Identify the error in this array allocation:\n```java\nint[] arr = new int[3]{1, 2, 3};\n```",
+    "options": [
+      "new int[] cannot take braces",
+      "Cannot specify array dimension `[3]` when an array initializer `{1, 2, 3}` is provided",
+      "int must be Integer",
+      "braces must contain semicolons"
+    ],
+    "answer": 1,
+    "explain": "When an explicit array initializer `{...}` is supplied, the dimension between brackets MUST be left empty (`new int[]{1, 2, 3}`). Specifying `[3]` causes a compilation error.",
+    "topic": "Array Initializer Dimension Conflict",
+    "type": "error",
+    "level": "medium",
+    "strength": "Caught dimension specification conflict with array initializer.",
+    "weakness": "Leave brackets empty `new int[]{...}` when initializing with elements."
+  },
+  {
+    "q": "Why does this loop produce an `ArrayIndexOutOfBoundsException`?\n```java\nint[] arr = {10, 20, 30};\nfor (int i = 0; i <= arr.length; i++) {\n    System.out.println(arr[i]);\n}\n```",
+    "options": [
+      "i starts at 0 instead of 1",
+      "Using `<=` causes the loop to attempt accessing `arr[3]`, which is out of bounds",
+      "println cannot print array elements",
+      "i++ is invalid"
+    ],
+    "answer": 1,
+    "explain": "Because array indices are 0 to `length - 1`, the loop must use `< arr.length`. Using `<=` attempts to access `arr[arr.length]`, throwing `ArrayIndexOutOfBoundsException`.",
+    "topic": "Off-By-One Array Loop Bounds",
+    "type": "error",
+    "level": "easy",
+    "strength": "Spotted `<=` boundary error in array loop.",
+    "weakness": "Always use `< arr.length` when iterating array indices."
+  },
+  {
+    "q": "What happens when compiling this array type mismatch?\n```java\nint[] arr = new double[5];\n```",
+    "options": [
+      "Automatic widening from int to double",
+      "Compilation error: incompatible types: double[] cannot be converted to int[]",
+      "Runtime ClassCastException",
+      "Elements are truncated to 0"
+    ],
+    "answer": 1,
+    "explain": "Array types in Java are not covariant across primitive types. `double[]` is an entirely incompatible type from `int[]`, causing a compilation error.",
+    "topic": "Incompatible Primitive Array Types",
+    "type": "error",
+    "level": "medium",
+    "strength": "Recognized that primitive arrays cannot be cross-assigned.",
+    "weakness": "Primitive array types cannot be assigned to one another (`int[]` cannot reference `double[]`)."
+  },
+  {
+    "q": "Why does printing an array directly produce weird text like `[I@15db9742`?\n```java\nint[] arr = {1, 2, 3};\nSystem.out.println(arr);\n```",
+    "options": [
+      "The array memory was corrupted",
+      "Arrays inherit Object's default `toString()` method, which prints type descriptor `[I` and hex hashcode instead of contents",
+      "Java does not support printing arrays",
+      "Array is uninitialized"
+    ],
+    "answer": 1,
+    "explain": "Arrays do not override `Object.toString()`. Printing `arr` prints the default object representation. To print elements, use `Arrays.toString(arr)`.",
+    "topic": "Default Array toString Output",
+    "type": "error",
+    "level": "easy",
+    "strength": "Understands why arrays print type descriptors instead of contents.",
+    "weakness": "Use `Arrays.toString(arr)` to display array contents instead of `arr.toString()`."
+  },
+  {
+    "q": "Identify the bug in this code:\n```java\nint[][] matrix = new int[3][3];\nfor (int r = 0; r < matrix.length; r++) {\n    for (int c = 0; c < matrix.length; c++) {\n        matrix[r][c] = r + c;\n    }\n}\n```",
+    "options": [
+      "Compilation error",
+      "Using `matrix.length` for column bound works for square matrices but fails for rectangular or jagged matrices where `matrix[r].length` must be used",
+      "r + c cannot be assigned to int",
+      "c must start at 1"
+    ],
+    "answer": 1,
+    "explain": "In non-square or jagged matrices, the number of columns in row `r` is `matrix[r].length`. Using `matrix.length` (number of rows) as the column bound causes logic bugs or out-of-bounds exceptions.",
+    "topic": "2D Column Bound Trap",
+    "type": "error",
+    "level": "medium",
+    "strength": "Identified fragile column bound assumption in 2D array traversal.",
+    "weakness": "Always use `matrix[r].length` for the column loop bound."
+  },
+  {
+    "q": "Why does the following snippet fail to compile?\n```java\nint[] arr = new int[5];\narr[0] = 3.14;\n```",
+    "options": [
+      "3.14 is out of bounds",
+      "Compilation error: possible lossy conversion from double to int",
+      "arr[0] is read-only",
+      "arr requires casting to float"
+    ],
+    "answer": 1,
+    "explain": "`arr` is an `int[]`. Assigning a `double` literal `3.14` to an `int` element violates type safety and causes a compile error without an explicit cast `(int) 3.14`.",
+    "topic": "Lossy Conversion in Array Element",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught type mismatch during array element assignment.",
+    "weakness": "Array elements must match the array's declared component type."
+  },
+  {
+    "q": "What is the runtime exception in this code?\n```java\nString[] names = new String[3];\nSystem.out.println(names[0].toUpperCase());\n```",
+    "options": [
+      "`ArrayIndexOutOfBoundsException`",
+      "`NullPointerException` because `names[0]` is null",
+      "`ClassCastException`",
+      "`IllegalArgumentException`"
+    ],
+    "answer": 1,
+    "explain": "A newly instantiated `String[]` has all elements initialized to `null`. Calling `.toUpperCase()` on `names[0]` dereferences `null`, throwing `NullPointerException`.",
+    "topic": "Null Element Dereference",
+    "type": "error",
+    "level": "easy",
+    "strength": "Recognized NullPointerException on uninitialized object array element.",
+    "weakness": "String array elements default to `null`; initialize them before calling methods."
+  },
+  {
+    "q": "What is wrong with this array copy implementation?\n```java\nint[] a = {1, 2, 3};\nint[] b = new int[2];\nSystem.arraycopy(a, 0, b, 0, a.length);\n```",
+    "options": [
+      "System.arraycopy cannot copy ints",
+      "Throws `ArrayIndexOutOfBoundsException` because `b` has length 2 and cannot accommodate 3 elements",
+      "b must be null initially",
+      "Source pos must be 1"
+    ],
+    "answer": 1,
+    "explain": "`System.arraycopy` attempts to copy 3 elements into `b`, which only has capacity 2. It throws `ArrayIndexOutOfBoundsException` at runtime.",
+    "topic": "System.arraycopy Destination Overflow",
+    "type": "error",
+    "level": "medium",
+    "strength": "Spotted destination capacity overflow in System.arraycopy.",
+    "weakness": "Destination array must have sufficient remaining capacity to hold copied elements."
+  },
+  {
+    "q": "Why does this code cause a compilation error?\n```java\nint[] a, b[];\na = new int[3][3];\n```",
+    "options": [
+      "a is a 1D array (`int[]`), but `new int[3][3]` is a 2D array (`int[][]`)",
+      "b is not initialized",
+      "new int[3][3] must be assigned to b only",
+      "Brackets after b are illegal"
+    ],
+    "answer": 0,
+    "explain": "In `int[] a, b[];`, `a` is a 1D array `int[]`, while `b` has extra brackets making it a 2D array `int[][]`. Assigning a 2D array to `a` causes an incompatible types compile error.",
+    "topic": "C-Style Array Declaration Trap",
+    "type": "error",
+    "level": "hard",
+    "strength": "Mastered mixed dimension declaration parsing in Java.",
+    "weakness": "`int[] a, b[];` makes `a` 1D and `b` 2D; keep brackets on type for clarity (`int[][] b;`)."
+  },
+  {
+    "q": "What is the bug in this array search algorithm?\n```java\nboolean found = false;\nfor (int x : arr) {\n    if (x == target) found = true;\n    else found = false;\n}\n```",
+    "options": [
+      "Loop causes infinite iteration",
+      "The `else found = false;` overwrites previous successful matches, so `found` only reflects the very last element in the array",
+      "x cannot be compared to target",
+      "arr cannot be iterated with for-each"
+    ],
+    "answer": 1,
+    "explain": "Setting `found = false` in the `else` branch overwrites any earlier match. Once found, the search should set `found = true; break;`.",
+    "topic": "Search Flag Overwrite Bug",
+    "type": "error",
+    "level": "easy",
+    "strength": "Caught premature flag overwrite in linear search loop.",
+    "weakness": "Do not reset search flags to false in the loop; set `true` and break upon match."
+  },
+  {
+    "q": "Why does this reverse array algorithm fail?\n```java\nfor (int i = 0; i < arr.length; i++) {\n    int temp = arr[i];\n    arr[i] = arr[arr.length - 1 - i];\n    arr[arr.length - 1 - i] = temp;\n}\n```",
+    "options": [
+      "Throws ArrayIndexOutOfBoundsException",
+      "It swaps every element twice, restoring the array to its original order at the end",
+      "temp cannot be declared inside for loop",
+      "arr[i] is read-only"
+    ],
+    "answer": 1,
+    "explain": "Iterating across the entire length swaps elements to the middle and then swaps them right back! The loop should only run to `arr.length / 2`.",
+    "topic": "Two-Pointer Reverse Double-Swap Bug",
+    "type": "error",
+    "level": "medium",
+    "strength": "Identified redundant double-swap bug in array reversal.",
+    "weakness": "To reverse an array in-place, loop only up to `arr.length / 2`."
+  },
+  {
+    "q": "What is wrong with this array comparison?\n```java\nint[][] m1 = {{1, 2}, {3, 4}};\nint[][] m2 = {{1, 2}, {3, 4}};\nboolean eq = Arrays.equals(m1, m2);\n```",
+    "options": [
+      "Compilation error",
+      "`Arrays.equals` performs shallow comparison on 2D arrays, comparing inner array references rather than nested values; `Arrays.deepEquals` must be used",
+      "m1 and m2 cannot have 2 elements",
+      "Arrays class cannot compare matrices"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.equals` on a 2D array compares the row array references (`m1[0] == m2[0]`), returning false. To compare multidimensional array contents deeply, use `Arrays.deepEquals(m1, m2)`.",
+    "topic": "2D Arrays.equals vs deepEquals Trap",
+    "type": "error",
+    "level": "medium",
+    "strength": "Distinguishes Arrays.equals from Arrays.deepEquals for multidimensional arrays.",
+    "weakness": "Use `Arrays.deepEquals()` to compare multidimensional arrays by content."
+  },
+  {
+    "q": "Identify the error in this code:\n```java\nfinal int[] arr = {1, 2, 3};\narr[0] = 100; // Line 2\narr = new int[5]; // Line 3\n```",
+    "options": [
+      "Line 2 causes a compile error: cannot modify elements of a final array",
+      "Line 3 causes a compile error: cannot assign a value to final variable arr",
+      "Both Line 2 and Line 3 cause compile errors",
+      "No errors"
+    ],
+    "answer": 1,
+    "explain": "A `final` array reference cannot be reassigned to point to another array (Line 3 fails). However, the array's contents are NOT immutable; mutating `arr[0] = 100` on Line 2 is completely valid.",
+    "topic": "Final Array Reference vs Content Mutability",
+    "type": "error",
+    "level": "medium",
+    "strength": "Understands that final applies to the array reference, not its elements.",
+    "weakness": "`final int[] arr` prevents reassigning `arr`, but array elements can still be modified."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\nint[] a = {1, 2, 3};\nint[] b = a;\nb[0] = 99;\nSystem.out.println(a[0]);\n```",
+    "options": [
+      "1",
+      "99",
+      "0",
+      "NullPointerException"
+    ],
+    "answer": 1,
+    "explain": "`b` and `a` refer to the exact same array object on the heap. Mutating `b[0]` modifies `a[0]`. Outputs 99.",
+    "topic": "Array Aliasing Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Correctly traced aliased array reference mutation.",
+    "weakness": "`b = a` aliases the array; modifying `b[0]` directly updates `a[0]`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] arr = new int[3];\narr[0] = 5;\narr[arr[0] - 4] = 10;\nSystem.out.println(arr[1]);\n```",
+    "options": [
+      "0",
+      "5",
+      "10",
+      "ArrayIndexOutOfBoundsException"
+    ],
+    "answer": 2,
+    "explain": "`arr[0]` is 5. `arr[0] - 4 = 5 - 4 = 1`. So `arr[1] = 10`. Printing `arr[1]` outputs 10.",
+    "topic": "Computed Array Index Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Accurately evaluated expression inside array index brackets.",
+    "weakness": "Evaluate the index expression: 5 - 4 = 1, so `arr[1] = 10`."
+  },
+  {
+    "q": "What does this code print?\n```java\nint[][] m = {{1, 2, 3}, {4, 5}};\nSystem.out.println(m.length + \" \" + m[0].length + \" \" + m[1].length);\n```",
+    "options": [
+      "2 3 2",
+      "5 3 2",
+      "2 3 3",
+      "3 2 2"
+    ],
+    "answer": 0,
+    "explain": "`m.length` is the number of rows (2). `m[0].length` is 3. `m[1].length` is 2. Outputs `2 3 2`.",
+    "topic": "Jagged Array Lengths Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Calculated dimensions of jagged 2D array.",
+    "weakness": "Rows = 2; row 0 length = 3; row 1 length = 2."
+  },
+  {
+    "q": "What is the output of the following code?\n```java\nint[] arr = {10, 20, 30, 40, 50};\nint sum = 0;\nfor (int i = 1; i < arr.length - 1; i++) {\n    sum += arr[i];\n}\nSystem.out.println(sum);\n```",
+    "options": [
+      "150",
+      "90",
+      "140",
+      "60"
+    ],
+    "answer": 1,
+    "explain": "The loop runs for `i = 1, 2, 3` (excluding indices 0 and 4). `sum = arr[1] + arr[2] + arr[3] = 20 + 30 + 40 = 90`.",
+    "topic": "Array Subsegment Sum",
+    "type": "output",
+    "level": "easy",
+    "strength": "Tracked loop boundary bounds on array summation.",
+    "weakness": "Indices 1, 2, 3 sum to 20 + 30 + 40 = 90."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\nint[] arr = {1, 2, 3, 4, 5};\nint p = 1;\nfor (int x : arr) {\n    if (x % 2 == 0) p *= x;\n}\nSystem.out.println(p);\n```",
+    "options": [
+      "8",
+      "15",
+      "120",
+      "24"
+    ],
+    "answer": 0,
+    "explain": "Even numbers in the array are 2 and 4. Product `p = 1 * 2 * 4 = 8`.",
+    "topic": "Even Elements Product",
+    "type": "output",
+    "level": "easy",
+    "strength": "Computed product of filtered array elements.",
+    "weakness": "Even elements are 2 and 4; 2 * 4 = 8."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[][] grid = new int[2][3];\nint val = 1;\nfor (int i = 0; i < grid.length; i++) {\n    for (int j = 0; j < grid[i].length; j++) {\n        grid[i][j] = val++;\n    }\n}\nSystem.out.println(grid[1][1]);\n```",
+    "options": [
+      "2",
+      "4",
+      "5",
+      "6"
+    ],
+    "answer": 2,
+    "explain": "Matrix layout: Row 0 has `1, 2, 3`. Row 1 has `4, 5, 6`. `grid[1][1]` is 5.",
+    "topic": "2D Array Population Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced 2D matrix sequential value assignment.",
+    "weakness": "Row 1 elements are 4, 5, 6; index [1][1] is 5."
+  },
+  {
+    "q": "What is printed by this code?\n```java\nint[] arr = {5, 3, 9, 1, 7};\nArrays.sort(arr);\nSystem.out.println(arr[0] + \" \" + arr[arr.length - 1]);\n```",
+    "options": [
+      "5 7",
+      "1 9",
+      "9 1",
+      "3 7"
+    ],
+    "answer": 1,
+    "explain": "After sorting, `arr` becomes `{1, 3, 5, 7, 9}`. The minimum element `arr[0]` is 1, and the maximum element `arr[arr.length - 1]` is 9.",
+    "topic": "Sorted Array Extremes",
+    "type": "output",
+    "level": "easy",
+    "strength": "Identified first and last elements after Arrays.sort().",
+    "weakness": "Sorted array is {1, 3, 5, 7, 9}; first is 1, last is 9."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] a = {1, 2, 3, 4, 5};\nint[] b = new int[3];\nSystem.arraycopy(a, 1, b, 0, 3);\nSystem.out.println(Arrays.toString(b));\n```",
+    "options": [
+      "[1, 2, 3]",
+      "[2, 3, 4]",
+      "[3, 4, 5]",
+      "[0, 0, 0]"
+    ],
+    "answer": 1,
+    "explain": "`System.arraycopy(a, 1, b, 0, 3)` copies 3 elements from `a` starting at index 1 (`2, 3, 4`) into `b` starting at index 0. `b` becomes `[2, 3, 4]`.",
+    "topic": "System.arraycopy Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Tracked source and destination indices in System.arraycopy.",
+    "weakness": "Copies elements at index 1, 2, 3 (2, 3, 4) into b."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\nint[] arr = {1, 2, 3};\nint[] copy = arr.clone();\ncopy[0] = 50;\nSystem.out.println(arr[0] + \" \" + copy[0]);\n```",
+    "options": [
+      "50 50",
+      "1 50",
+      "1 1",
+      "Error"
+    ],
+    "answer": 1,
+    "explain": "`.clone()` on a 1D primitive array creates an independent copy. Mutating `copy[0]` does not affect `arr[0]`. Prints `1 50`.",
+    "topic": "1D Array Clone Independence",
+    "type": "output",
+    "level": "easy",
+    "strength": "Recognized independent mutation in cloned 1D array.",
+    "weakness": "Cloning a 1D primitive array isolates changes to the copy."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] arr = {10, 20, 30, 40};\nfor (int i = 0; i < arr.length / 2; i++) {\n    int t = arr[i];\n    arr[i] = arr[arr.length - 1 - i];\n    arr[arr.length - 1 - i] = t;\n}\nSystem.out.println(arr[1]);\n```",
+    "options": [
+      "10",
+      "20",
+      "30",
+      "40"
+    ],
+    "answer": 2,
+    "explain": "The loop reverses the array in-place to `{40, 30, 20, 10}`. `arr[1]` is 30.",
+    "topic": "In-Place Array Reversal Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Accurately traced in-place two-pointer array reversal.",
+    "weakness": "Reversed array is {40, 30, 20, 10}; index 1 is 30."
+  },
+  {
+    "q": "What does the following code print?\n```java\nint[][] m = new int[3][3];\nfor (int i = 0; i < 3; i++) m[i][i] = 1;\nint sum = 0;\nfor (int[] row : m)\n    for (int cell : row) sum += cell;\nSystem.out.println(sum);\n```",
+    "options": [
+      "1",
+      "3",
+      "9",
+      "0"
+    ],
+    "answer": 1,
+    "explain": "`m[i][i] = 1` sets the main diagonal cells `[0][0], [1][1], [2][2]` to 1. All other 6 cells remain 0. Sum is 3.",
+    "topic": "Identity Matrix Diagonal Sum",
+    "type": "output",
+    "level": "easy",
+    "strength": "Calculated sum of main diagonal entries.",
+    "weakness": "3 diagonal cells each have 1; total sum is 3."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] arr = {1, 2, 3, 4, 5};\nint[] sub = Arrays.copyOfRange(arr, 1, 4);\nSystem.out.println(sub.length + \" \" + sub[0] + \" \" + sub[sub.length - 1]);\n```",
+    "options": [
+      "3 2 4",
+      "4 2 5",
+      "3 1 3",
+      "3 2 5"
+    ],
+    "answer": 0,
+    "explain": "`Arrays.copyOfRange(arr, from, to)` copies indices `[1, 4)` (exclusive of 4), containing elements at indices 1, 2, 3: `{2, 3, 4}`. Length is 3, first is 2, last is 4.",
+    "topic": "copyOfRange Bounds",
+    "type": "output",
+    "level": "medium",
+    "strength": "Understands half-open interval `[from, to)` in copyOfRange.",
+    "weakness": "`copyOfRange(arr, 1, 4)` copies indices 1, 2, 3 (`{2, 3, 4}`)."
+  },
+  {
+    "q": "What does the following snippet print?\n```java\nint[] arr = {2, 4, 6, 8, 10};\nint idx = Arrays.binarySearch(arr, 6);\nSystem.out.println(idx);\n```",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "-3"
+    ],
+    "answer": 1,
+    "explain": "Element 6 is located at index 2. Binary search returns its zero-based index: 2.",
+    "topic": "Binary Search Exact Match Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Found exact element index via binary search.",
+    "weakness": "Element 6 is at index 2."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] arr = {10, 20, 30, 40};\nint idx = Arrays.binarySearch(arr, 25);\nSystem.out.println(idx);\n```",
+    "options": [
+      "-2",
+      "-3",
+      "-1",
+      "2"
+    ],
+    "answer": 1,
+    "explain": "25 is not present. It would be inserted at index 2 (between 20 and 30). Formula: `-(insertion_point + 1) = -(2 + 1) = -3`.",
+    "topic": "Binary Search Insertion Point Output",
+    "type": "output",
+    "level": "hard",
+    "strength": "Calculated negative insertion point formula in binary search.",
+    "weakness": "25 belongs at index 2; returns `-(2 + 1) = -3`."
+  },
+  {
+    "q": "What does this code print?\n```java\nint[] a = {1, 2};\nint[] b = {1, 2};\nSystem.out.println((a == b) + \" \" + Arrays.equals(a, b));\n```",
+    "options": [
+      "true true",
+      "false true",
+      "true false",
+      "false false"
+    ],
+    "answer": 1,
+    "explain": "`a == b` compares references (different objects on heap -> false). `Arrays.equals(a, b)` compares element contents -> true. Output: `false true`.",
+    "topic": "Reference vs Element Equality",
+    "type": "output",
+    "level": "easy",
+    "strength": "Distinguishes reference identity from content equality.",
+    "weakness": "`==` is false for distinct array instances; `Arrays.equals` is true."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] arr = {1, 2, 3};\nint shift = arr[0];\nfor (int i = 0; i < arr.length - 1; i++) {\n    arr[i] = arr[i + 1];\n}\narr[arr.length - 1] = shift;\nSystem.out.println(Arrays.toString(arr));\n```",
+    "options": [
+      "[1, 2, 3]",
+      "[2, 3, 1]",
+      "[3, 2, 1]",
+      "[2, 1, 3]"
+    ],
+    "answer": 1,
+    "explain": "This algorithm performs a left circular shift by 1 position. `{1, 2, 3}` becomes `{2, 3, 1}`.",
+    "topic": "Left Circular Array Shift",
+    "type": "output",
+    "level": "medium",
+    "strength": "Traced left circular shift algorithm correctly.",
+    "weakness": "First element 1 shifts to the back; result is `[2, 3, 1]`."
+  },
+  {
+    "q": "What does the following code print?\n```java\nint[] a = new int[5];\nArrays.fill(a, 1, 4, 9);\nSystem.out.println(Arrays.toString(a));\n```",
+    "options": [
+      "[9, 9, 9, 0, 0]",
+      "[0, 9, 9, 9, 0]",
+      "[9, 9, 9, 9, 0]",
+      "[0, 9, 9, 0, 0]"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.fill(a, from, to, val)` fills range `[1, 4)` (indices 1, 2, 3) with 9. Index 0 and 4 remain 0. Output: `[0, 9, 9, 9, 0]`.",
+    "topic": "Arrays.fill Range Output",
+    "type": "output",
+    "level": "medium",
+    "strength": "Correctly applied range bounds in Arrays.fill.",
+    "weakness": "Fills indices 1, 2, and 3 with 9; indices 0 and 4 remain 0."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[][] jagged = new int[2][];\njagged[0] = new int[]{1, 2};\njagged[1] = new int[]{3, 4, 5};\nint count = 0;\nfor (int[] row : jagged) count += row.length;\nSystem.out.println(count);\n```",
+    "options": [
+      "5",
+      "6",
+      "4",
+      "2"
+    ],
+    "answer": 0,
+    "explain": "Row 0 has length 2. Row 1 has length 3. Total elements `count = 2 + 3 = 5`.",
+    "topic": "Jagged Array Element Count",
+    "type": "output",
+    "level": "easy",
+    "strength": "Calculated total cell count across ragged rows.",
+    "weakness": "Row lengths 2 + 3 = 5 total elements."
+  },
+  {
+    "q": "What is printed by this code?\n```java\nint[] arr = {4, 1, 8, 3};\nint max = arr[0];\nfor (int i = 1; i < arr.length; i++) {\n    if (arr[i] > max) max = arr[i];\n}\nSystem.out.println(max);\n```",
+    "options": [
+      "4",
+      "1",
+      "8",
+      "3"
+    ],
+    "answer": 2,
+    "explain": "The loop tracks the running maximum element. The largest value in `{4, 1, 8, 3}` is 8.",
+    "topic": "Linear Maximum Finding",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced linear scan for maximum array element.",
+    "weakness": "Maximum element is 8."
+  },
+  {
+    "q": "What does this snippet print?\n```java\nint[] arr = {10, 20, 30};\nint x = arr[--arr.length - 1];\nSystem.out.println(x);\n```",
+    "options": [
+      "Compilation error: cannot modify final field length",
+      "20",
+      "30",
+      "ArrayIndexOutOfBoundsException"
+    ],
+    "answer": 0,
+    "explain": "`arr.length` is a final variable and cannot be modified with `--`. The code fails to compile.",
+    "topic": "Attempted Length Decrement Error",
+    "type": "output",
+    "level": "hard",
+    "strength": "Spotted compile-time error modifying final field length.",
+    "weakness": "`arr.length` is final and cannot be modified with `--`."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] arr = {1, 2, 3, 2, 1};\nboolean isPal = true;\nfor (int i = 0; i < arr.length / 2; i++) {\n    if (arr[i] != arr[arr.length - 1 - i]) {\n        isPal = false;\n        break;\n    }\n}\nSystem.out.println(isPal);\n```",
+    "options": [
+      "true",
+      "false",
+      "1",
+      "0"
+    ],
+    "answer": 0,
+    "explain": "Indices compare: `arr[0] (1) == arr[4] (1)`, `arr[1] (2) == arr[3] (2)`. All symmetric pairs match, so `isPal` remains `true`.",
+    "topic": "Palindrome Array Verification",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced symmetric two-pointer array palindrome check.",
+    "weakness": "The array reads identically forwards and backwards; output is true."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] nums = {1, 2, 3};\nfor (int i = 0; i < nums.length; i++) {\n    nums[i] = nums[nums.length - 1 - i];\n}\nSystem.out.println(Arrays.toString(nums));\n```",
+    "options": [
+      "[3, 2, 1]",
+      "[3, 2, 3]",
+      "[1, 2, 1]",
+      "[1, 2, 3]"
+    ],
+    "answer": 1,
+    "explain": "`i=0`: `nums[0] = nums[2] = 3` -> `{3, 2, 3}`. `i=1`: `nums[1] = nums[1] = 2`. `i=2`: `nums[2] = nums[0] = 3` (because nums[0] was overwritten with 3!). Result: `[3, 2, 3]`.",
+    "topic": "Overwritten Reverse Without Temp",
+    "type": "output",
+    "level": "hard",
+    "strength": "Spotted missing temporary variable leading to asymmetric overwrite.",
+    "weakness": "Without a temp swap, earlier overwritten values corrupt later assignments: `[3, 2, 3]`."
+  },
+  {
+    "q": "What does this code print?\n```java\nint[][] m = {{1, 2}, {3, 4}};\nSystem.out.println(m[1][0] + m[0][1]);\n```",
+    "options": [
+      "5",
+      "3",
+      "7",
+      "23"
+    ],
+    "answer": 0,
+    "explain": "`m[1][0]` is 3. `m[0][1]` is 2. `3 + 2 = 5`.",
+    "topic": "2D Array Cross Cell Sum",
+    "type": "output",
+    "level": "easy",
+    "strength": "Accurately accessed 2D array coordinates.",
+    "weakness": "`m[1][0] = 3` and `m[0][1] = 2`; 3 + 2 = 5."
+  },
+  {
+    "q": "What is the output of this code?\n```java\nint[] a = {1, 2, 3};\nint[] b = a.clone();\nSystem.out.println((a == b) + \" \" + (a[0] == b[0]));\n```",
+    "options": [
+      "false true",
+      "true true",
+      "false false",
+      "true false"
+    ],
+    "answer": 0,
+    "explain": "`a == b` is false because `.clone()` allocates a distinct new array instance. `a[0] == b[0]` is true because primitive values are equal (`1 == 1`). Output: `false true`.",
+    "topic": "Cloned Array Identity vs Element Equality",
+    "type": "output",
+    "level": "medium",
+    "strength": "Distinguished cloned instance identity from element value equality.",
+    "weakness": "Cloned array is a distinct object (`a != b`), but copied elements match (`1 == 1`)."
+  },
+  {
+    "q": "What is printed by this code?\n```java\nint[] arr = {10, 5, 20, 15};\nint target = 20;\nint foundIdx = -1;\nfor (int i = 0; i < arr.length; i++) {\n    if (arr[i] == target) { foundIdx = i; break; }\n}\nSystem.out.println(foundIdx);\n```",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": 2,
+    "explain": "Element 20 is located at index 2. The loop breaks immediately and prints 2.",
+    "topic": "Linear Search Index Output",
+    "type": "output",
+    "level": "easy",
+    "strength": "Traced linear search target match and break index.",
+    "weakness": "Target 20 is found at index 2."
+  },
+  {
+    "q": "You are developing a student grading system for a class of 40 students in University of Malaya. Scores range from 0 to 100. Why is an array `int[] scores = new int[40];` more suitable than declaring 40 individual variables (`score1, score2, ...`)?",
+    "options": [
+      "Arrays use less CPU cache",
+      "Arrays allow indexed iteration using loops, simplified statistical calculations (average, min, max), and clean parameter passing to methods",
+      "Individual variables cannot hold numbers above 30",
+      "Java restricts methods to 10 local variables"
+    ],
+    "answer": 1,
+    "explain": "Arrays provide indexed sequential access, enabling modular loop processing for computing averages, sorting, and passing datasets cleanly.",
+    "topic": "Array vs Discrete Variables",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands benefits of arrays for bulk homogenous data processing.",
+    "weakness": "Arrays enable indexed iteration and modular aggregation functions."
+  },
+  {
+    "q": "An e-commerce analytics dashboard tracks daily sales for 12 months. Since months have different numbers of days (28 to 31), which data structure represents this calendar without wasting memory cells?",
+    "options": [
+      "A rectangular 2D array `int[12][31]`",
+      "A jagged 2D array where each row `month` is allocated with its exact number of days `sales[m] = new int[daysInMonth]`",
+      "A 1D array of 365 elements with complex index offsets",
+      "A 3D cube array"
+    ],
+    "answer": 1,
+    "explain": "A jagged array allocates exact column counts per row, eliminating unused empty cells for shorter months.",
+    "topic": "Jagged Array Calendar Design",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Designed memory-efficient jagged array for variable-length monthly data.",
+    "weakness": "Jagged arrays allocate exact row capacities, saving memory on irregular month lengths."
+  },
+  {
+    "q": "A high-frequency sensor records 10,000 temperature readings every second. A developer needs to clear the array to zero between capture cycles. Which method is the fastest standard way to zero out the array?",
+    "options": [
+      "Looping through each index and assigning `arr[i] = 0;`",
+      "`Arrays.fill(arr, 0);`",
+      "Re-allocating a new array `arr = new int[10000];` on every cycle",
+      "`System.gc()`"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.fill(arr, 0)` is optimized and avoids triggering garbage collector overhead from repeated heap reallocations.",
+    "topic": "Array Reuse vs Garbage Collection",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Understands memory reuse and Arrays.fill to prevent GC pressure.",
+    "weakness": "Reuse arrays with `Arrays.fill(arr, 0)` to avoid GC pressure from frequent re-allocations."
+  },
+  {
+    "q": "You are writing a seat reservation engine for a cinema hall with 10 rows and 15 seats per row. How do you check if Seat 8 in Row 4 is currently booked (where false means available, true means booked)?",
+    "options": [
+      "`if (seats[4][8]) { ... }`",
+      "`if (seats[3][7]) { ... }` (adjusting for zero-based indexing)",
+      "`if (seats[8][4]) { ... }`",
+      "`if (seats[4 * 15 + 8]) { ... }`"
+    ],
+    "answer": 1,
+    "explain": "In zero-based indexing, Row 4 is index `3` and Seat 8 is index `7`. The condition is `if (seats[3][7])`.",
+    "topic": "Zero-Based Coordinate Mapping",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Correctly mapped 1-based human seat coordinates to 0-based array indices.",
+    "weakness": "Translate 1-based human coordinates to 0-based array indices by subtracting 1."
+  },
+  {
+    "q": "A weather station needs to compute the median temperature from an unsorted array of daily readings. What is the standard algorithm using Java's built-in libraries?",
+    "options": [
+      "Sum all elements and divide by length",
+      "Sort the array using `Arrays.sort(temps);`, then pick the middle element `temps[temps.length / 2]`",
+      "Call `Arrays.binarySearch(temps, 0)`",
+      "Use `Arrays.toString(temps)`"
+    ],
+    "answer": 1,
+    "explain": "The median requires sorted order. Sort with `Arrays.sort()`, then access the middle index.",
+    "topic": "Median Calculation Algorithm",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied Arrays.sort to calculate median statistics.",
+    "weakness": "Sort the array first; the median is at index `length / 2`."
+  },
+  {
+    "q": "A mobile game inventory system has a maximum capacity of 20 items. When an inventory array is full and a player picks up a new item, how can the system dynamically expand capacity to 30 items?",
+    "options": [
+      "Call `inventory.length = 30;`",
+      "Use `inventory = Arrays.copyOf(inventory, 30);` to allocate a new array of size 30 with existing elements copied over",
+      "Call `inventory.expand(10);`",
+      "Java arrays expand automatically when an element is added"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.copyOf(inventory, 30)` creates a new array of length 30, copies the existing 20 elements, and returns the new reference.",
+    "topic": "Dynamic Capacity Expansion Pattern",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Employed Arrays.copyOf for dynamic array resizing.",
+    "weakness": "Use `Arrays.copyOf(arr, newSize)` to resize arrays dynamically."
+  },
+  {
+    "q": "You are implementing a digital image filter that processes grayscale pixels represented as a 2D array `int[][] image`. A blurring algorithm needs to access neighboring pixels `(r-1, c)`, `(r+1, c)`, `(r, c-1)`, `(r, c+1)`. What boundary check must precede accessing neighbor `image[nr][nc]`?",
+    "options": [
+      "`nr >= 0 && nr < image.length && nc >= 0 && nc < image[nr].length`",
+      "`nr > 0 && nc > 0`",
+      "`image[nr][nc] != null`",
+      "`nr == nc`"
+    ],
+    "answer": 0,
+    "explain": "To prevent `ArrayIndexOutOfBoundsException`, neighbor coordinates must be verified: `nr >= 0 && nr < rows && nc >= 0 && nc < cols`.",
+    "topic": "2D Grid Neighbor Bounds Guard",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Implemented robust boundary guard condition for 2D matrix traversal.",
+    "weakness": "Always verify `0 <= r < rows` and `0 <= c < cols` before accessing matrix neighbors."
+  },
+  {
+    "q": "A banking fraud detection service checks whether a transaction sequence is strictly sorted in chronological order. Which linear scan correctly checks if an array `long[] timestamps` is sorted ascendingly?",
+    "options": [
+      "`for (int i = 0; i < len - 1; i++) if (timestamps[i] > timestamps[i+1]) return false; return true;`",
+      "`for (int i = 0; i < len; i++) if (timestamps[i] < timestamps[i+1]) return false;`",
+      "`return Arrays.binarySearch(timestamps, 0) >= 0;`",
+      "`return timestamps[0] < timestamps[len - 1];`"
+    ],
+    "answer": 0,
+    "explain": "Iterate from 0 to `len - 2`. If any element exceeds its successor (`timestamps[i] > timestamps[i+1]`), the array is not sorted. If all pass, return true.",
+    "topic": "Sorted Array Verification Scan",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Designed clean O(N) verification algorithm for sorted sequence.",
+    "weakness": "Check `timestamps[i] > timestamps[i+1]`; return false on the first inversion."
+  },
+  {
+    "q": "A flight booking engine stores connecting airport route distances in an adjacency matrix `int[][] dist`. How is an airport route between Airport `i` and Airport `j` verified as non-existent (assuming 0 represents no direct flight)?",
+    "options": [
+      "`if (dist[i][j] == 0)`",
+      "`if (dist[i] == null)`",
+      "`if (dist.length == 0)`",
+      "`if (i == j)`"
+    ],
+    "answer": 0,
+    "explain": "In a graph adjacency matrix, `dist[i][j] == 0` designates that no direct edge/flight exists between node `i` and node `j`.",
+    "topic": "Adjacency Matrix Edge Verification",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Understands graph representation via 2D adjacency matrix.",
+    "weakness": "In an adjacency matrix, 0 represents the absence of a direct connection between vertices."
+  },
+  {
+    "q": "A lottery system draws 6 winning numbers from 1 to 49. To rapidly check if a player's picked number is among the winners, what is the most efficient search approach if the winning numbers array is kept sorted?",
+    "options": [
+      "Linear search scanning from index 0 to 5",
+      "`Arrays.binarySearch(winners, pickedNumber) >= 0`",
+      "`winners.contains(pickedNumber)`",
+      "Sorting the array on every check"
+    ],
+    "answer": 1,
+    "explain": "`Arrays.binarySearch` on a pre-sorted array runs in O(log N) time and returns an index `>= 0` if the target is found.",
+    "topic": "Binary Search Membership Check",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied binary search for fast O(log N) membership testing.",
+    "weakness": "Use `Arrays.binarySearch(sortedArr, key) >= 0` for fast membership checks."
+  },
+  {
+    "q": "A music playlist app implements a shuffle feature that randomizes the order of songs in `String[] playlist`. Which industry-standard algorithm shuffles an array in-place in O(N) time?",
+    "options": [
+      "Bubble Shuffle",
+      "Fisher-Yates (Knuth) Shuffle algorithm: iterate backwards from `n-1` to 1, swapping `arr[i]` with a random index `0 <= j <= i`",
+      "Sorting by song length",
+      "Reversing the array twice"
+    ],
+    "answer": 1,
+    "explain": "The Fisher-Yates shuffle runs in O(N) time and guarantees that every permutation is equally probable.",
+    "topic": "Fisher-Yates Shuffle Algorithm",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Mastered the Fisher-Yates in-place array shuffling algorithm.",
+    "weakness": "Fisher-Yates iterates backwards, swapping each element with a random index `[0, i]`."
+  },
+  {
+    "q": "A logistics company packs containers with item weights. To find the top 3 heaviest items in an array of 1,000 weights, what is the cleanest approach using Java's `Arrays` utility?",
+    "options": [
+      "`Arrays.sort(weights);` then read the last 3 elements at indices `len - 1`, `len - 2`, `len - 3`",
+      "Search with `Arrays.binarySearch()`",
+      "Use `Arrays.fill()`",
+      "Reverse the array 3 times"
+    ],
+    "answer": 0,
+    "explain": "Sorting with `Arrays.sort(weights)` places the largest items at the end of the array, allowing immediate retrieval of the top 3 items.",
+    "topic": "Top-K via Array Sorting",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Retrieved top-K extreme values via sorted array indexing.",
+    "weakness": "Sort ascendingly; the top K elements reside at the end of the array."
+  },
+  {
+    "q": "You are writing a barcode scanner validation module that verifies an EAN-13 barcode stored as `int[] digits = new int[13];`. The check digit formula requires summing odd-positioned digits and multiplying even-positioned digits by 3. How do you traverse alternating positions cleanly?",
+    "options": [
+      "Two separate loops: one with `i += 2` starting at 0, and another with `i += 2` starting at 1",
+      "A single while loop incrementing by 0.5",
+      "Recursion only",
+      "Enhanced for loop without index"
+    ],
+    "answer": 0,
+    "explain": "Using two loops with step increment `i += 2` cleanly separates odd and even parity indices without needing `if (i % 2 == 0)` branching on every iteration.",
+    "topic": "Parity Stride Loop Traversal",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Designed stride loops for alternating parity index processing.",
+    "weakness": "Use step `i += 2` to iterate even and odd index positions independently."
+  },
+  {
+    "q": "A ride-sharing app maintains a circular buffer of the last 5 GPS coordinate points using an array `double[] buffer = new double[5];`. When a new reading arrives, how is the insertion index updated so it wraps around to index 0 after index 4?",
+    "options": [
+      "`insertIdx = (insertIdx + 1) % buffer.length;`",
+      "`insertIdx = insertIdx + 1; if (insertIdx > 5) insertIdx = 0;`",
+      "`insertIdx = insertIdx % 4;`",
+      "`insertIdx = buffer.length - 1;`"
+    ],
+    "answer": 0,
+    "explain": "The modulus operator `(idx + 1) % size` wraps around seamlessly: `(4 + 1) % 5 = 0`.",
+    "topic": "Circular Buffer Wrap-Around",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied modular arithmetic for circular buffer index wrapping.",
+    "weakness": "`index = (index + 1) % capacity` wraps buffer pointers in O(1) time."
+  },
+  {
+    "q": "A machine learning pipeline receives feature vectors of length 512. It must compute the Euclidean dot product between two vectors `a` and `b` of equal length. Which loop structure computes this correctly?",
+    "options": [
+      "`double dot = 0; for (int i = 0; i < a.length; i++) dot += a[i] * b[i];`",
+      "`double dot = 0; for (int x : a) dot += x * b[x];`",
+      "`double dot = Arrays.binarySearch(a, b);`",
+      "`double dot = a.length * b.length;`"
+    ],
+    "answer": 0,
+    "explain": "The dot product multiplies corresponding elements `a[i] * b[i]` and sums them across the vector length.",
+    "topic": "Vector Dot Product Computation",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Implemented vector dot product via indexed traversal.",
+    "weakness": "Multiply corresponding elements `a[i] * b[i]` and accumulate into sum."
+  },
+  {
+    "q": "A video streaming player tracks buffer health across 60 seconds. A drop below 20% in any second triggers a bitrate downgrade. Which search pattern terminates as soon as the first substandard second is found?",
+    "options": [
+      "Linear search with early return/break: `for (int val : buffer) if (val < 20) { triggerDowngrade(); break; }`",
+      "Summing all buffer values and checking the average",
+      "Sorting the buffer array first",
+      "Scanning the entire array twice"
+    ],
+    "answer": 0,
+    "explain": "Early termination via `break` on the first failing condition saves CPU cycles and triggers responsive bitrate adjustments.",
+    "topic": "Early Exit Quality Check",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Used early loop termination for real-time quality alerting.",
+    "weakness": "Break immediately upon encountering a failing condition to minimize latency."
+  },
+  {
+    "q": "A medical heart monitor logs ECG pulse rates. A noise filter removes the single highest and single lowest outlier spikes before averaging the remaining readings. How is this calculated efficiently?",
+    "options": [
+      "`Arrays.sort(ecg); double sum = 0; for (int i = 1; i < ecg.length - 1; i++) sum += ecg[i]; double avg = sum / (ecg.length - 2);`",
+      "Subtract max from min",
+      "Divide total sum by ecg.length",
+      "Zero out index 0"
+    ],
+    "answer": 0,
+    "explain": "Sorting places the minimum at index 0 and maximum at `length - 1`. Summing indices `1` through `length - 2` and dividing by `length - 2` yields the trimmed mean.",
+    "topic": "Trimmed Mean Outlier Removal",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Implemented trimmed mean statistical calculation.",
+    "weakness": "Sort array, sum from index 1 to `length - 2`, and divide by `length - 2`."
+  },
+  {
+    "q": "An image processing tool transposes an N x N square matrix (swapping rows and columns: `m[r][c]` with `m[c][r]`). How is this done in-place without swapping elements back to their original spots?",
+    "options": [
+      "`for (int r = 0; r < N; r++) for (int c = r + 1; c < N; c++) swap(m[r][c], m[c][r]);`",
+      "`for (int r = 0; r < N; r++) for (int c = 0; c < N; c++) swap(m[r][c], m[c][r]);`",
+      "`m = m.clone();`",
+      "Reverse each row"
+    ],
+    "answer": 0,
+    "explain": "Iterating with column bound `c = r + 1` strictly visits elements above the main diagonal, swapping each with its transpose counterpart exactly once.",
+    "topic": "In-Place Matrix Transposition",
+    "type": "scenario",
+    "level": "hard",
+    "strength": "Mastered upper-triangular indexing for in-place matrix transposition.",
+    "weakness": "Traverse strictly above diagonal (`c = r + 1`) to avoid double-swapping elements."
+  },
+  {
+    "q": "A supermarket inventory system tracks item stock levels. A restocking alert must list all item indices where `stock[i] == 0`. What should the method return when no items are out of stock?",
+    "options": [
+      "`null`",
+      "An empty array `new int[0]`",
+      "A single-element array containing -1",
+      "Throw a NullPointerException"
+    ],
+    "answer": 1,
+    "explain": "Returning a zero-length array `new int[0]` is the standard Java best practice; it prevents `NullPointerException` in calling code that loops over results.",
+    "topic": "Zero-Length Array Return Idiom",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Follows industry pattern of returning empty arrays instead of null.",
+    "weakness": "Return `new int[0]` instead of `null` to prevent caller NullPointerExceptions."
+  },
+  {
+    "q": "A data warehouse pipeline receives a stream of 1,000,000 integers. It needs to count the frequency of occurrences of values between 0 and 99. Which data structure achieves O(1) frequency tallying with minimal memory?",
+    "options": [
+      "A hash map with boxing",
+      "A frequency count array `int[] counts = new int[100];` where each value directly indexes `counts[val]++`",
+      "Sorting the 1,000,000 integers on every insertion",
+      "A 2D matrix"
+    ],
+    "answer": 1,
+    "explain": "A direct-addressed frequency array (bucket/tally array) provides instantaneous O(1) updates without object allocation or hash collision overhead.",
+    "topic": "Direct-Address Frequency Array",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Applied direct-addressed bucket array for high-performance counting.",
+    "weakness": "Use direct index mapping `counts[val]++` for bounded integer counting."
+  },
+  {
+    "q": "A game developer needs to represent a chess board. Each square holds a piece identifier. What is the most natural representation in Java?",
+    "options": [
+      "`int[64]` 1D array",
+      "`int[8][8]` 2D array",
+      "`int[8][8][8]` 3D array",
+      "64 discrete variables"
+    ],
+    "answer": 1,
+    "explain": "An 8x8 2D array `int[8][8]` matches the 2D grid rank and file coordinates of a chessboard.",
+    "topic": "Grid Representation Choice",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Selected 2D matrix layout for grid-based game board.",
+    "weakness": "Represent 2D grids naturally with an 8x8 2D array."
+  },
+  {
+    "q": "A weather tracking program finds the hottest temperature recorded in a year across all cities: `double[][] cityTemps`. What is the correct nested search idiom?",
+    "options": [
+      "`double max = cityTemps[0][0]; for (double[] row : cityTemps) for (double t : row) if (t > max) max = t;`",
+      "`double max = 0; if (cityTemps.length > max) max = cityTemps.length;`",
+      "`double max = cityTemps[0].length;`",
+      "`Arrays.sort(cityTemps); return cityTemps[0][0];`"
+    ],
+    "answer": 0,
+    "explain": "Iterating through every cell of the 2D array with enhanced for-loops and maintaining a running maximum initialized to `cityTemps[0][0]` finds the global maximum.",
+    "topic": "Global Matrix Extremum Search",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Implemented clean nested for-each traversal for global matrix maximum.",
+    "weakness": "Initialize `max` to `grid[0][0]` and scan all cells via nested for-each loops."
+  },
+  {
+    "q": "A warehouse scanning app reads RFID tags into an array. Due to radio reflections, duplicate tag IDs are captured. If the array is sorted, how can duplicates be filtered into a unique array in O(N) time?",
+    "options": [
+      "By using a two-pointer pass copying elements only when `arr[i] != arr[i-1]`",
+      "By running binary search on every element",
+      "By reversing the array",
+      "By filling the array with zeros"
+    ],
+    "answer": 0,
+    "explain": "In a sorted array, duplicate elements are consecutive. A single two-pointer linear pass detects transitions `arr[i] != arr[i-1]` in O(N) time.",
+    "topic": "Sorted Array Deduplication",
+    "type": "scenario",
+    "level": "medium",
+    "strength": "Mastered two-pointer O(N) deduplication on sorted arrays.",
+    "weakness": "Compare adjacent elements `arr[i] != arr[i-1]` in a sorted array to filter duplicates in O(N) time."
+  },
+  {
+    "q": "A student records quiz scores: `int[] scores = {85, 92, 78, 90};`. They want to calculate the average score as a `double`. Which formula avoids integer division truncation?",
+    "options": [
+      "`double avg = (double) sum / scores.length;`",
+      "`double avg = sum / scores.length;`",
+      "`double avg = (double)(sum / scores.length);`",
+      "`double avg = sum / (scores.length * 1.0f);`"
+    ],
+    "answer": 0,
+    "explain": "Casting `sum` to `double` before dividing ensures floating-point division is performed, preserving fractional averages.",
+    "topic": "Array Average Precision",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Avoided integer division truncation in array average calculation.",
+    "weakness": "Cast `sum` to `double` prior to division: `(double) sum / length`."
+  },
+  {
+    "q": "An audio synthesizer creates a 1-second sine wave at 44.1 kHz sampling rate. How many elements must the audio buffer array hold?",
+    "options": [
+      "441",
+      "4,410",
+      "44,100",
+      "441,000"
+    ],
+    "answer": 2,
+    "explain": "A 44.1 kHz sampling rate requires 44,100 samples per second. An array of `new double[44100]` is required.",
+    "topic": "Audio Buffer Sizing",
+    "type": "scenario",
+    "level": "easy",
+    "strength": "Correctly sized audio sample buffer based on sampling frequency.",
+    "weakness": "At 44.1 kHz, 1 second of audio requires exactly 44,100 sample elements."
+  }
+]
