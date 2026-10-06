@@ -355,10 +355,6 @@
     if (moodBtn) {
       moodBtn.textContent = mood.name;
     }
-    const glanceMood = document.getElementById("glance-mood-text");
-    if (glanceMood) {
-      glanceMood.textContent = mood.name;
-    }
   }
 
   // Build the 10 Procedural 3D Islands
