@@ -2518,9 +2518,425 @@
       transition: none !important;
     }
     [data-motion="off"] #toast,
-    [data-motion="off"] .modal-backdrop .search-box,
-    [data-motion="off"] .modal-backdrop .quiz-box {
-      transform: none !important;
+    /* ============================================================
+       3D Island World (Sky Archipelago) Styles
+       Tech Stack: Three.js WebGL + Blender/Python GLB Pipeline
+       ============================================================ */
+    .island-world-container {
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      overflow: hidden;
+      background: #fde8e0;
+      font-family: var(--body);
+      user-select: none;
+    }
+    .island-canvas-wrap {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: grab;
+    }
+    .island-canvas-wrap:active {
+      cursor: grabbing;
+    }
+    .island-labels-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Wooden Signboards matching Photo 1 */
+    .island-signboard {
+      pointer-events: auto;
+      position: absolute;
+      display: none;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 14px;
+      border-radius: 99px;
+      background: linear-gradient(135deg, #faeedd 0%, #f3dec2 100%);
+      border: 1.5px solid #c29562;
+      color: #4a2f15;
+      font-weight: 700;
+      font-size: 0.82rem;
+      font-family: var(--body);
+      box-shadow: 0 4px 14px rgba(70, 40, 15, 0.22), 0 1px 3px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.16s var(--ease-out), box-shadow 0.16s var(--ease-out), border-color 0.16s;
+      z-index: 10;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .island-signboard:hover,
+    .island-signboard.hovered {
+      transform: translate(-50%, -108%) scale(1.08) !important;
+      background: linear-gradient(135deg, #fff7eb 0%, #fbe6cb 100%);
+      border-color: #d97706;
+      box-shadow: 0 8px 24px rgba(217, 119, 6, 0.35);
+    }
+    .island-signboard .sign-code {
+      background: rgba(138, 86, 36, 0.15);
+      color: #78350f;
+      padding: 2px 7px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .island-signboard .sign-name {
+      font-weight: 700;
+      color: #452a12;
+    }
+    .island-signboard .sign-action {
+      font-size: 0.74rem;
+      color: #b45309;
+      font-weight: 800;
+      margin-left: 2px;
+    }
+
+    /* Top Floating HUD Bar */
+    .island-top-bar {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .island-top-left,
+    .island-top-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+    .island-brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      font-family: var(--head);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #1e293b;
+    }
+    .island-hud-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .island-hud-pill:hover {
+      background: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    .island-hud-pill.action {
+      background: #1e6b48;
+      color: #ffffff;
+      border-color: #1e6b48;
+    }
+    .island-hud-pill.action:hover {
+      background: #175437;
+    }
+
+    /* Bottom-Left Floating Info Card (Matching Photo 1 "A world of little wonders") */
+    .island-glance-card {
+      position: absolute;
+      bottom: 80px;
+      left: 24px;
+      max-width: 380px;
+      padding: 20px 24px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 14px 40px rgba(100, 60, 40, 0.12);
+      pointer-events: auto;
+      z-index: 20;
+      font-family: var(--body);
+      animation: fadeIn 0.4s ease;
+    }
+    .glance-kicker {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+      color: #947164;
+      margin-bottom: 4px;
+    }
+    .glance-title {
+      font-family: var(--head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #2d1810;
+      margin: 0 0 6px 0;
+      line-height: 1.15;
+    }
+    .glance-subtitle {
+      font-size: 0.86rem;
+      color: #644b41;
+      margin: 0 0 14px 0;
+      line-height: 1.4;
+    }
+    .glance-status-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #7c584b;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 6px 12px;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, 0.85);
+    }
+    .glance-status-row .glance-dot {
+      color: #10b981;
+      font-size: 1rem;
+    }
+    .glance-status-row .glance-tag {
+      color: #a16207;
+    }
+
+    /* Hover Floating Detail Popover */
+    .island-hover-popover {
+      position: absolute;
+      top: 80px;
+      right: 24px;
+      width: 320px;
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      pointer-events: none;
+      z-index: 25;
+      display: none;
+      animation: fadeIn 0.15s ease;
+    }
+    .island-hover-popover.visible {
+      display: block;
+    }
+    .hover-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .hover-card-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+    .hover-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+    }
+    .hover-card-desc {
+      font-size: 0.84rem;
+      color: #475569;
+      line-height: 1.45;
+      margin: 0 0 8px 0;
+    }
+    .hover-card-topics {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .hover-card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1e6b48;
+      border-top: 1px dashed rgba(0, 0, 0, 0.1);
+      padding-top: 8px;
+    }
+
+    /* Bottom Quick Travel Dock */
+    .island-bottom-dock {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 92vw;
+      z-index: 20;
+      pointer-events: auto;
+    }
+    .dock-scroll-tray {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .dock-pill {
+      border: none;
+      background: transparent;
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .dock-pill:hover {
+      background: rgba(0, 0, 0, 0.06);
+      color: #0f172a;
+    }
+    .dock-pill.active {
+      background: #1e6b48;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(30, 107, 72, 0.35);
+    }
+    .dock-pill.reset {
+      color: #b45309;
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .dock-pill.reset:hover {
+      background: rgba(245, 158, 11, 0.2);
+    }
+
+    /* Header toggle button for Islands */
+    .icon-btn.islands-btn {
+      background: linear-gradient(135deg, rgba(254, 243, 199, 0.8), rgba(253, 230, 138, 0.6));
+      color: #92400e;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      font-weight: 700;
+    }
+    .icon-btn.islands-btn:hover,
+    .icon-btn.islands-btn.active {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      color: #78350f;
+      border-color: #d97706;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+    }
+
+    /* 3D Islands Promo Banner inside Notes */
+    .islands-promo-card {
+      margin: 20px 0 28px;
+      padding: 20px 24px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fef2ee 0%, #fef7ed 50%, #f0fdf4 100%);
+      border: 1px solid rgba(234, 88, 12, 0.2);
+      box-shadow: 0 6px 20px rgba(234, 88, 12, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    [data-color-scheme="dark"] .islands-promo-card,
+    [data-theme="dark"] .islands-promo-card {
+      background: linear-gradient(135deg, #231612 0%, #1e1b2e 50%, #13241b 100%);
+      border-color: rgba(251, 146, 60, 0.25);
+    }
+    .islands-promo-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .islands-promo-icon {
+      font-size: 2.2rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    }
+    .islands-promo-text h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 4px 0;
+    }
+    .islands-promo-text p {
+      font-size: 0.88rem;
+      color: var(--ink-muted);
+      margin: 0;
+    }
+    .islands-promo-btn {
+      padding: 9px 18px;
+      border-radius: 99px;
+      background: #1e6b48;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(30, 107, 72, 0.25);
+      transition: all 0.15s ease;
+    }
+    .islands-promo-btn:hover {
+      background: #175437;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(30, 107, 72, 0.35);
+    }
+
+    @media (max-width: 768px) {
+      .island-glance-card {
+        bottom: 74px;
+        left: 12px;
+        right: 12px;
+        max-width: none;
+        padding: 14px 16px;
+      }
+      .glance-title {
+        font-size: 1.3rem;
+      }
+      .island-hover-popover {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -2552,6 +2968,9 @@
     </div>
 
     <div class="header-right">
+      <button id="island-toggle-btn" class="icon-btn islands-btn" aria-label="Explore 10 Chapters in 3D Islands" title="Explore 10 Chapter Floating Islands">
+        <span>🏝️ 3D Islands</span>
+      </button>
       <button id="quiz-btn" class="icon-btn accent" aria-label="Practice Quiz">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         <span class="btn-text">Practice Quiz</span>
@@ -2579,6 +2998,66 @@
       </div>
     </div>
   </header>
+
+  <!-- 3D Island World Viewport (Sky Archipelago) -->
+  <div id="island-world-view" class="island-world-container" style="display: none;">
+    <div id="island-canvas-container" class="island-canvas-wrap"></div>
+    <div id="island-labels-overlay" class="island-labels-layer"></div>
+
+    <!-- Top Floating HUD Bar -->
+    <div class="island-top-bar">
+      <div class="island-top-left">
+        <div class="island-brand-pill">
+          <span class="brand-emoji">🏝️</span>
+          <span class="brand-text">Java Islands</span>
+        </div>
+        <button type="button" id="island-mood-btn" class="island-hud-pill" title="Toggle Sky Mood">
+          Peach twilight 🌅
+        </button>
+      </div>
+      <div class="island-top-right">
+        <button type="button" class="island-hud-pill action" id="exit-island-btn">
+          📖 Back to Notes
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom-Left Floating Info Card (Matching Photo 1 "A world of little wonders") -->
+    <div class="island-glance-card">
+      <div class="glance-kicker">Your sky neighborhood</div>
+      <h2 class="glance-title">A world of little wonders.</h2>
+      <p class="glance-subtitle">Choose an island to launch the quiz · Stay a little while.</p>
+      <div class="glance-status-row">
+        <span class="glance-dot">•</span>
+        <span class="glance-tag">At a glance</span>
+        <span class="glance-val" id="glance-mood-text">Peach twilight 🌅</span>
+        <span class="glance-sep">·</span>
+        <span class="glance-val">10 Islands</span>
+        <span class="glance-sep">·</span>
+        <span class="glance-val">500 Qs Bank</span>
+      </div>
+    </div>
+
+    <!-- Hover Floating Detail Popover -->
+    <div id="island-hover-card" class="island-hover-popover"></div>
+
+    <!-- Bottom Quick Travel Dock -->
+    <div class="island-bottom-dock" id="island-quick-dock">
+      <div class="dock-scroll-tray">
+        <button type="button" class="dock-pill" data-target="0">★ Primer</button>
+        <button type="button" class="dock-pill" data-target="1">Ch 2 Basics</button>
+        <button type="button" class="dock-pill" data-target="2">Ch 3 & 4 Control</button>
+        <button type="button" class="dock-pill" data-target="3">Ch 5 Arrays</button>
+        <button type="button" class="dock-pill" data-target="4">Ch 6 Methods</button>
+        <button type="button" class="dock-pill" data-target="5">Ch 7 File I/O</button>
+        <button type="button" class="dock-pill" data-target="6">Ch 8 Class</button>
+        <button type="button" class="dock-pill" data-target="7">Ch 9 Inheritance</button>
+        <button type="button" class="dock-pill" data-target="8">Ch 10 Polymorphism</button>
+        <button type="button" class="dock-pill" data-target="9">Ch 11 Exceptions</button>
+        <button type="button" class="dock-pill reset" data-target="reset">⟲ Reset View</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Layout Container -->
   <div class="app-layout">
@@ -3028,6 +3507,28 @@
       const cleanMd = ch.md.replace(/\r/g, "");
       const alertProcessed = preprocessMarkdown(cleanMd);
       doc.innerHTML = marked.parse(alertProcessed);
+
+      // 3D Islands Promo Banner
+      const promoBanner = document.createElement("div");
+      promoBanner.className = "islands-promo-card";
+      promoBanner.innerHTML = `
+        <div class="islands-promo-left">
+          <span class="islands-promo-icon">🏝️</span>
+          <div class="islands-promo-text">
+            <h3>Explore the 10 Floating Islands in 3D</h3>
+            <p>Travel through the peaceful sky archipelago & click any island to challenge its quiz.</p>
+          </div>
+        </div>
+        <button type="button" class="islands-promo-btn" id="promo-enter-islands-btn">
+          <span>Explore 3D Islands</span>
+          <span>➔</span>
+        </button>
+      `;
+      const promoBtn = promoBanner.querySelector("#promo-enter-islands-btn");
+      if (promoBtn) {
+        promoBtn.onclick = () => toggleIslandMode(true);
+      }
+      doc.prepend(promoBanner);
 
       // Enhance Code Blocks
       doc.querySelectorAll("pre").forEach(pre => {
@@ -3993,6 +4494,61 @@
     } else {
       openChapter(0, true);
     }
+
+    // ============================================================
+    // 3D Island World Integration
+    // ============================================================
+    window.openChapterQuiz = function(targetIdx) {
+      if (typeof targetIdx === "number" && targetIdx >= 0 && targetIdx < DATA.length) {
+        cur = targetIdx;
+        renderChapterList();
+        const ch = DATA[cur];
+        $("#hero-crumb").textContent = ch.name;
+        $("#hero-title").textContent = (ch.num === "★" ? "" : "Chapter " + ch.num + ": ") + ch.name;
+        openQuiz();
+      }
+    };
+
+    const islandView = document.getElementById("island-world-view");
+    const appLayout = document.querySelector(".app-layout");
+    const islandToggleBtn = document.getElementById("island-toggle-btn");
+    const exitIslandBtn = document.getElementById("exit-island-btn");
+
+    function toggleIslandMode(show) {
+      if (show) {
+        if (appLayout) appLayout.style.display = "none";
+        if (islandView) islandView.style.display = "block";
+        if (islandToggleBtn) islandToggleBtn.classList.add("active");
+        if (typeof window.initIslandWorld === "function") window.initIslandWorld();
+        if (typeof say === "function") {
+          say("Sky Archipelago 🏝️", "Welcome to the 10 Java Islands! Click any island to launch its quiz!");
+        }
+      } else {
+        if (islandView) islandView.style.display = "none";
+        if (appLayout) appLayout.style.display = "";
+        if (islandToggleBtn) islandToggleBtn.classList.remove("active");
+        if (typeof window.pauseIslandWorld === "function") window.pauseIslandWorld();
+      }
+    }
+
+    if (islandToggleBtn) {
+      islandToggleBtn.addEventListener("click", () => {
+        const isOpen = islandView && islandView.style.display !== "none";
+        toggleIslandMode(!isOpen);
+      });
+    }
+
+    if (exitIslandBtn) {
+      exitIslandBtn.addEventListener("click", () => {
+        toggleIslandMode(false);
+      });
+    }
   </script>
+
+  <!-- Three.js & 3D Island World Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="islands_3d.js"></script>
 </body>
 </html>
