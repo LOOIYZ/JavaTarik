@@ -3654,58 +3654,7 @@
       padding-top: 8px;
     }
 
-    /* Bottom Quick Travel Dock */
-    .island-bottom-dock {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 92vw;
-      z-index: 20;
-      pointer-events: auto;
-    }
-    .dock-scroll-tray {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 99px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      overflow-x: auto;
-      max-width: 100%;
-    }
-    .dock-pill {
-      border: none;
-      background: transparent;
-      padding: 5px 12px;
-      border-radius: 99px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #475569;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s ease;
-    }
-    .dock-pill:hover {
-      background: rgba(0, 0, 0, 0.06);
-      color: #0f172a;
-    }
-    .dock-pill.active {
-      background: #1e6b48;
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(30, 107, 72, 0.35);
-    }
-    .dock-pill.reset {
-      color: #b45309;
-      background: rgba(245, 158, 11, 0.1);
-    }
-    .dock-pill.reset:hover {
-      background: rgba(245, 158, 11, 0.2);
-    }
+
 
     /* Header toggle button for Islands */
     .icon-btn.islands-btn {
@@ -3900,23 +3849,6 @@
 
     <!-- Hover Floating Detail Popover -->
     <div id="island-hover-card" class="island-hover-popover"></div>
-
-    <!-- Bottom Quick Travel Dock -->
-    <div class="island-bottom-dock" id="island-quick-dock">
-      <div class="dock-scroll-tray">
-        <button type="button" class="dock-pill" data-target="0">★ Primer</button>
-        <button type="button" class="dock-pill" data-target="1">Ch 2 Basics</button>
-        <button type="button" class="dock-pill" data-target="2">Ch 3 & 4 Control</button>
-        <button type="button" class="dock-pill" data-target="3">Ch 5 Arrays</button>
-        <button type="button" class="dock-pill" data-target="4">Ch 6 Methods</button>
-        <button type="button" class="dock-pill" data-target="5">Ch 7 File I/O</button>
-        <button type="button" class="dock-pill" data-target="6">Ch 8 Class</button>
-        <button type="button" class="dock-pill" data-target="7">Ch 9 Inheritance</button>
-        <button type="button" class="dock-pill" data-target="8">Ch 10 Polymorphism</button>
-        <button type="button" class="dock-pill" data-target="9">Ch 11 Exceptions</button>
-        <button type="button" class="dock-pill reset" data-target="reset">⟲ Reset View</button>
-      </div>
-    </div>
   </div>
 
   <!-- Off-Canvas Sidebar Backdrop -->

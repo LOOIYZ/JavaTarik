@@ -1140,24 +1140,6 @@
     container.addEventListener("pointerdown", () => { isOrbiting = false; });
     container.addEventListener("pointermove", () => { isOrbiting = true; });
 
-    // Dock Button Clicks
-    const dock = document.getElementById("island-quick-dock");
-    if (dock) {
-      dock.addEventListener("click", (e) => {
-        const btn = e.target.closest(".dock-pill");
-        if (!btn) return;
-        const target = btn.getAttribute("data-target");
-        if (target === "reset") {
-          resetCameraView();
-        } else {
-          const idx = parseInt(target, 10);
-          if (!isNaN(idx)) {
-            flyCameraToIsland(idx);
-          }
-        }
-      });
-    }
-
     // Mood Selector Button
     const moodBtn = document.getElementById("island-mood-btn");
     if (moodBtn) {
@@ -1332,15 +1314,7 @@
     }
     requestAnimationFrame(step);
 
-    // Update active state in dock
-    const dockButtons = document.querySelectorAll(".dock-pill");
-    dockButtons.forEach(btn => {
-      if (btn.getAttribute("data-target") == idx) {
-        btn.classList.add("active");
-      } else {
-        btn.classList.remove("active");
-      }
-    });
+
   }
 
   function resetCameraView() {
@@ -1365,9 +1339,6 @@
       requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
-
-    const dockButtons = document.querySelectorAll(".dock-pill");
-    dockButtons.forEach(btn => btn.classList.remove("active"));
   }
 
   // Animation Loop
