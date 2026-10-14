@@ -1,0 +1,605 @@
+/* ============================================================
+   JavaTarik × Firebase Cloud Sync & User Accounts
+   Apple Design System • Cross-Device Progress Synchronization
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Header Account & Sync Button
+   ------------------------------------------------------------ */
+.account-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border, #e3ded5);
+  background: var(--surface-card, rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--ink, #19241f);
+  font-family: var(--body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  position: relative;
+  user-select: none;
+}
+
+.account-nav-btn:hover {
+  background: var(--surface, #ffffff);
+  border-color: var(--brand, #1e6b48);
+  box-shadow: 0 3px 10px rgba(30, 107, 72, 0.12);
+  transform: translateY(-1px);
+}
+
+.account-nav-btn:active {
+  transform: scale(0.97);
+}
+
+.account-nav-btn.is-logged-in {
+  border-color: rgba(30, 107, 72, 0.35);
+  background: linear-gradient(135deg, rgba(232, 245, 238, 0.7), rgba(255, 255, 255, 0.95));
+}
+
+.account-avatar-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fde68a, #f59e0b);
+  color: #78350f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(217, 119, 6, 0.25);
+}
+
+.account-nav-btn.is-logged-in .account-avatar-badge {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 1px 4px rgba(16, 185, 129, 0.35);
+}
+
+.account-label-text {
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-sync-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9ca3af;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.account-sync-dot.synced {
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+.account-sync-dot.syncing {
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+  animation: kopi-sync-pulse 1s infinite alternate;
+}
+
+.account-sync-dot.error {
+  background: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+@keyframes kopi-sync-pulse {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.25); opacity: 1; }
+}
+
+/* ------------------------------------------------------------
+   Modal Backdrop & Dialog Container
+   ------------------------------------------------------------ */
+.kopi-auth-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kopi-auth-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.kopi-auth-modal {
+  width: min(480px, 94vw);
+  background: var(--surface-card, #ffffff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: var(--radius-lg, 24px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.96) translateY(12px);
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-sizing: border-box;
+}
+
+.kopi-auth-backdrop.active .kopi-auth-modal {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal Header Bar */
+.kopi-auth-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  background: var(--surface-subtle, rgba(248, 250, 252, 0.7));
+}
+
+.kopi-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kopi-auth-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e8f5ee, #c8ebd8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 2px 8px rgba(30, 107, 72, 0.15);
+}
+
+.kopi-auth-titles h3 {
+  margin: 0;
+  font-family: var(--head, "Baloo 2", cursive, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink, #0f172a);
+  line-height: 1.2;
+}
+
+.kopi-auth-titles p {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-muted, #64748b);
+}
+
+.kopi-auth-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface, #f1f5f9);
+  color: var(--ink-muted, #64748b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.kopi-auth-close-btn:hover {
+  background: #e2e8f0;
+  color: var(--ink, #0f172a);
+}
+
+/* Modal Content Area */
+.kopi-auth-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(85vh - 80px);
+  overflow-y: auto;
+}
+
+/* Segmented Tabs: Sign In / Create Account / Reset */
+.kopi-auth-tabs {
+  display: flex;
+  padding: 3px;
+  background: var(--surface-subtle, #f1f5f9);
+  border-radius: 12px;
+  gap: 3px;
+}
+
+.kopi-auth-tab-btn {
+  flex: 1;
+  padding: 7px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-muted, #64748b);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+}
+
+.kopi-auth-tab-btn.active {
+  background: var(--surface-card, #ffffff);
+  color: var(--ink, #0f172a);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Alert Banners */
+.kopi-auth-alert {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.kopi-auth-alert.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.kopi-auth-alert.success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.kopi-auth-alert.info {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+}
+
+/* Form Styles */
+.kopi-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kopi-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.kopi-form-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink, #334155);
+  letter-spacing: 0.01em;
+}
+
+.kopi-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.kopi-form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border, #cbd5e1);
+  background: var(--surface, #ffffff);
+  color: var(--ink, #0f172a);
+  font-family: inherit;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.kopi-form-input:focus {
+  outline: none;
+  border-color: var(--brand, #1e6b48);
+  box-shadow: 0 0 0 3px rgba(30, 107, 72, 0.18);
+}
+
+.kopi-submit-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: var(--brand, #1e6b48);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(30, 107, 72, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.kopi-submit-btn:hover:not(:disabled) {
+  background: var(--brand-hover, #165236);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(30, 107, 72, 0.32);
+}
+
+.kopi-submit-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.kopi-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Logged-In User Dashboard */
+.kopi-dashboard-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kopi-user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--surface-subtle, #f8fafc);
+  border: 1px solid var(--border, #e2e8f0);
+}
+
+.kopi-user-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #047857);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.28);
+}
+
+.kopi-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.kopi-user-email {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink, #0f172a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kopi-user-status {
+  font-size: 0.74rem;
+  color: #059669;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+/* Sync Telemetry Grid */
+.kopi-sync-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.kopi-stat-card {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface-card, #ffffff);
+  border: 1px solid var(--border, #e2e8f0);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kopi-stat-num {
+  font-family: var(--mono, monospace);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--brand, #1e6b48);
+}
+
+.kopi-stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-muted, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.kopi-dashboard-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.kopi-btn-secondary {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border, #cbd5e1);
+  background: var(--surface, #ffffff);
+  color: var(--ink, #334155);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.kopi-btn-secondary:hover {
+  background: var(--surface-subtle, #f8fafc);
+  border-color: var(--ink-muted, #64748b);
+}
+
+.kopi-btn-danger {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+  background: #fff5f5;
+  color: #dc2626;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.kopi-btn-danger:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+}
+
+/* Firebase Setup Guide Drawer */
+.kopi-setup-guide-box {
+  margin-top: 10px;
+  border: 1px dashed var(--border, #cbd5e1);
+  border-radius: 14px;
+  padding: 14px;
+  background: var(--surface-subtle, #f8fafc);
+}
+
+.kopi-setup-guide-box summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand, #1e6b48);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kopi-setup-guide-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.kopi-setup-guide-content {
+  margin-top: 10px;
+  font-size: 0.77rem;
+  color: var(--ink-muted, #475569);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kopi-setup-guide-content ol {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+
+.kopi-setup-guide-content code {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: var(--mono, monospace);
+  font-size: 0.72rem;
+  color: var(--ink, #0f172a);
+}
+
+/* Dark Mode Integration */
+[data-color-scheme="dark"] .kopi-auth-modal,
+[data-theme="dark"] .kopi-auth-modal,
+[data-theme="vision"] .kopi-auth-modal,
+[data-theme="xcode"] .kopi-auth-modal {
+  background: #181d28;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f1f5f9;
+}
+
+[data-color-scheme="dark"] .kopi-auth-header,
+[data-theme="dark"] .kopi-auth-header,
+[data-theme="vision"] .kopi-auth-header,
+[data-theme="xcode"] .kopi-auth-header {
+  background: #131822;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-color-scheme="dark"] .kopi-auth-titles h3,
+[data-theme="dark"] .kopi-auth-titles h3,
+[data-theme="vision"] .kopi-auth-titles h3,
+[data-theme="xcode"] .kopi-auth-titles h3 {
+  color: #f8fafc;
+}
+
+[data-color-scheme="dark"] .kopi-auth-tabs,
+[data-theme="dark"] .kopi-auth-tabs,
+[data-theme="vision"] .kopi-auth-tabs,
+[data-theme="xcode"] .kopi-auth-tabs {
+  background: #1e2535;
+}
+
+[data-color-scheme="dark"] .kopi-auth-tab-btn.active,
+[data-theme="dark"] .kopi-auth-tab-btn.active,
+[data-theme="vision"] .kopi-auth-tab-btn.active,
+[data-theme="xcode"] .kopi-auth-tab-btn.active {
+  background: #2a344a;
+  color: #ffffff;
+}
+
+[data-color-scheme="dark"] .kopi-form-input,
+[data-theme="dark"] .kopi-form-input,
+[data-theme="vision"] .kopi-form-input,
+[data-theme="xcode"] .kopi-form-input {
+  background: #1e2535;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-color-scheme="dark"] .kopi-user-card,
+[data-theme="dark"] .kopi-user-card,
+[data-theme="vision"] .kopi-user-card,
+[data-theme="xcode"] .kopi-user-card,
+[data-color-scheme="dark"] .kopi-stat-card,
+[data-theme="dark"] .kopi-stat-card,
+[data-theme="vision"] .kopi-stat-card,
+[data-theme="xcode"] .kopi-stat-card {
+  background: #1e2535;
+  border-color: rgba(255, 255, 255, 0.08);
+}
