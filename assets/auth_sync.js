@@ -41,6 +41,7 @@ async function initFirebase() {
     
     const { 
       getFirestore, 
+      initializeFirestore,
       doc, 
       setDoc, 
       getDoc, 
@@ -49,7 +50,13 @@ async function initFirebase() {
 
     firebaseApp = initializeApp(firebaseConfig);
     firebaseAuth = getAuth(firebaseApp);
-    firestoreDb = getFirestore(firebaseApp);
+    try {
+      firestoreDb = initializeFirestore(firebaseApp, {
+        experimentalAutoDetectLongPolling: true,
+      });
+    } catch (e) {
+      firestoreDb = getFirestore(firebaseApp);
+    }
 
     fbAuthMethods = {
       createUserWithEmailAndPassword,
@@ -143,11 +150,22 @@ function getDeviceId() {
   return devId;
 }
 
+function formatSyncError(e) {
+  const msg = e?.message || String(e || "");
+  if (msg.includes("client is offline") || msg.includes("NOT_FOUND") || msg.includes("does not exist")) {
+    return "Cloud Firestore database has not been created yet in project 'javatarik'.\n\nPlease go to Firebase Console (https://console.firebase.google.com/project/javatarik/firestore) and click 'Create database' to enable cloud storage.";
+  }
+  if (msg.includes("permission-denied")) {
+    return "Permission denied by Firestore security rules. Please check your firestore.rules configuration.";
+  }
+  return msg;
+}
+
 // ------------------------------------------------------------
 // Smart Bidirectional Progress Merge
 // ------------------------------------------------------------
 async function performInitialSync(user) {
-  if (!firestoreDb || !fbFirestoreMethods) return;
+  if (!firestoreDb || !fbFirestoreMethods) return { success: false, error: "Firebase not initialized" };
 
   syncStatus = 'syncing';
   updateNavButton(user, 'syncing');
@@ -186,10 +204,14 @@ async function performInitialSync(user) {
     syncStatus = 'synced';
     lastSyncedTime = Date.now();
     updateNavButton(user, 'synced');
+    updateModalUI();
+    return { success: true };
   } catch (err) {
     console.error("[JavaTarik Sync] Initial sync failed:", err);
     syncStatus = 'error';
     updateNavButton(user, 'error');
+    updateModalUI();
+    return { success: false, error: err };
   }
 }
 
@@ -485,10 +507,17 @@ function updateModalUI() {
           <div class="kopi-user-info">
             <div class="kopi-user-email">${email}</div>
             <div class="kopi-user-status">
-              <span>●</span> Cloud Sync Active & Realtime
+              <span>●</span> ${syncStatus === 'error' ? 'Connection Error' : 'Cloud Sync Active & Realtime'}
             </div>
           </div>
         </div>
+
+        ${syncStatus === 'error' ? `
+        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.76rem; color: #ef4444; line-height: 1.4; text-align: left;">
+          ⚠️ <strong>Firestore Database not created:</strong> Project <code>javatarik</code> does not have a Firestore Database yet.<br>
+          Please open <a href="https://console.firebase.google.com/project/javatarik/firestore" target="_blank" style="color: #ef4444; font-weight: 700; text-decoration: underline;">Firebase Console</a> and click <strong>Create database</strong>.
+        </div>
+        ` : ''}
 
         <!-- Telemetry Stats -->
         <div class="kopi-sync-stats-grid">
@@ -528,10 +557,16 @@ function updateModalUI() {
       forceSyncBtn.onclick = async () => {
         forceSyncBtn.disabled = true;
         forceSyncBtn.textContent = 'Syncing...';
-        await performInitialSync(currentUser);
+        const res = await performInitialSync(currentUser);
         forceSyncBtn.disabled = false;
-        forceSyncBtn.textContent = 'Synced ✓';
-        setTimeout(() => { if (forceSyncBtn) forceSyncBtn.textContent = '🔄 Sync Now with Cloud'; }, 1500);
+        if (res && res.success) {
+          forceSyncBtn.textContent = 'Synced ✓';
+          setTimeout(() => { if (forceSyncBtn) forceSyncBtn.textContent = '🔄 Sync Now with Cloud'; }, 1500);
+        } else {
+          forceSyncBtn.textContent = 'Sync Failed';
+          alert("Could not sync with cloud:\n\n" + formatSyncError(res?.error));
+          setTimeout(() => { if (forceSyncBtn) forceSyncBtn.textContent = '🔄 Sync Now with Cloud'; }, 2000);
+        }
       };
     }
 
@@ -550,7 +585,7 @@ function updateModalUI() {
             alert("No cloud backup exists yet.");
           }
         } catch (e) {
-          alert("Could not pull from cloud: " + e.message);
+          alert("Could not pull from cloud:\n\n" + formatSyncError(e));
         }
         reloadCloudBtn.disabled = false;
       };
