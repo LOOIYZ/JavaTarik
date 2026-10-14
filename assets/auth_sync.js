@@ -86,11 +86,11 @@ async function handleAuthStateChange(user) {
     console.info("[JavaTarik Sync] User signed in:", user.email);
     updateNavButton(user, 'syncing');
     
-    // Subscribe to realtime progress updates from Cloud Firestore
-    startRealtimeSync(user);
-    
-    // Initial fetch and smart merge
+    // 1. Initial fetch and smart two-way merge FIRST
     await performInitialSync(user);
+
+    // 2. ONLY AFTER initial merge is complete, subscribe to realtime updates
+    startRealtimeSync(user);
   } else {
     console.info("[JavaTarik Sync] User signed out.");
     if (unsubscribeSnapshot) {
@@ -217,7 +217,10 @@ function getLocalProgressData() {
     lastScrollTop: rawProg ? rawProg.lastScrollTop : 0,
     lastScrollPct: rawProg ? rawProg.lastScrollPct : 0,
     lastVisited: rawProg ? rawProg.lastVisited : Date.now(),
-    completedChapters: Array.from(new Set([...(rawProg?.completedChapters || []), ...rawDone])),
+    completedChapters: Array.from(new Set([
+      ...(Array.isArray(rawProg?.completedChapters) ? rawProg.completedChapters : []),
+      ...(Array.isArray(rawDone) ? rawDone : [])
+    ])).map(n => parseInt(n, 10)).filter(n => !isNaN(n)),
     quizHistory: rawQuiz,
     fontSizeIdx: rawProg ? rawProg.fontSizeIdx : 1,
     theme: localStorage.getItem("kopi-theme") || "kopi"
@@ -226,11 +229,11 @@ function getLocalProgressData() {
 
 // Merge algorithm: NEVER lose completed chapters or quiz attempts
 function mergeProgressDatasets(local, cloud) {
-  // 1. Union of completed chapters
+  // 1. Union of completed chapters (normalized to numbers)
   const allDone = Array.from(new Set([
     ...(Array.isArray(local?.completedChapters) ? local.completedChapters : []),
     ...(Array.isArray(cloud?.completedChapters) ? cloud.completedChapters : [])
-  ]));
+  ])).map(n => parseInt(n, 10)).filter(n => !isNaN(n));
 
   // 2. Merge quiz history (take best score / latest attempt per set)
   const mergedQuizzes = { ...(cloud?.quizHistory || {}), ...(local?.quizHistory || {}) };
@@ -266,16 +269,39 @@ function mergeProgressDatasets(local, cloud) {
 }
 
 // Apply cloud progress to localStorage and trigger DOM refresh
-function applyCloudDataToLocal(cloudData, silent = false) {
+function applyCloudDataToLocal(cloudData, silent = false, forceOverwrite = false) {
   try {
-    localStorage.setItem("kopi-study-progress", JSON.stringify(cloudData));
-    if (Array.isArray(cloudData.completedChapters)) {
-      localStorage.setItem("kopi-done-chapters", JSON.stringify(cloudData.completedChapters));
+    let localDone = [];
+    try {
+      localDone = JSON.parse(localStorage.getItem("kopi-done-chapters") || "[]");
+    } catch (e) { }
+
+    // Always take the UNION of completed chapters (normalized to numbers) unless forceOverwrite is requested
+    let mergedChapters;
+    if (forceOverwrite) {
+      mergedChapters = Array.isArray(cloudData.completedChapters) ? cloudData.completedChapters : [];
+    } else {
+      mergedChapters = Array.from(new Set([
+        ...(Array.isArray(localDone) ? localDone : []),
+        ...(Array.isArray(cloudData.completedChapters) ? cloudData.completedChapters : [])
+      ]));
     }
+
+    mergedChapters = mergedChapters
+      .map(n => parseInt(n, 10))
+      .filter(n => !isNaN(n));
+
+    const mergedPayload = {
+      ...cloudData,
+      completedChapters: mergedChapters
+    };
+
+    localStorage.setItem("kopi-study-progress", JSON.stringify(mergedPayload));
+    localStorage.setItem("kopi-done-chapters", JSON.stringify(mergedChapters));
 
     // Broadcast to page so study progress bars, chapter checks, and stats update immediately
     window.dispatchEvent(new CustomEvent('kopi:progress-synced', { 
-      detail: { data: cloudData, silent } 
+      detail: { data: mergedPayload, silent } 
     }));
 
     lastSyncedTime = Date.now();
@@ -469,6 +495,7 @@ function updateModalUI() {
           <div class="kopi-stat-card">
             <span class="kopi-stat-num">${doneCount}</span>
             <span class="kopi-stat-label">Chapters Completed</span>
+            ${doneCount > 0 ? `<div style="font-size:0.75rem; color:var(--ink-muted, #64748b); margin-top:4px; font-weight:500;">(${local.completedChapters.map(i => 'Ch ' + (i + 1)).join(', ')})</div>` : ''}
           </div>
           <div class="kopi-stat-card">
             <span class="kopi-stat-num">${quizCount}</span>
@@ -517,7 +544,7 @@ function updateModalUI() {
           const docRef = fbFirestoreMethods.doc(firestoreDb, 'users', currentUser.uid, 'progress', 'current');
           const snap = await fbFirestoreMethods.getDoc(docRef);
           if (snap.exists()) {
-            applyCloudDataToLocal(snap.data(), false);
+            applyCloudDataToLocal(snap.data(), false, true);
             alert("Progress loaded from cloud! Resumed right where you left off.");
           } else {
             alert("No cloud backup exists yet.");

@@ -4780,9 +4780,9 @@
     // Backward compatibility for completed chapters
     try {
       if (savedProgress && Array.isArray(savedProgress.completedChapters)) {
-        done = new Set(savedProgress.completedChapters);
+        done = new Set(savedProgress.completedChapters.map(Number));
       } else {
-        done = new Set(JSON.parse(localStorage.getItem("kopi-done-chapters") || "[]"));
+        done = new Set(JSON.parse(localStorage.getItem("kopi-done-chapters") || "[]").map(Number));
       }
     } catch (e) {
       done = new Set();
@@ -4853,7 +4853,7 @@
       if (!cloudData) return;
 
       if (Array.isArray(cloudData.completedChapters)) {
-        done = new Set(cloudData.completedChapters);
+        done = new Set(cloudData.completedChapters.map(Number));
       }
       if (cloudData.quizHistory && typeof cloudData.quizHistory === "object") {
         quizHistory = cloudData.quizHistory;
@@ -5063,12 +5063,15 @@
 
     // Toggle Chapter Done
     function toggleChapterDone(idx) {
-      const isDone = done.has(idx);
+      const numIdx = Number(idx);
+      const isDone = done.has(numIdx) || done.has(idx) || done.has(String(idx));
       if (isDone) {
+        done.delete(numIdx);
         done.delete(idx);
+        done.delete(String(idx));
         showToast(`Chapter ${DATA[idx].num} marked in progress`);
       } else {
-        done.add(idx);
+        done.add(numIdx);
         showToast(`Chapter ${DATA[idx].num} marked completed! 🎉`);
         say("Chapter Complete! 🎉", `${done.size} of ${DATA.length} chapters done. Keep up the momentum!`, "party");
       }
@@ -5077,7 +5080,7 @@
 
       const doneBtn = $("#pager-done-btn");
       if (doneBtn && cur === idx) {
-        const finishedNow = done.has(idx);
+        const finishedNow = done.has(numIdx) || done.has(idx) || done.has(String(idx));
         doneBtn.innerHTML = finishedNow ? "Chapter Completed ✓ (Tap to Undo)" : "Mark Chapter as Done 🎉";
         doneBtn.classList.toggle("is-completed", finishedNow);
       }
@@ -5097,7 +5100,7 @@
         btn.className = "chapter-btn";
         if (idx === cur) btn.setAttribute("aria-current", "true");
 
-        const isDone = done.has(idx);
+        const isDone = done.has(idx) || done.has(String(idx)) || done.has(Number(idx));
         const qInfo = quizHistory[idx];
         const quizBadge = qInfo ? `<span class="ch-quiz-badge" title="Quiz score: ${qInfo.score}/${qInfo.total}">🎯 ${qInfo.score}/${qInfo.total}</span>` : "";
 

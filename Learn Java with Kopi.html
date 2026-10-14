@@ -3277,7 +3277,7 @@
     let fontIdx = 1;
 
     try {
-      done = new Set(JSON.parse(localStorage.getItem("kopi-done-chapters") || "[]"));
+      done = new Set(JSON.parse(localStorage.getItem("kopi-done-chapters") || "[]").map(Number));
     } catch (e) { }
 
     const saveDone = () => {
@@ -3296,8 +3296,10 @@
       const cloudData = e.detail?.data;
       if (!cloudData) return;
       if (Array.isArray(cloudData.completedChapters)) {
-        done = new Set(cloudData.completedChapters);
-        renderNav();
+        done = new Set(cloudData.completedChapters.map(Number));
+        if (typeof renderChapterList === "function") {
+          renderChapterList();
+        }
       }
     });
 
@@ -3406,7 +3408,7 @@
         btn.className = "chapter-btn";
         if (idx === cur) btn.setAttribute("aria-current", "true");
 
-        const isDone = done.has(idx);
+        const isDone = done.has(idx) || done.has(String(idx)) || done.has(Number(idx));
         btn.innerHTML = `
           <div class="ch-num">${isDone ? '<span class="ch-done-icon">✓</span>' : ch.num}</div>
           <div class="ch-info">
@@ -3563,7 +3565,7 @@
       // Mark Chapter Done Button
       const doneBtn = document.createElement("button");
       doneBtn.className = "pager-btn primary";
-      const isFinished = done.has(idx);
+      const isFinished = done.has(idx) || done.has(String(idx)) || done.has(Number(idx));
       doneBtn.innerHTML = isFinished ? "Completed ✓" : "Mark Chapter Completed ✓";
       doneBtn.onclick = () => {
         done.add(idx);
