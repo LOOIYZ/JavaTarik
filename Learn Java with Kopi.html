@@ -727,6 +727,287 @@
       opacity: 1;
     }
 
+    /* ============================================================
+       FSKTM Resources Dropdown & Quick Links
+       ============================================================ */
+    .resources-popover-anchor {
+      position: relative;
+    }
+
+    .resources-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 38px;
+      padding: 0 13px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 99px;
+      cursor: pointer;
+      color: var(--ink-muted);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: all var(--dur-fast) var(--ease-out);
+      text-decoration: none;
+    }
+
+    .resources-btn-icon {
+      font-size: 1rem;
+      line-height: 1;
+      display: inline-block;
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+
+    .resources-chevron {
+      transition: transform var(--dur-fast) var(--ease-out);
+      color: var(--ink-subtle);
+      margin-left: 1px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .resources-nav-btn:hover {
+        background: var(--brand-light);
+        border-color: var(--brand);
+        color: var(--brand);
+      }
+
+      .resources-nav-btn:hover .resources-chevron {
+        color: var(--brand);
+      }
+    }
+
+    .resources-nav-btn:active {
+      transform: scale(0.94);
+    }
+
+    .resources-nav-btn.open {
+      background: var(--brand-light);
+      border-color: var(--brand);
+      color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(30, 107, 72, 0.15);
+    }
+
+    .resources-nav-btn.open .resources-chevron {
+      transform: rotate(180deg);
+      color: var(--brand);
+    }
+
+    .resources-popover {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 330px;
+      max-width: calc(100vw - 24px);
+      background: var(--popover-bg, rgba(255, 255, 255, 0.94));
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--popover-border, rgba(0, 0, 0, 0.12));
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+      padding: 12px;
+      z-index: 125;
+      transform-origin: top right;
+      opacity: 0;
+      transform: scale(0.95) translateY(-6px);
+      pointer-events: none;
+      transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+    }
+
+    .resources-popover.open {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+
+    .resources-popover-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 8px;
+    }
+
+    .resources-popover-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .resources-popover-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--brand);
+      background: var(--brand-light);
+      padding: 2px 8px;
+      border-radius: 99px;
+      letter-spacing: 0.02em;
+    }
+
+    .resources-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .resource-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 13px;
+      border: 1px solid transparent;
+      background: var(--surface);
+      text-decoration: none;
+      color: var(--ink);
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.12s var(--ease-out), box-shadow 0.15s ease;
+      position: relative;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .resource-card:hover {
+        background: var(--surface-subtle);
+        border-color: var(--border);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      }
+
+      .resource-card:hover .resource-arrow {
+        color: var(--brand);
+        transform: translate(2px, -2px);
+      }
+    }
+
+    .resource-card:active {
+      transform: scale(0.98);
+    }
+
+    .resource-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-icon-wrap.map {
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .resource-icon-wrap.drive {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    [data-color-scheme="dark"] .resource-icon-wrap.map,
+    [data-theme="vision"] .resource-icon-wrap.map,
+    [data-theme="xcode"] .resource-icon-wrap.map {
+      background: linear-gradient(135deg, #072a4a, #0b3d68);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    [data-color-scheme="dark"] .resource-icon-wrap.drive,
+    [data-theme="vision"] .resource-icon-wrap.drive,
+    [data-theme="xcode"] .resource-icon-wrap.drive {
+      background: linear-gradient(135deg, #422006, #78350f);
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+
+    .resource-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .resource-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .resource-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .resource-pill {
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .resource-pill.map {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    .resource-pill.drive {
+      background: #d97706;
+      color: #ffffff;
+    }
+
+    .resource-desc {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .resource-arrow {
+      color: var(--ink-subtle);
+      flex-shrink: 0;
+      transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+    }
+
+    .resources-popover-footer {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.68rem;
+      color: var(--ink-subtle);
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
+
+    @media (max-width: 640px) {
+      .resources-btn-text,
+      .resources-chevron {
+        display: none;
+      }
+      .resources-nav-btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+      .resources-popover {
+        right: 0;
+        width: min(310px, calc(100vw - 24px));
+      }
+    }
+
     #menu-btn {
       display: none;
     }
@@ -2916,6 +3197,61 @@
         </svg>
         <span class="btn-text">Practice Quiz</span>
       </button>
+
+      <!-- FSKTM Student Resources Dropdown (Floor Plan & Notes) -->
+      <div class="resources-popover-anchor">
+        <button id="resources-btn" class="icon-btn resources-nav-btn" aria-label="FSKTM Student Resources and Links" aria-haspopup="true" aria-expanded="false" title="Faculty Floor Plan & Year 1 Sem 1 Notes">
+          <span class="resources-btn-icon">🧭</span>
+          <span class="resources-btn-text">Resources</span>
+          <svg class="resources-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="resources-popover" id="resources-popover" role="dialog" aria-label="Student Resources and Quick Links" aria-hidden="true">
+          <div class="resources-popover-header">
+            <span class="resources-popover-title">
+              <span>🏛️</span> Quick Resources
+            </span>
+            <span class="resources-popover-badge">FSKTM • UM</span>
+          </div>
+          <div class="resources-list">
+            <a href="https://fsktm-floorplan.netlify.app/" target="_blank" rel="noopener noreferrer" class="resource-card" id="link-floorplan">
+              <div class="resource-icon-wrap map" aria-hidden="true">🗺️</div>
+              <div class="resource-info">
+                <div class="resource-title-row">
+                  <span class="resource-title">Faculty Floor Plan · 3D Navigator</span>
+                  <span class="resource-pill map">3D Map</span>
+                </div>
+                <span class="resource-desc">Interactive 3D navigation & room finder</span>
+              </div>
+              <svg class="resource-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1Yaoj3uTysggSgY7j-N1q6jkGLMjqOCTE?usp=drive_link" target="_blank" rel="noopener noreferrer" class="resource-card" id="link-y1s1-notes">
+              <div class="resource-icon-wrap drive" aria-hidden="true">📁</div>
+              <div class="resource-info">
+                <div class="resource-title-row">
+                  <span class="resource-title">Year 1 Sem 1 Notes</span>
+                  <span class="resource-pill drive">Drive</span>
+                </div>
+                <span class="resource-desc">Curated study notes, slides & materials</span>
+              </div>
+              <svg class="resource-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+          </div>
+          <div class="resources-popover-footer">
+            <span>Opens in new tab • FSKTM Student Hub</span>
+          </div>
+        </div>
+      </div>
+
       <span class="header-right-separator" aria-hidden="true"></span>
       <button id="font-btn" class="icon-btn" aria-label="Adjust text size" title="Adjust text size">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -3690,7 +4026,54 @@
       isOpen ? closeThemePopover() : openThemePopover();
     }
 
+    const resourcesPopover = $("#resources-popover");
+    const resourcesBtn = $("#resources-btn");
+
+    function toggleResourcesPopover() {
+      const isOpen = resourcesPopover && resourcesPopover.classList.contains("open");
+      isOpen ? closeResourcesPopover() : openResourcesPopover();
+    }
+
+    function openResourcesPopover() {
+      closeThemePopover();
+      if (resourcesPopover) {
+        resourcesPopover.classList.add("open");
+        resourcesPopover.setAttribute("aria-hidden", "false");
+      }
+      if (resourcesBtn) {
+        resourcesBtn.classList.add("open");
+        resourcesBtn.setAttribute("aria-expanded", "true");
+      }
+    }
+
+    function closeResourcesPopover() {
+      if (resourcesPopover && resourcesPopover.classList.contains("open")) {
+        resourcesPopover.classList.remove("open");
+        resourcesPopover.setAttribute("aria-hidden", "true");
+      }
+      if (resourcesBtn) {
+        resourcesBtn.classList.remove("open");
+        resourcesBtn.setAttribute("aria-expanded", "false");
+      }
+    }
+
+    if (resourcesBtn) {
+      resourcesBtn.onclick = (e) => {
+        e.stopPropagation();
+        toggleResourcesPopover();
+      };
+    }
+
+    if (resourcesPopover) {
+      resourcesPopover.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          setTimeout(closeResourcesPopover, 120);
+        });
+      });
+    }
+
     function openThemePopover() {
+      closeResourcesPopover();
       themePopover.classList.add("open");
       themePopover.setAttribute("aria-hidden", "false");
     }
@@ -3711,10 +4094,16 @@
       if (themePopover && !themePopover.contains(e.target) && e.target !== $("#theme-btn")) {
         closeThemePopover();
       }
+      if (resourcesPopover && !resourcesPopover.contains(e.target) && resourcesBtn && !resourcesBtn.contains(e.target)) {
+        closeResourcesPopover();
+      }
     });
 
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeThemePopover();
+      if (e.key === "Escape") {
+        closeThemePopover();
+        closeResourcesPopover();
+      }
     });
 
     function setTheme(themeId) {
