@@ -61,6 +61,10 @@ for ch in range(10):
         ordered_ch_qs.extend(interleaved)
         
     assert len(ordered_ch_qs) == 100, f'Ch{ch} total={len(ordered_ch_qs)}'
+    ans_counts = {}
+    for q in ordered_ch_qs:
+        ans_counts[q['answer']] = ans_counts.get(q['answer'], 0) + 1
+    assert all(ans_counts[a] == 25 for a in range(4)), f'Ch{ch} answers not balanced: {ans_counts}'
     final_bank[str(ch)] = ordered_ch_qs
 
 with open('quiz_bank.js', 'w', encoding='utf-8') as f:
