@@ -1019,6 +1019,26 @@
       margin: 0 auto;
       padding: 0 24px;
       gap: 28px;
+      transition: grid-template-columns 0.3s cubic-bezier(0.16, 1, 0.3, 1), gap 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Desktop Collapsed TOC (On This Page) State */
+    @media (min-width: 1101px) {
+      body.toc-collapsed .app-layout {
+        grid-template-columns: var(--sidebar-w) minmax(0, 1fr) 0px;
+        gap: 28px 0;
+      }
+
+      body.toc-collapsed aside.toc-sidebar {
+        width: 0;
+        min-width: 0;
+        padding-left: 0;
+        padding-right: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(24px);
+      }
     }
 
     aside.sidebar {
@@ -1271,6 +1291,12 @@
       max-width: var(--content-max);
       font-size: 1.02rem;
       line-height: 1.72;
+      transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.toc-collapsed .prose,
+    body.sidebar-collapsed .prose {
+      max-width: 100%;
     }
 
     .prose h1,
@@ -1681,6 +1707,7 @@
       flex-direction: column;
       gap: 12px;
       overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, width 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .toc-card {
@@ -1699,6 +1726,7 @@
     .toc-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 6px;
       font-family: var(--head);
       font-size: 0.76rem;
@@ -1708,6 +1736,88 @@
       color: var(--ink-muted);
       margin-bottom: 8px;
       flex-shrink: 0;
+    }
+
+    .toc-header-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .toc-close-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .toc-close-btn:hover {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.25);
+      color: #ef4444;
+      transform: scale(1.05);
+    }
+
+    .toc-close-btn:active {
+      transform: scale(0.92);
+    }
+
+    .toc-reopen-btn {
+      position: fixed;
+      top: calc(var(--header-h) + 14px);
+      right: 18px;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px 7px 11px;
+      font-family: var(--head);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-color-scheme="dark"] .toc-reopen-btn,
+    [data-theme="dark"] .toc-reopen-btn {
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .toc-reopen-btn:hover {
+      background: var(--surface-subtle);
+      border-color: var(--brand);
+      color: var(--brand);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .toc-reopen-btn:active {
+      transform: scale(0.96);
+    }
+
+    @media (min-width: 1101px) {
+      body.toc-collapsed .toc-reopen-btn {
+        display: inline-flex;
+        animation: fadeIn 0.25s ease;
+      }
     }
 
     .toc-list {
@@ -3351,15 +3461,23 @@
     <aside class="toc-sidebar" id="toc-sidebar">
       <div class="toc-card">
         <div class="toc-header">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="8" y1="6" x2="21" y2="6"></line>
-            <line x1="8" y1="12" x2="21" y2="12"></line>
-            <line x1="8" y1="18" x2="21" y2="18"></line>
-            <line x1="3" y1="6" x2="3.01" y2="6"></line>
-            <line x1="3" y1="12" x2="3.01" y2="12"></line>
-            <line x1="3" y1="18" x2="3.01" y2="18"></line>
-          </svg>
-          <span>On This Page</span>
+          <div class="toc-header-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>On This Page</span>
+          </div>
+          <button class="toc-close-btn" id="toc-close-btn" aria-label="Close On This Page" title="Close On This Page">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
         <ul class="toc-list" id="toc-list">
           <!-- Populated dynamically -->
@@ -3374,6 +3492,19 @@
         </button>
       </div>
     </aside>
+
+    <!-- Floating Reopen Button when TOC is Closed -->
+    <button class="toc-reopen-btn" id="toc-reopen-btn" aria-label="Show On This Page" title="Show On This Page">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      <span>On This Page</span>
+    </button>
   </div>
 
   <!-- Mascot Kopi Dock -->
@@ -4431,6 +4562,37 @@
 
     // Mobile Menu Toggle
     $("#menu-btn").onclick = () => $("#sidebar").classList.toggle("open");
+
+    // Table of Contents (On This Page) Close / Reopen Toggle
+    const tocCloseBtn = $("#toc-close-btn");
+    const tocReopenBtn = $("#toc-reopen-btn");
+
+    function setTocCollapsed(collapsed, showFeedback = true) {
+      const isCollapsed = document.body.classList.toggle("toc-collapsed", collapsed);
+      try {
+        localStorage.setItem("kopi-desktop-toc-collapsed", isCollapsed ? "true" : "false");
+      } catch (e) { }
+
+      if (showFeedback) {
+        showToast(isCollapsed ? "On This Page closed (click right tab to reopen)" : "On This Page restored");
+      }
+    }
+
+    if (tocCloseBtn) {
+      tocCloseBtn.onclick = () => setTocCollapsed(true);
+    }
+
+    if (tocReopenBtn) {
+      tocReopenBtn.onclick = () => setTocCollapsed(false);
+    }
+
+    try {
+      const isTocCollapsed = localStorage.getItem("kopi-desktop-toc-collapsed") === "true";
+      if (isTocCollapsed && window.innerWidth > 1100) {
+        document.body.classList.add("toc-collapsed");
+      }
+    } catch (e) { }
+
     $("#home-logo").onclick = () => openChapter(0);
 
     // Global Search Modal Engine
